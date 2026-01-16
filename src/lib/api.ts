@@ -1,28 +1,36 @@
-import { Chain, Balance, Delegation, UnbondingDelegation, AccountDetail, PaginatedResponse, ChainStats } from './types';
+import type {
+  Chain,
+  Balance,
+  Delegation,
+  UnbondingDelegation,
+  AccountDetail,
+  PaginatedResponse,
+  ChainStats,
+} from './types'
 
 export const CHAINS: Chain[] = [
   { id: 'aifx', name: 'Pundi AIFX', icon: '', denom: 'PUNDIAI', decimals: 18 },
   { id: 'pundix', name: 'Pundi X', icon: '', denom: 'PUNDIX', decimals: 18 },
+]
 
-];
-
-const MOCK_DELAY = 500;
+const MOCK_DELAY = 500
 
 // Helper to simulate delay
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 // Mock Data Generators
-const generateAddress = (prefix: string) => `${prefix}1${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
+const generateAddress = (prefix: string) =>
+  `${prefix}1${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`
 
 export const getChains = async (): Promise<Chain[]> => {
-  await delay(MOCK_DELAY);
-  return CHAINS;
-};
+  await delay(MOCK_DELAY)
+  return CHAINS
+}
 
 export const getChainStats = async (chainId: string): Promise<ChainStats> => {
-  await delay(MOCK_DELAY);
-  const chain = CHAINS.find((c) => c.id === chainId) || CHAINS[0];
-  
+  await delay(MOCK_DELAY)
+  const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
+
   return {
     totalSupply: {
       amount: (1000000000 * Math.random() + 500000000).toFixed(0),
@@ -40,29 +48,37 @@ export const getChainStats = async (chainId: string): Promise<ChainStats> => {
       amount: (10000000 * Math.random() + 1000000).toFixed(0),
       denom: chain.denom,
     },
-  };
-};
+  }
+}
 
-export const getBalances = async (chainId: string, page = 1, pageSize = 10): Promise<PaginatedResponse<Balance>> => {
-  await delay(MOCK_DELAY);
-  const chain = CHAINS.find((c) => c.id === chainId) || CHAINS[0];
+export const getBalances = async (
+  chainId: string,
+  page = 1,
+  pageSize = 10
+): Promise<PaginatedResponse<Balance>> => {
+  await delay(MOCK_DELAY)
+  const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
   const data: Balance[] = Array.from({ length: pageSize }).map((_, i) => ({
     address: generateAddress(chain.id),
     amount: (Math.random() * 1000).toFixed(chain.decimals),
     denom: chain.denom,
-  }));
-  
+  }))
+
   return {
     data,
     total: 100, // Mock total
     page,
     pageSize,
-  };
-};
+  }
+}
 
-export const getDelegations = async (chainId: string, page = 1, pageSize = 10): Promise<PaginatedResponse<Delegation>> => {
-  await delay(MOCK_DELAY);
-  const chain = CHAINS.find((c) => c.id === chainId) || CHAINS[0];
+export const getDelegations = async (
+  chainId: string,
+  page = 1,
+  pageSize = 10
+): Promise<PaginatedResponse<Delegation>> => {
+  await delay(MOCK_DELAY)
+  const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
   const data: Delegation[] = Array.from({ length: pageSize }).map((_, i) => ({
     delegatorAddress: generateAddress(chain.id),
     validatorAddress: `${chain.id}valoper1${Math.random().toString(36).substring(2, 10)}`,
@@ -70,44 +86,53 @@ export const getDelegations = async (chainId: string, page = 1, pageSize = 10): 
     amount: (Math.random() * 500).toFixed(chain.decimals),
     denom: chain.denom,
     delegationCount: Math.floor(Math.random() * 20) + 1,
-  }));
+  }))
 
   return {
     data,
     total: 80,
     page,
     pageSize,
-  };
-};
+  }
+}
 
-export const getUnbondingDelegations = async (chainId: string, page = 1, pageSize = 10): Promise<PaginatedResponse<UnbondingDelegation>> => {
-  await delay(MOCK_DELAY);
-  const chain = CHAINS.find((c) => c.id === chainId) || CHAINS[0];
-  const data: UnbondingDelegation[] = Array.from({ length: pageSize }).map((_, i) => {
-    const futureDate = new Date();
-    futureDate.setDate(futureDate.getDate() + Math.floor(Math.random() * 21));
-    return {
-      delegatorAddress: generateAddress(chain.id),
-      validatorAddress: `${chain.id}valoper1${Math.random().toString(36).substring(2, 10)}`,
-      validatorName: `Validator ${i + 1}`,
-      amount: (Math.random() * 200).toFixed(chain.decimals),
-      denom: chain.denom,
-      completionTime: futureDate.toISOString(),
-    };
-  });
+export const getUnbondingDelegations = async (
+  chainId: string,
+  page = 1,
+  pageSize = 10
+): Promise<PaginatedResponse<UnbondingDelegation>> => {
+  await delay(MOCK_DELAY)
+  const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
+  const data: UnbondingDelegation[] = Array.from({ length: pageSize }).map(
+    (_, i) => {
+      const futureDate = new Date()
+      futureDate.setDate(futureDate.getDate() + Math.floor(Math.random() * 21))
+      return {
+        delegatorAddress: generateAddress(chain.id),
+        validatorAddress: `${chain.id}valoper1${Math.random().toString(36).substring(2, 10)}`,
+        validatorName: `Validator ${i + 1}`,
+        amount: (Math.random() * 200).toFixed(chain.decimals),
+        denom: chain.denom,
+        completionTime: futureDate.toISOString(),
+      }
+    }
+  )
 
   return {
     data,
     total: 30,
     page,
     pageSize,
-  };
-};
+  }
+}
 
-export const getAccountDetail = async (chainId: string, address: string): Promise<AccountDetail> => {
-  await delay(MOCK_DELAY);
-  const chain = CHAINS.find((c) => c.id === chainId) || CHAINS[0];
-  
+export const getAccountDetail = async (
+  chainId: string,
+  address: string
+): Promise<AccountDetail> => {
+  await delay(MOCK_DELAY)
+  const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
+
   return {
     address,
     balance: {
@@ -138,7 +163,7 @@ export const getAccountDetail = async (chainId: string, address: string): Promis
       {
         amount: (Math.random() * 50).toFixed(chain.decimals),
         denom: chain.denom,
-      }
-    ]
-  };
-};
+      },
+    ],
+  }
+}
