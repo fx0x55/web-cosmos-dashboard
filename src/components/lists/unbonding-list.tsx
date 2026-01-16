@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getUnbondingDelegations } from "@/lib/api";
 import { UnbondingDelegation } from "@/lib/types";
 import { DataTable } from "@/components/data-table";
+import { formatAmount } from "@/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -62,7 +63,7 @@ export function UnbondingList() {
           header: "Amount",
           cell: (item) => (
             <div className="flex items-center gap-2">
-              <span>{item.amount}</span>
+              <span>{formatAmount(item.amount)}</span>
               <span className="text-slate-500 text-sm">{item.denom}</span>
             </div>
           ),

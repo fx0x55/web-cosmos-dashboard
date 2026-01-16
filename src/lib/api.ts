@@ -1,8 +1,8 @@
 import { Chain, Balance, Delegation, UnbondingDelegation, AccountDetail, PaginatedResponse, ChainStats } from './types';
 
 export const CHAINS: Chain[] = [
-  { id: 'aifx', name: 'AIFX', icon: '', denom: 'PUNDIAI', decimals: 18 },
-  { id: 'pundix', name: 'PUNDIX', icon: '', denom: 'PUNDIX', decimals: 18 },
+  { id: 'aifx', name: 'Pundi AIFX', icon: '', denom: 'PUNDIAI', decimals: 18 },
+  { id: 'pundix', name: 'Pundi X', icon: '', denom: 'PUNDIX', decimals: 18 },
 
 ];
 

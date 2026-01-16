@@ -3,6 +3,7 @@ import { getAccountDetail } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { formatAmount } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -60,7 +61,7 @@ export default async function AddressPage({
           <CardContent>
             <div className="text-5xl font-bold flex items-baseline gap-3 tracking-tight">
               <span className="bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-                {data.balance.amount}
+                {formatAmount(data.balance.amount)}
               </span>
               <span className="text-xl text-muted-foreground font-medium uppercase">
                 {data.balance.denom}
@@ -78,7 +79,7 @@ export default async function AddressPage({
           <CardContent>
             <div className="text-5xl font-bold flex items-baseline gap-3 tracking-tight">
                <span className="bg-gradient-to-br from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
-                +{data.rewards[0]?.amount || "0"}
+                +{formatAmount(data.rewards[0]?.amount)}
               </span>
               <span className="text-xl text-muted-foreground font-medium uppercase">
                 {data.rewards[0]?.denom || ""}
@@ -122,10 +123,10 @@ export default async function AddressPage({
                           </div>
                         </TableCell>
                         <TableCell className="text-right font-mono px-6 text-base group-hover:text-foreground transition-colors text-emerald-600 dark:text-emerald-400">
-                          +{item.reward?.amount} {item.reward?.denom}
+                          +{formatAmount(item.reward?.amount)} {item.reward?.denom}
                         </TableCell>
                         <TableCell className="text-right font-mono px-6 text-base text-foreground/80 group-hover:text-foreground transition-colors">
-                          {item.amount} {item.denom}
+                          {formatAmount(item.amount)} {item.denom}
                         </TableCell>
                       </TableRow>
                     ))
@@ -174,7 +175,7 @@ export default async function AddressPage({
                           </Badge>
                         </TableCell>
                         <TableCell className="text-right font-mono px-6 text-base text-foreground/80 group-hover:text-foreground transition-colors">
-                          {item.amount} {item.denom}
+                          {formatAmount(item.amount)} {item.denom}
                         </TableCell>
                       </TableRow>
                     ))
