@@ -10,19 +10,6 @@ import { DashboardStats } from "@/components/dashboard-stats";
 export default function Home() {
   return (
     <div className="space-y-10 animate-in fade-in duration-700 slide-in-from-bottom-4">
-      <div className="flex flex-col gap-6 py-8 md:py-12 items-center text-center relative z-10">
-        <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary backdrop-blur-sm">
-          <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-          Mainnet Live
-        </div>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-b from-foreground to-foreground/50 bg-clip-text text-transparent max-w-4xl">
-          Explore the Cosmos Ecosystem
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-          Monitor real-time activities, track balances, and manage delegations across the interchain universe with precision and style.
-        </p>
-      </div>
-
       <DashboardStats />
 
       <Tabs defaultValue="balances" className="w-full space-y-8">

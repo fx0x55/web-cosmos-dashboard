@@ -1,10 +1,9 @@
 import { Chain, Balance, Delegation, UnbondingDelegation, AccountDetail, PaginatedResponse, ChainStats } from './types';
 
 export const CHAINS: Chain[] = [
-  { id: 'cosmos', name: 'Cosmos Hub', icon: '⚛️', denom: 'ATOM', decimals: 6 },
-  { id: 'osmosis', name: 'Osmosis', icon: '🧪', denom: 'OSMO', decimals: 6 },
-  { id: 'juno', name: 'Juno', icon: '🛡️', denom: 'JUNO', decimals: 6 },
-  { id: 'stargaze', name: 'Stargaze', icon: '✨', denom: 'STARS', decimals: 6 },
+  { id: 'aifx', name: 'AIFX', icon: '', denom: 'PUNDIAI', decimals: 18 },
+  { id: 'pundix', name: 'PUNDIX', icon: '', denom: 'PUNDIX', decimals: 18 },
+
 ];
 
 const MOCK_DELAY = 500;

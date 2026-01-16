@@ -11,7 +11,7 @@ export function MainNav() {
           <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all">
             C
           </div>
-          <span className="font-bold text-xl hidden sm:inline-block tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Cosmos Dashboard</span>
+          <span className="font-bold text-xl hidden sm:inline-block tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Chain Dashboard</span>
         </Link>
         <div className="flex items-center gap-4 flex-1 justify-end">
           <div className="hidden md:block w-full max-w-sm">

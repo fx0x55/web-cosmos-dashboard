@@ -8,8 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cosmos Data Dashboard",
-  description: "A modern dashboard for Cosmos SDK chains",
+  title: "Chain Data Dashboard",
+  description: "A dashboard for Cosmos SDK chains",
 };
 
 export default function RootLayout({
