@@ -14,7 +14,7 @@ export function MainNav() {
           <span className="font-bold text-xl hidden sm:inline-block tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">Chain Dashboard</span>
         </Link>
         <div className="flex items-center gap-4 flex-1 justify-end">
-          <div className="hidden md:block w-full max-w-sm">
+          <div className="hidden md:block w-full max-w-[460px]">
             <SearchForm />
           </div>
           <ChainSwitcher />

@@ -32,8 +32,8 @@ export function SearchForm() {
   };
 
   return (
-    <form onSubmit={handleSearch} className="relative flex items-end gap-2">
-      <div className="grid w-full max-w-sm items-center gap-1.5">
+    <form onSubmit={handleSearch} className="flex w-full items-end gap-3 relative z-10">
+      <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="search-address" className="sr-only">Search Address</Label>
         <div className="relative">
           <Input
@@ -45,19 +45,19 @@ export function SearchForm() {
               setQuery(e.target.value);
               if (error) setError("");
             }}
-            className={`w-[300px] h-11 bg-white/50 dark:bg-black/50 backdrop-blur-sm border-white/20 pr-10 transition-all focus:scale-[1.02] duration-200 ${error ? "border-red-500 ring-red-500" : ""}`}
+            className={`w-full h-11 bg-white/50 dark:bg-black/50 backdrop-blur-sm border-slate-200 dark:border-white/20 shadow-sm transition-all focus:scale-[1.02] duration-200 ${error ? "border-red-500 ring-red-500" : ""}`}
           />
-          <Button 
-            type="submit" 
-            size="icon" 
-            variant="ghost" 
-            className="absolute right-0 top-0 h-11 w-11 hover:bg-transparent text-slate-500"
-          >
-            <Search className="h-4 w-4" />
-          </Button>
+          {error && <p className="text-xs text-red-500 absolute -bottom-5 left-0">{error}</p>}
         </div>
-        {error && <p className="text-xs text-red-500 absolute -bottom-5 left-0">{error}</p>}
       </div>
+      <Button 
+        type="submit" 
+        size="icon" 
+        variant="ghost" 
+        className="h-11 w-11 shrink-0 bg-white/50 dark:bg-black/50 backdrop-blur-sm border border-slate-200 dark:border-white/20 shadow-sm hover:bg-white/80 dark:hover:bg-white/10 transition-all hover:scale-105"
+      >
+        <Search className="h-4 w-4 text-slate-500" />
+      </Button>
     </form>
   );
 }
