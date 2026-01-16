@@ -3,8 +3,8 @@
 const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ["geist", "lucide-react"],
+    typedRoutes: true,
     experimental: {
-      typedRoutes: true,
       serverActions: { bodySizeLimit: "10mb" },
     },
   };
