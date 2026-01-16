@@ -27,7 +27,7 @@ export function SearchForm() {
     }
 
     setError("");
-    const chain = searchParams.get("chain") || "cosmos";
+    const chain = searchParams.get("chain") || "aifx";
     router.push(`/address/${query}?chain=${chain}`);
   };
 

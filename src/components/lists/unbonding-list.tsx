@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 
 export function UnbondingList() {
   const searchParams = useSearchParams();
-  const chainId = searchParams.get("chain") || "cosmos";
+  const chainId = searchParams.get("chain") || "aifx";
   
   const [data, setData] = useState<UnbondingDelegation[]>([]);
   const [loading, setLoading] = useState(true);

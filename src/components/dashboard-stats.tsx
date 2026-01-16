@@ -9,7 +9,7 @@ import { Coins, Lock, Unlock, PiggyBank } from "lucide-react";
 
 export function DashboardStats() {
   const searchParams = useSearchParams();
-  const chainId = searchParams.get("chain") || "cosmos";
+  const chainId = searchParams.get("chain") || "aifx";
   
   const [stats, setStats] = useState<ChainStats | null>(null);
   const [loading, setLoading] = useState(true);

@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 
 export function BalanceList() {
   const searchParams = useSearchParams();
-  const chainId = searchParams.get("chain") || "cosmos";
+  const chainId = searchParams.get("chain") || "aifx";
   
   const [data, setData] = useState<Balance[]>([]);
   const [loading, setLoading] = useState(true);

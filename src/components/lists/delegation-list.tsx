@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 
 export function DelegationList() {
   const searchParams = useSearchParams();
-  const chainId = searchParams.get("chain") || "cosmos";
+  const chainId = searchParams.get("chain") || "aifx";
   
   const [data, setData] = useState<Delegation[]>([]);
   const [loading, setLoading] = useState(true);

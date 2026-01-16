@@ -23,7 +23,7 @@ export default async function AddressPage({
   searchParams: Promise<{ chain?: string }>;
 }) {
   const { address } = await params;
-  const { chain: chainId = "cosmos" } = await searchParams;
+  const { chain: chainId = "aifx" } = await searchParams;
 
   const data = await getAccountDetail(chainId, address);
 

@@ -20,7 +20,7 @@ export function ChainSwitcher() {
   const [loading, setLoading] = React.useState(true);
 
   // Get current chain from URL or default to first chain
-  const currentChainId = searchParams.get("chain") || "cosmos";
+  const currentChainId = searchParams.get("chain") || "aifx";
 
   React.useEffect(() => {
     const fetchChains = async () => {

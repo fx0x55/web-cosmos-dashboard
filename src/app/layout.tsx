@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Chain Data Dashboard",
-  description: "A dashboard for Cosmos SDK chains",
+  description: "A dashboard for Chain Data",
 };
 
 export default function RootLayout({
