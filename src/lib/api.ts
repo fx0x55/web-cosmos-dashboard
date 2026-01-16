@@ -58,7 +58,7 @@ export const getBalances = async (
 ): Promise<PaginatedResponse<Balance>> => {
   await delay(MOCK_DELAY)
   const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
-  const data: Balance[] = Array.from({ length: pageSize }).map((_, i) => ({
+  const data: Balance[] = Array.from({ length: pageSize }).map(() => ({
     address: generateAddress(chain.id),
     amount: (Math.random() * 1000).toFixed(chain.decimals),
     denom: chain.denom,
@@ -151,7 +151,7 @@ export const getAccountDetail = async (
         denom: chain.denom,
       },
     })),
-    unbonding: Array.from({ length: 1 }).map((_, i) => ({
+    unbonding: Array.from({ length: 1 }).map(() => ({
       delegatorAddress: address,
       validatorAddress: `${chain.id}valoper1${Math.random().toString(36).substring(2, 10)}`,
       validatorName: `Old Validator`,

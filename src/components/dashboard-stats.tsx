@@ -90,8 +90,7 @@ export function DashboardStats() {
             <CardTitle className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary">
               {item.title}
             </CardTitle>
-            <div
-              className="rounded-xl bg-background/50 p-2 ring-1 ring-white/20 transition-colors group-hover:bg-primary/10 group-hover:ring-primary/20 dark:bg-white/5">
+            <div className="rounded-xl bg-background/50 p-2 ring-1 ring-white/20 transition-colors group-hover:bg-primary/10 group-hover:ring-primary/20 dark:bg-white/5">
               <item.icon
                 className={`h-4 w-4 ${item.color} opacity-80 transition-opacity group-hover:opacity-100`}
               />

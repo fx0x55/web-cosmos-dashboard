@@ -52,7 +52,7 @@ export function DataTable<T>({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {loading ? (
+            {loading &&
               Array.from({ length: 5 }).map((_, i) => (
                 <TableRow key={i} className="h-20 border-white/10">
                   {columns.map((_, j) => (
@@ -61,8 +61,8 @@ export function DataTable<T>({
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : data.length === 0 ? (
+              ))}
+            {!loading && data.length === 0 && (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
@@ -70,7 +70,9 @@ export function DataTable<T>({
                   No results found.
                 </TableCell>
               </TableRow>
-            ) : (
+            )}
+            {!loading &&
+              data.length > 0 &&
               data.map((item, i) => (
                 <TableRow
                   key={i}
@@ -85,8 +87,7 @@ export function DataTable<T>({
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            )}
+              ))}
           </TableBody>
         </Table>
       </div>
