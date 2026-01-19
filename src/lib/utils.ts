@@ -17,3 +17,24 @@ export function formatAmount(
 
   return `${formattedInteger}.${formattedDecimal}`
 }
+
+export function truncateAddress(address: string, start = 8, end = 6): string {
+  if (!address) return ''
+  if (address.length <= start + end) return address
+  return `${address.slice(0, start)}...${address.slice(-end)}`
+}
+
+export function formatDateTime(timestamp: number | string): string {
+  if (!timestamp) return '-'
+  return new Date(timestamp)
+    .toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    })
+    .replace(',', '')
+}

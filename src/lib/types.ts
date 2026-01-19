@@ -23,6 +23,7 @@ export interface Chain {
   icon: string
   denom: string
   decimals: number
+  explorer_validator_url?: string
 }
 
 // API Types based on API.md
@@ -41,6 +42,7 @@ export interface Account {
 export interface Staking {
   address: string
   val_address: string
+  val_moniker?: string
   delegation_amount: number
   reward_amount: number
 }
@@ -48,6 +50,7 @@ export interface Staking {
 export interface Unbonding {
   address: string
   val_address: string
+  val_moniker?: string
   unbonding_id: number
   unbonding_amount: number
   creation_height: number

@@ -1,17 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getUnbondings } from '@/lib/api'
+import { getUnbondings, CHAINS } from '@/lib/api'
 import type { Unbonding } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
-import { formatAmount } from '@/lib/utils'
+import { formatAmount, truncateAddress, formatDateTime } from '@/lib/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { CopyButton } from '@/components/copy-button'
 import { Badge } from '@/components/ui/badge'
 
 export function UnbondingList() {
   const searchParams = useSearchParams()
   const chainId = searchParams.get('chain') || 'aifx'
+  const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
   const [data, setData] = useState<Unbonding[]>([])
   const [loading, setLoading] = useState(true)
@@ -57,7 +59,30 @@ export function UnbondingList() {
         {
           header: 'Validator',
           cell: item => (
-            <span className="font-mono text-xs">{item.val_address}</span>
+            <div className="flex flex-col gap-0.5">
+              <a
+                href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline">
+                {item.val_moniker && (
+                  <span className="font-medium text-foreground">
+                    {item.val_moniker}
+                  </span>
+                )}
+              </a>
+              <div className="flex items-center gap-1.5">
+                <a
+                  href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs text-muted-foreground hover:underline"
+                  title={item.val_address}>
+                  {truncateAddress(item.val_address)}
+                </a>
+                <CopyButton value={item.val_address} />
+              </div>
+            </div>
           ),
         },
         {
@@ -72,7 +97,7 @@ export function UnbondingList() {
           header: 'Completion Time',
           cell: item => (
             <Badge variant="outline" className="font-mono text-xs">
-              {new Date(item.completion_time_ms).toLocaleString()}
+              {formatDateTime(item.completion_time_ms)}
             </Badge>
           ),
         },

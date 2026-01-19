@@ -1,7 +1,7 @@
-import { getAccountDetail } from '@/lib/api'
+import { getAccountDetail, CHAINS } from '@/lib/api'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { formatAmount } from '@/lib/utils'
+import { formatAmount, truncateAddress, formatDateTime } from '@/lib/utils'
 import {
   Table,
   TableBody,
@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/table'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import { CopyButton } from '@/components/copy-button'
 
 export default async function AddressPage({
   params,
@@ -22,6 +23,7 @@ export default async function AddressPage({
 }) {
   const { address } = await params
   const { chain: chainId = 'aifx' } = await searchParams
+  const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
   const data = await getAccountDetail(address)
 
@@ -118,10 +120,29 @@ export default async function AddressPage({
                         key={i}
                         className="group h-20 border-white/5 transition-colors hover:bg-primary/5">
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
-                          <div className="flex flex-col">
-                            <span className="font-mono text-xs text-muted-foreground">
-                              {item.val_address}
-                            </span>
+                          <div className="flex flex-col gap-0.5">
+                            <a
+                              href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:underline">
+                              {item.val_moniker && (
+                                <span className="font-medium text-foreground">
+                                  {item.val_moniker}
+                                </span>
+                              )}
+                            </a>
+                            <div className="flex items-center gap-1.5">
+                              <a
+                                href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-mono text-xs text-muted-foreground hover:underline"
+                                title={item.val_address}>
+                                {truncateAddress(item.val_address)}
+                              </a>
+                              <CopyButton value={item.val_address} />
+                            </div>
                           </div>
                         </TableCell>
                         <TableCell className="px-6 text-right font-mono text-base text-emerald-600 transition-colors group-hover:text-foreground dark:text-emerald-400">
@@ -174,17 +195,36 @@ export default async function AddressPage({
                         key={i}
                         className="group h-20 border-white/5 transition-colors hover:bg-primary/5">
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
-                          <div className="flex flex-col">
-                            <span className="font-mono text-xs text-muted-foreground">
-                              {item.val_address}
-                            </span>
+                          <div className="flex flex-col gap-0.5">
+                            <a
+                              href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:underline">
+                              {item.val_moniker && (
+                                <span className="font-medium text-foreground">
+                                  {item.val_moniker}
+                                </span>
+                              )}
+                            </a>
+                            <div className="flex items-center gap-1.5">
+                              <a
+                                href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-mono text-xs text-muted-foreground hover:underline"
+                                title={item.val_address}>
+                                {truncateAddress(item.val_address)}
+                              </a>
+                              <CopyButton value={item.val_address} />
+                            </div>
                           </div>
                         </TableCell>
                         <TableCell className="px-6">
                           <Badge
-                            variant="secondary"
-                            className="bg-secondary/50 font-mono text-xs">
-                            {new Date(item.completion_time_ms).toLocaleString()}
+                            variant="outline"
+                            className="font-mono text-xs">
+                            {formatDateTime(item.completion_time_ms)}
                           </Badge>
                         </TableCell>
                         <TableCell className="px-6 text-right font-mono text-base text-foreground/80 transition-colors group-hover:text-foreground">

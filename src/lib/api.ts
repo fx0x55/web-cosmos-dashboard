@@ -9,23 +9,55 @@ import type {
 } from './types'
 
 export const CHAINS: Chain[] = [
-  { id: 'aifx', name: 'Pundi AIFX', icon: '', denom: 'PUNDIAI', decimals: 18 },
-  { id: 'pundix', name: 'Pundi X', icon: '', denom: 'PUNDIX', decimals: 18 },
+  {
+    id: 'aifx',
+    name: 'Pundi AIFX',
+    icon: '',
+    denom: 'PUNDIAI',
+    decimals: 18,
+    explorer_validator_url: 'https://pundiscan.io/pundiaifx/validator/',
+  },
+  // { id: 'pundix', name: 'Pundi X', icon: '', denom: 'PUNDIX', decimals: 18 },
 ]
 
-const BASE_URL = 'http://localhost:8080'
+// Environment variable for API URL (Server-side)
+// Ensure it has a protocol
+const getEnvApiUrl = () => {
+  let url = process.env.API_URL || 'http://localhost:8080'
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `http://${url}`
+  }
+  // Remove trailing slash if present to avoid double slashes with endpoint
+  return url.replace(/\/$/, '')
+}
+
+const ENV_API_URL = getEnvApiUrl()
+
+// Determine BASE_URL
+// Direct connection to backend (CORS is enabled on backend)
+// This avoids Next.js proxy issues and 404s when config is not reloaded
+// Always append '/api' as verified by curl
+const BASE_URL = `${ENV_API_URL}/api`
 
 // Helper for fetch
 async function fetchAPI<T>(endpoint: string, params: Record<string, any> = {}): Promise<T> {
-  const url = new URL(`${BASE_URL}${endpoint}`)
+  const path = `${BASE_URL}${endpoint}`
+  // Since BASE_URL is now absolute (http://...), we don't need a base for URL constructor
+  const url = new URL(path)
+
   Object.keys(params).forEach(key => {
     if (params[key] !== undefined) {
       url.searchParams.append(key, String(params[key]))
     }
   })
 
+  // Debug log to trace requests
+  console.log(`[API] Fetching: ${url.toString()}`)
+
+  // url.toString() returns the full absolute URL which fetch handles correctly
   const res = await fetch(url.toString())
   if (!res.ok) {
+    console.error(`[API] Error ${res.status} on ${url.toString()}`)
     if (res.status === 404) {
       throw new Error('Not Found')
     }
