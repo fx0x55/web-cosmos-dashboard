@@ -23,7 +23,7 @@ export const CHAINS: Chain[] = [
 // Environment variable for API URL (Server-side)
 // Ensure it has a protocol
 const getEnvApiUrl = () => {
-  let url = process.env.API_URL || 'http://localhost:8080'
+  let url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082'
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
     url = `http://${url}`
   }
