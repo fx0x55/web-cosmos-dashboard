@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getBalances } from '@/lib/api'
-import type { Balance } from '@/lib/types'
+import { getAccounts } from '@/lib/api'
+import type { Account } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
 import { formatAmount } from '@/lib/utils'
 import Link from 'next/link'
@@ -12,7 +12,7 @@ export function BalanceList() {
   const searchParams = useSearchParams()
   const chainId = searchParams.get('chain') || 'aifx'
 
-  const [data, setData] = useState<Balance[]>([])
+  const [data, setData] = useState<Account[]>([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
@@ -22,8 +22,8 @@ export function BalanceList() {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const res = await getBalances(chainId, page, pageSize)
-        setData(res.data)
+        const res = await getAccounts(page, pageSize)
+        setData(res.list)
         setTotal(res.total)
       } catch (error) {
         console.error(error)
@@ -32,7 +32,7 @@ export function BalanceList() {
       }
     }
     fetchData()
-  }, [chainId, page])
+  }, [page])
 
   return (
     <DataTable
@@ -57,8 +57,8 @@ export function BalanceList() {
           header: 'Balance',
           cell: item => (
             <div className="flex items-center gap-2">
-              <span>{formatAmount(item.amount)}</span>
-              <span className="text-sm text-slate-500">{item.denom}</span>
+              <span>{formatAmount(item.amount.toString())}</span>
+              {/* Denom is not provided by API, assuming standard based on context or hiding it */}
             </div>
           ),
         },

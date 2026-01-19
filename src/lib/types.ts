@@ -25,48 +25,42 @@ export interface Chain {
   decimals: number
 }
 
-export interface Balance {
+// API Types based on API.md
+
+export interface Account {
   address: string
-  amount: string
-  denom: string
+  account_number: number
+  sequence: number
+  amount: number
+  staking_amount: number
+  staking_count: number
+  reward_amount: number
+  unbonding_amount: number
 }
 
-export interface Delegation {
-  delegatorAddress: string
-  validatorAddress: string
-  validatorName: string // Mocked for display
-  amount: string
-  denom: string
-  delegationCount?: number // Total delegations count for the delegator
-  reward?: {
-    amount: string
-    denom: string
-  }
-}
-
-export interface UnbondingDelegation {
-  delegatorAddress: string
-  validatorAddress: string
-  validatorName: string
-  amount: string
-  denom: string
-  completionTime: string
-}
-
-export interface AccountDetail {
+export interface Staking {
   address: string
-  balance: Balance
-  delegations: Delegation[]
-  unbonding: UnbondingDelegation[]
-  rewards: {
-    amount: string
-    denom: string
-  }[]
+  val_address: string
+  delegation_amount: number
+  reward_amount: number
+}
+
+export interface Unbonding {
+  address: string
+  val_address: string
+  unbonding_id: number
+  unbonding_amount: number
+  creation_height: number
+  completion_time_ms: number
+}
+
+export interface AccountDetailResponse {
+  account: Account
+  stakings: Staking[]
+  unbondings: Unbonding[]
 }
 
 export interface PaginatedResponse<T> {
-  data: T[]
+  list: T[]
   total: number
-  page: number
-  pageSize: number
 }

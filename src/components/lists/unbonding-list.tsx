@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getUnbondingDelegations } from '@/lib/api'
-import type { UnbondingDelegation } from '@/lib/types'
+import { getUnbondings } from '@/lib/api'
+import type { Unbonding } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
 import { formatAmount } from '@/lib/utils'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ export function UnbondingList() {
   const searchParams = useSearchParams()
   const chainId = searchParams.get('chain') || 'aifx'
 
-  const [data, setData] = useState<UnbondingDelegation[]>([])
+  const [data, setData] = useState<Unbonding[]>([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
@@ -23,8 +23,8 @@ export function UnbondingList() {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const res = await getUnbondingDelegations(chainId, page, pageSize)
-        setData(res.data)
+        const res = await getUnbondings(page, pageSize)
+        setData(res.list)
         setTotal(res.total)
       } catch (error) {
         console.error(error)
@@ -33,7 +33,7 @@ export function UnbondingList() {
       }
     }
     fetchData()
-  }, [chainId, page])
+  }, [page])
 
   return (
     <DataTable
@@ -48,22 +48,23 @@ export function UnbondingList() {
           header: 'Delegator',
           cell: item => (
             <Link
-              href={`/address/${item.delegatorAddress}?chain=${chainId}`}
+              href={`/address/${item.address}?chain=${chainId}`}
               className="font-medium decoration-zinc-400 underline-offset-4 transition-all hover:underline">
-              {item.delegatorAddress}
+              {item.address}
             </Link>
           ),
         },
         {
           header: 'Validator',
-          accessorKey: 'validatorName',
+          cell: item => (
+            <span className="font-mono text-xs">{item.val_address}</span>
+          ),
         },
         {
           header: 'Amount',
           cell: item => (
             <div className="flex items-center gap-2">
-              <span>{formatAmount(item.amount)}</span>
-              <span className="text-sm text-slate-500">{item.denom}</span>
+              <span>{formatAmount(item.unbonding_amount.toString())}</span>
             </div>
           ),
         },
@@ -71,7 +72,7 @@ export function UnbondingList() {
           header: 'Completion Time',
           cell: item => (
             <Badge variant="outline" className="font-mono text-xs">
-              {new Date(item.completionTime).toLocaleString()}
+              {new Date(item.completion_time_ms).toLocaleString()}
             </Badge>
           ),
         },

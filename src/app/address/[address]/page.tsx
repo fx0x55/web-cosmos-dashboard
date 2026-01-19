@@ -23,7 +23,7 @@ export default async function AddressPage({
   const { address } = await params
   const { chain: chainId = 'aifx' } = await searchParams
 
-  const data = await getAccountDetail(chainId, address)
+  const data = await getAccountDetail(address)
 
   return (
     <div className="space-y-10 duration-700 animate-in fade-in slide-in-from-bottom-8">
@@ -60,10 +60,7 @@ export default async function AddressPage({
           <CardContent>
             <div className="flex items-baseline gap-3 text-5xl font-bold tracking-tight">
               <span className="bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-                {formatAmount(data.balance.amount)}
-              </span>
-              <span className="text-xl font-medium uppercase text-muted-foreground">
-                {data.balance.denom}
+                {formatAmount(data.account.amount.toString())}
               </span>
             </div>
           </CardContent>
@@ -78,10 +75,7 @@ export default async function AddressPage({
           <CardContent>
             <div className="flex items-baseline gap-3 text-5xl font-bold tracking-tight">
               <span className="bg-gradient-to-br from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
-                +{formatAmount(data.rewards[0]?.amount)}
-              </span>
-              <span className="text-xl font-medium uppercase text-muted-foreground">
-                {data.rewards[0]?.denom || ''}
+                +{formatAmount(data.account.reward_amount.toString())}
               </span>
             </div>
           </CardContent>
@@ -102,15 +96,15 @@ export default async function AddressPage({
                       Validator
                     </TableHead>
                     <TableHead className="h-14 bg-white/20 px-6 text-right text-base font-medium text-muted-foreground dark:bg-black/20">
-                      Reward
+                      Amount
                     </TableHead>
                     <TableHead className="h-14 bg-white/20 px-6 text-right text-base font-medium text-muted-foreground dark:bg-black/20">
-                      Amount
+                      Reward
                     </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data.delegations.length === 0 ? (
+                  {data.stakings.length === 0 ? (
                     <TableRow>
                       <TableCell
                         colSpan={3}
@@ -119,24 +113,22 @@ export default async function AddressPage({
                       </TableCell>
                     </TableRow>
                   ) : (
-                    data.delegations.map((item, i) => (
+                    data.stakings.map((item, i) => (
                       <TableRow
                         key={i}
                         className="group h-20 border-white/5 transition-colors hover:bg-primary/5">
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                           <div className="flex flex-col">
-                            <span>{item.validatorName}</span>
                             <span className="font-mono text-xs text-muted-foreground">
-                              {item.validatorAddress}
+                              {item.val_address}
                             </span>
                           </div>
                         </TableCell>
                         <TableCell className="px-6 text-right font-mono text-base text-emerald-600 transition-colors group-hover:text-foreground dark:text-emerald-400">
-                          +{formatAmount(item.reward?.amount)}{' '}
-                          {item.reward?.denom}
+                          {formatAmount(item.delegation_amount.toString())}
                         </TableCell>
                         <TableCell className="px-6 text-right font-mono text-base text-foreground/80 transition-colors group-hover:text-foreground">
-                          {formatAmount(item.amount)} {item.denom}
+                          {formatAmount(item.reward_amount.toString())}{' '}
                         </TableCell>
                       </TableRow>
                     ))
@@ -168,7 +160,7 @@ export default async function AddressPage({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data.unbonding.length === 0 ? (
+                  {data.unbondings.length === 0 ? (
                     <TableRow>
                       <TableCell
                         colSpan={3}
@@ -177,15 +169,14 @@ export default async function AddressPage({
                       </TableCell>
                     </TableRow>
                   ) : (
-                    data.unbonding.map((item, i) => (
+                    data.unbondings.map((item, i) => (
                       <TableRow
                         key={i}
                         className="group h-20 border-white/5 transition-colors hover:bg-primary/5">
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                           <div className="flex flex-col">
-                            <span>{item.validatorName}</span>
                             <span className="font-mono text-xs text-muted-foreground">
-                              {item.validatorAddress}
+                              {item.val_address}
                             </span>
                           </div>
                         </TableCell>
@@ -193,11 +184,11 @@ export default async function AddressPage({
                           <Badge
                             variant="secondary"
                             className="bg-secondary/50 font-mono text-xs">
-                            {new Date(item.completionTime).toLocaleString()}
+                            {new Date(item.completion_time_ms).toLocaleString()}
                           </Badge>
                         </TableCell>
                         <TableCell className="px-6 text-right font-mono text-base text-foreground/80 transition-colors group-hover:text-foreground">
-                          {formatAmount(item.amount)} {item.denom}
+                          {formatAmount(item.unbonding_amount.toString())}
                         </TableCell>
                       </TableRow>
                     ))
