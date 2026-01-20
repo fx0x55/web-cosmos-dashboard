@@ -34,30 +34,33 @@ const getEnvApiUrl = () => {
 const ENV_API_URL = getEnvApiUrl()
 
 // Determine BASE_URL
-// Direct connection to backend (CORS is enabled on backend)
-// This avoids Next.js proxy issues and 404s when config is not reloaded
-// Always append '/api' as verified by curl
-const BASE_URL = `${ENV_API_URL}/api`
+// On server side: Direct connection to backend using absolute URL
+// On client side: Use relative path to leverage Next.js rewrites (proxy) to avoid CORS
+const isServer = typeof window === 'undefined'
+const BASE_URL = isServer ? `${ENV_API_URL}/api` : '/api'
 
 // Helper for fetch
 async function fetchAPI<T>(endpoint: string, params: Record<string, any> = {}): Promise<T> {
   const path = `${BASE_URL}${endpoint}`
-  // Since BASE_URL is now absolute (http://...), we don't need a base for URL constructor
-  const url = new URL(path)
+  
+  // Construct URL with parameters
+  // If path is relative (client-side), we need a base for URL constructor
+  // But we can simply append query string manually or use URL with window.location.origin if needed
+  // Simpler approach: use URLSearchParams directly
+  
+  const queryString = Object.keys(params)
+    .filter(key => params[key] !== undefined)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(String(params[key]))}`)
+    .join('&')
 
-  Object.keys(params).forEach(key => {
-    if (params[key] !== undefined) {
-      url.searchParams.append(key, String(params[key]))
-    }
-  })
+  const fullUrl = queryString ? `${path}?${queryString}` : path
 
   // Debug log to trace requests
-  console.log(`[API] Fetching: ${url.toString()}`)
+  console.log(`[API] Fetching: ${fullUrl}`)
 
-  // url.toString() returns the full absolute URL which fetch handles correctly
-  const res = await fetch(url.toString())
+  const res = await fetch(fullUrl)
   if (!res.ok) {
-    console.error(`[API] Error ${res.status} on ${url.toString()}`)
+    console.error(`[API] Error ${res.status} on ${fullUrl}`)
     if (res.status === 404) {
       throw new Error('Not Found')
     }

@@ -1,8 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  reactStrictMode: true,
+  transpilePackages: ["geist", "lucide-react"],
+  experimental: {
+    typedRoutes: true,
+    serverActions: {
+      bodySizeLimit: "10mb",
+    },
+    reactCompiler: true,
+  },
   async rewrites() {
     return [
       {
