@@ -3,12 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["geist", "lucide-react"],
+  typedRoutes: true,
+  reactCompiler: true,
   experimental: {
-    typedRoutes: true,
     serverActions: {
       bodySizeLimit: "10mb",
     },
-    reactCompiler: true,
   },
   async rewrites() {
     return [
