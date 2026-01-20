@@ -35,6 +35,7 @@ export function formatDateTime(timestamp: number | string): string {
       minute: '2-digit',
       second: '2-digit',
       hour12: false,
+      timeZone: 'UTC',
     })
     .replace(',', '')
 }

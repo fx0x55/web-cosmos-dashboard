@@ -24,6 +24,8 @@ export interface Chain {
   denom: string
   decimals: number
   explorer_base_url?: string
+  rest_url?: string
+  adenom?: string
 }
 
 // API Types based on API.md

@@ -16,6 +16,8 @@ export const CHAINS: Chain[] = [
     denom: 'PUNDIAI',
     decimals: 18,
     explorer_base_url: 'https://pundiscan.io/pundiaifx/',
+    rest_url: 'https://fx-rest.functionx.io:1317',
+    adenom: 'apundiai',
   },
   // { id: 'pundix', name: 'Pundi X', icon: '', denom: 'PUNDIX', decimals: 18 },
 ]
@@ -81,25 +83,79 @@ export const getChains = async (): Promise<Chain[]> => {
 }
 
 export const getChainStats = async (chainId: string): Promise<ChainStats> => {
-  // Mock implementation as API doesn't provide this yet
   const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
+
+  if (chain.rest_url && chain.adenom) {
+    try {
+      const [supplyRes, poolRes, communityPoolRes] = await Promise.all([
+        fetch(
+          `${chain.rest_url}/cosmos/bank/v1beta1/supply/by_denom?denom=${chain.adenom}`
+        ).then(res => res.json()),
+        fetch(`${chain.rest_url}/cosmos/staking/v1beta1/pool`).then(res =>
+          res.json()
+        ),
+        fetch(
+          `${chain.rest_url}/cosmos/distribution/v1beta1/community_pool`
+        ).then(res => res.json()),
+      ])
+
+      const communityPoolCoin = communityPoolRes.pool?.find(
+        (c: any) => c.denom === chain.adenom
+      )
+
+      const formatValue = (value: string | undefined) => {
+        if (!value) return '0'
+        // Handle potentially very large numbers by using BigInt
+        // Then divide by 10^decimals to get the main unit value
+        try {
+          // Remove any decimal part first for BigInt (API might return decimals for some fields)
+          const integerPart = value.split('.')[0]
+          const bigValue = BigInt(integerPart)
+          const str = bigValue.toString().padStart(chain.decimals + 1, '0')
+          const integer = str.slice(0, -chain.decimals)
+          return integer
+        } catch (e) {
+          console.error('Error formatting value:', value, e)
+          return '0'
+        }
+      }
+
+      return {
+        totalSupply: {
+          amount: formatValue(supplyRes.amount?.amount),
+          denom: chain.denom,
+        },
+        bondedTokens: {
+          amount: formatValue(poolRes.pool?.bonded_tokens),
+          denom: chain.denom,
+        },
+        notBondedTokens: {
+          amount: formatValue(poolRes.pool?.not_bonded_tokens),
+          denom: chain.denom,
+        },
+        communityPool: {
+          amount: formatValue(communityPoolCoin?.amount),
+          denom: chain.denom,
+        },
+      }
+    } catch (error) {
+      console.error('Failed to fetch chain stats from REST API:', error)
+      // Return 0 values on failure as requested
+      return {
+        totalSupply: { amount: '0', denom: chain.denom },
+        bondedTokens: { amount: '0', denom: chain.denom },
+        notBondedTokens: { amount: '0', denom: chain.denom },
+        communityPool: { amount: '0', denom: chain.denom },
+      }
+    }
+  }
+
+  // Fallback for chains without REST API config or if logic falls through (though above returns in catch)
   return {
-    totalSupply: {
-      amount: (1000000000 * Math.random() + 500000000).toFixed(0),
-      denom: chain.denom,
-    },
-    bondedTokens: {
-      amount: (300000000 * Math.random() + 100000000).toFixed(0),
-      denom: chain.denom,
-    },
-    notBondedTokens: {
-      amount: (50000000 * Math.random() + 10000000).toFixed(0),
-      denom: chain.denom,
-    },
-    communityPool: {
-      amount: (10000000 * Math.random() + 1000000).toFixed(0),
-      denom: chain.denom,
-    },
+    totalSupply: { amount: '0', denom: chain.denom },
+    bondedTokens: { amount: '0', denom: chain.denom },
+    notBondedTokens: { amount: '0', denom: chain.denom },
+    communityPool: { amount: '0', denom: chain.denom },
   }
 }
 
