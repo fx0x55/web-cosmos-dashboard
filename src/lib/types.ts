@@ -23,7 +23,7 @@ export interface Chain {
   icon: string
   denom: string
   decimals: number
-  explorer_validator_url?: string
+  explorer_base_url?: string
 }
 
 // API Types based on API.md

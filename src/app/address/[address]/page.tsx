@@ -46,21 +46,46 @@ export default async function AddressPage({
               {chainId}
             </Badge>
           </div>
-          <p className="w-fit select-all break-all rounded-xl border border-white/10 bg-muted/50 p-3 font-mono text-base text-muted-foreground">
-            {address}
-          </p>
+          <div className="flex w-fit items-center gap-3 rounded-xl border border-white/10 bg-muted/50 p-2 pl-4">
+            <a
+              href={`${chainConfig.explorer_base_url}address/${address}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="break-all font-mono text-base text-muted-foreground transition-colors hover:text-primary hover:underline">
+              {address}
+            </a>
+            <CopyButton value={address} />
+          </div>
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md transition-colors hover:bg-white/10">
+              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Account #
+              </span>
+              <span className="font-mono font-medium text-foreground">
+                {data.account.account_number}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md transition-colors hover:bg-white/10">
+              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Sequence
+              </span>
+              <span className="font-mono font-medium text-foreground">
+                {data.account.sequence}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2">
-        <Card className="glass-card border-none">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary">
-              Available Balance
+            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary">
+              Available
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline gap-3 text-5xl font-bold tracking-tight">
+            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
               <span className="bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
                 {formatAmount(data.account.amount.toString())}
               </span>
@@ -68,14 +93,44 @@ export default async function AddressPage({
           </CardContent>
         </Card>
 
-        <Card className="glass-card border-none">
+        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-emerald-500">
-              Pending Rewards
+            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-blue-500">
+              Staked
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline gap-3 text-5xl font-bold tracking-tight">
+            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
+              <span className="bg-gradient-to-br from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                {formatAmount(data.account.staking_amount.toString())}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-500/5">
+          <CardHeader className="space-y-2 pb-4">
+            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-orange-500">
+              Unbonding
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
+              <span className="bg-gradient-to-br from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                {formatAmount(data.account.unbonding_amount.toString())}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/5">
+          <CardHeader className="space-y-2 pb-4">
+            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-emerald-500">
+              Rewards
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
               <span className="bg-gradient-to-br from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
                 +{formatAmount(data.account.reward_amount.toString())}
               </span>
@@ -87,7 +142,14 @@ export default async function AddressPage({
       <div className="space-y-8">
         <Card className="glass-card border-none">
           <CardHeader>
-            <CardTitle className="text-2xl">Delegations</CardTitle>
+            <CardTitle className="flex items-center gap-3 text-2xl">
+              Delegations
+              <Badge
+                variant="secondary"
+                className="bg-white/10 px-2 text-sm font-normal text-muted-foreground hover:bg-white/20">
+                {data.account.staking_count}
+              </Badge>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-hidden rounded-xl border border-white/10 bg-white/30 dark:bg-black/20">
@@ -122,7 +184,7 @@ export default async function AddressPage({
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                           <div className="flex flex-col gap-0.5">
                             <a
-                              href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                              href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="hover:underline">
@@ -134,7 +196,7 @@ export default async function AddressPage({
                             </a>
                             <div className="flex items-center gap-1.5">
                               <a
-                                href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                                href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="font-mono text-xs text-muted-foreground hover:underline"
@@ -197,7 +259,7 @@ export default async function AddressPage({
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                           <div className="flex flex-col gap-0.5">
                             <a
-                              href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                              href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="hover:underline">
@@ -209,7 +271,7 @@ export default async function AddressPage({
                             </a>
                             <div className="flex items-center gap-1.5">
                               <a
-                                href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                                href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="font-mono text-xs text-muted-foreground hover:underline"

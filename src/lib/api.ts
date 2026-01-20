@@ -15,7 +15,7 @@ export const CHAINS: Chain[] = [
     icon: '',
     denom: 'PUNDIAI',
     decimals: 18,
-    explorer_validator_url: 'https://pundiscan.io/pundiaifx/validator/',
+    explorer_base_url: 'https://pundiscan.io/pundiaifx/',
   },
   // { id: 'pundix', name: 'Pundi X', icon: '', denom: 'PUNDIX', decimals: 18 },
 ]
@@ -40,17 +40,23 @@ const isServer = typeof window === 'undefined'
 const BASE_URL = isServer ? `${ENV_API_URL}/api` : '/api'
 
 // Helper for fetch
-async function fetchAPI<T>(endpoint: string, params: Record<string, any> = {}): Promise<T> {
+async function fetchAPI<T>(
+  endpoint: string,
+  params: Record<string, any> = {}
+): Promise<T> {
   const path = `${BASE_URL}${endpoint}`
-  
+
   // Construct URL with parameters
   // If path is relative (client-side), we need a base for URL constructor
   // But we can simply append query string manually or use URL with window.location.origin if needed
   // Simpler approach: use URLSearchParams directly
-  
+
   const queryString = Object.keys(params)
     .filter(key => params[key] !== undefined)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(String(params[key]))}`)
+    .map(
+      key =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(String(params[key]))}`
+    )
     .join('&')
 
   const fullUrl = queryString ? `${path}?${queryString}` : path
@@ -108,14 +114,20 @@ export const getTopDelegators = async (
   page = 1,
   page_size = 10
 ): Promise<PaginatedResponse<Account>> => {
-  return fetchAPI<PaginatedResponse<Account>>('/delegators', { page, page_size })
+  return fetchAPI<PaginatedResponse<Account>>('/delegators', {
+    page,
+    page_size,
+  })
 }
 
 export const getUnbondings = async (
   page = 1,
   page_size = 10
 ): Promise<PaginatedResponse<Unbonding>> => {
-  return fetchAPI<PaginatedResponse<Unbonding>>('/unbondings', { page, page_size })
+  return fetchAPI<PaginatedResponse<Unbonding>>('/unbondings', {
+    page,
+    page_size,
+  })
 }
 
 export const getAccountDetail = async (

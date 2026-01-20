@@ -61,7 +61,7 @@ export function UnbondingList() {
           cell: item => (
             <div className="flex flex-col gap-0.5">
               <a
-                href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline">
@@ -73,7 +73,7 @@ export function UnbondingList() {
               </a>
               <div className="flex items-center gap-1.5">
                 <a
-                  href={`${chainConfig.explorer_validator_url}${item.val_address}`}
+                  href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono text-xs text-muted-foreground hover:underline"

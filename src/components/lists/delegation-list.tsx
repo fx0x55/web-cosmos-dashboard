@@ -63,9 +63,7 @@ export function DelegationList() {
         },
         {
           header: 'Total Delegations',
-          cell: item => (
-            <span className="font-mono">{item.staking_count}</span>
-          ),
+          cell: item => <span className="font-mono">{item.staking_count}</span>,
         },
       ]}
     />
