@@ -1,11 +1,13 @@
 import type {
   Chain,
   Account,
-  Staking,
   Unbonding,
   AccountDetailResponse,
   PaginatedResponse,
   ChainStats,
+  ValidatorSummaryResponse,
+  ValidatorDelegation,
+  ValidatorUnbonding,
 } from './types'
 
 export const CHAINS: Chain[] = [
@@ -157,6 +159,40 @@ export const getChainStats = async (chainId: string): Promise<ChainStats> => {
     notBondedTokens: { amount: '0', denom: chain.denom },
     communityPool: { amount: '0', denom: chain.denom },
   }
+}
+
+export const getValidatorSummary = async (
+  valAddress: string
+): Promise<ValidatorSummaryResponse> => {
+  return fetchAPI<ValidatorSummaryResponse>(`/validators/${valAddress}`)
+}
+
+export const getValidatorDelegations = async (
+  valAddress: string,
+  page: number = 1,
+  pageSize: number = 10
+): Promise<PaginatedResponse<ValidatorDelegation>> => {
+  return fetchAPI<PaginatedResponse<ValidatorDelegation>>(
+    `/validators/${valAddress}/delegations`,
+    {
+      page,
+      page_size: pageSize,
+    }
+  )
+}
+
+export const getValidatorUnbondings = async (
+  valAddress: string,
+  page: number = 1,
+  pageSize: number = 10
+): Promise<PaginatedResponse<ValidatorUnbonding>> => {
+  return fetchAPI<PaginatedResponse<ValidatorUnbonding>>(
+    `/validators/${valAddress}/unbondings`,
+    {
+      page,
+      page_size: pageSize,
+    }
+  )
 }
 
 export const getAccounts = async (

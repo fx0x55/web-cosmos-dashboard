@@ -1,31 +1,35 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getUnbondings, CHAINS } from '@/lib/api'
-import type { Unbonding } from '@/lib/types'
+import { getValidatorUnbondings } from '@/lib/api'
+import type { ValidatorUnbonding } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
-import { formatAmount, truncateAddress, formatDateTime } from '@/lib/utils'
+import { formatAmount, formatDateTime } from '@/lib/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { CopyButton } from '@/components/copy-button'
 import { Badge } from '@/components/ui/badge'
 
-export function UnbondingList() {
+interface ValidatorUnbondingListProps {
+  valAddress: string
+}
+
+export function ValidatorUnbondingList({
+  valAddress,
+}: ValidatorUnbondingListProps) {
   const searchParams = useSearchParams()
   const chainId = searchParams.get('chain') || 'aifx'
-  const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
-  const [data, setData] = useState<Unbonding[]>([])
+  const [data, setData] = useState<ValidatorUnbonding[]>([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
-  const pageSize = 50
+  const pageSize = 10
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const res = await getUnbondings(page, pageSize)
+        const res = await getValidatorUnbondings(valAddress, page, pageSize)
         setData(res.list)
         setTotal(res.total)
       } catch (error) {
@@ -35,7 +39,7 @@ export function UnbondingList() {
       }
     }
     fetchData()
-  }, [page])
+  }, [page, valAddress])
 
   return (
     <DataTable
@@ -47,7 +51,7 @@ export function UnbondingList() {
       onPageChange={setPage}
       columns={[
         {
-          header: 'Delegator',
+          header: 'Delegator Address',
           cell: item => (
             <Link
               href={`/address/${item.address}?chain=${chainId}`}
@@ -57,25 +61,8 @@ export function UnbondingList() {
           ),
         },
         {
-          header: 'Validator',
-          cell: item => (
-            <div className="flex flex-col gap-0.5">
-              <Link
-                href={`/validator/${item.val_address}?chain=${chainId}`}
-                className="font-medium text-foreground hover:underline">
-                {item.val_moniker && <span>{item.val_moniker}</span>}
-              </Link>
-              <div className="flex items-center gap-1.5">
-                <Link
-                  href={`/validator/${item.val_address}?chain=${chainId}`}
-                  className="font-mono text-xs text-muted-foreground hover:underline"
-                  title={item.val_address}>
-                  {truncateAddress(item.val_address)}
-                </Link>
-                <CopyButton value={item.val_address} />
-              </div>
-            </div>
-          ),
+          header: 'Unbonding ID',
+          cell: item => <span className="font-mono">{item.unbonding_id}</span>,
         },
         {
           header: 'Amount',

@@ -183,26 +183,22 @@ export default async function AddressPage({
                         className="group h-20 border-white/5 transition-colors hover:bg-primary/5">
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                           <div className="flex flex-col gap-0.5">
-                            <a
-                              href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                            <Link
+                              href={`/validator/${item.val_address}?chain=${chainId}`}
                               className="hover:underline">
                               {item.val_moniker && (
                                 <span className="font-medium text-foreground">
                                   {item.val_moniker}
                                 </span>
                               )}
-                            </a>
+                            </Link>
                             <div className="flex items-center gap-1.5">
-                              <a
-                                href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                              <Link
+                                href={`/validator/${item.val_address}?chain=${chainId}`}
                                 className="font-mono text-xs text-muted-foreground hover:underline"
                                 title={item.val_address}>
                                 {truncateAddress(item.val_address)}
-                              </a>
+                              </Link>
                               <CopyButton value={item.val_address} />
                             </div>
                           </div>
@@ -258,26 +254,22 @@ export default async function AddressPage({
                         className="group h-20 border-white/5 transition-colors hover:bg-primary/5">
                         <TableCell className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                           <div className="flex flex-col gap-0.5">
-                            <a
-                              href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                            <Link
+                              href={`/validator/${item.val_address}?chain=${chainId}`}
                               className="hover:underline">
                               {item.val_moniker && (
                                 <span className="font-medium text-foreground">
                                   {item.val_moniker}
                                 </span>
                               )}
-                            </a>
+                            </Link>
                             <div className="flex items-center gap-1.5">
-                              <a
-                                href={`${chainConfig.explorer_base_url}validator/${item.val_address}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                              <Link
+                                href={`/validator/${item.val_address}?chain=${chainId}`}
                                 className="font-mono text-xs text-muted-foreground hover:underline"
                                 title={item.val_address}>
                                 {truncateAddress(item.val_address)}
-                              </a>
+                              </Link>
                               <CopyButton value={item.val_address} />
                             </div>
                           </div>

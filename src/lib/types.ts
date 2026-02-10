@@ -69,3 +69,32 @@ export interface PaginatedResponse<T> {
   list: T[]
   total: number
 }
+
+// Validator Types
+
+export interface ValidatorSummaryResponse {
+  val_address: string
+  val_moniker: string
+  total_delegators_count: number
+  total_delegated_amount: number
+  total_undelegators_count: number
+  total_undelegated_amount: number
+}
+
+export interface ValidatorDelegation {
+  address: string
+  val_address: string
+  val_moniker: string
+  delegation_amount: number
+  reward_amount: number
+}
+
+export interface ValidatorUnbonding {
+  address: string
+  val_address: string
+  val_moniker: string
+  unbonding_id: number
+  unbonding_amount: number
+  creation_height: number
+  completion_time_ms: number
+}
