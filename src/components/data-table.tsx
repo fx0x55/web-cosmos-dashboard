@@ -38,14 +38,14 @@ export function DataTable<T>({
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden rounded-3xl border border-white/20 bg-white/40 shadow-sm ring-1 ring-white/10 backdrop-blur-xl dark:bg-black/40">
+      <div className="glass-panel overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
         <Table>
           <TableHeader>
-            <TableRow className="border-white/10 bg-white/30 hover:bg-white/5 dark:bg-black/20">
+            <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
               {columns.map((col, index) => (
                 <TableHead
                   key={index}
-                  className="h-14 px-6 text-base font-medium text-muted-foreground">
+                  className="h-12 px-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
                   {col.header}
                 </TableHead>
               ))}
@@ -54,10 +54,10 @@ export function DataTable<T>({
           <TableBody>
             {loading &&
               Array.from({ length: 5 }).map((_, i) => (
-                <TableRow key={i} className="h-20 border-white/10">
+                <TableRow key={i} className="h-16 border-b border-border/50">
                   {columns.map((_, j) => (
                     <TableCell key={j} className="px-6">
-                      <div className="h-5 w-full max-w-[100px] animate-pulse rounded-md bg-muted" />
+                      <div className="h-5 w-full max-w-[100px] animate-pulse rounded-md bg-muted/50" />
                     </TableCell>
                   ))}
                 </TableRow>
@@ -76,11 +76,11 @@ export function DataTable<T>({
               data.map((item, i) => (
                 <TableRow
                   key={i}
-                  className="group h-20 border-white/5 transition-colors hover:bg-primary/5 dark:hover:bg-primary/10">
+                  className="group h-16 border-b border-border/50 transition-colors hover:bg-primary/5">
                   {columns.map((col, j) => (
                     <TableCell
                       key={j}
-                      className="px-6 text-base font-medium text-foreground/80 transition-colors group-hover:text-foreground">
+                      className="px-6 text-sm font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                       {col.cell
                         ? col.cell(item)
                         : (item[col.accessorKey!] as React.ReactNode)}

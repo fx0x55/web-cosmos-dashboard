@@ -5,24 +5,26 @@ import { ModeToggle } from '@/components/mode-toggle'
 
 export function MainNav() {
   return (
-    <div className="sticky top-0 z-50 border-b border-white/10 bg-white/60 shadow-sm backdrop-blur-xl transition-all duration-300 supports-[backdrop-filter]:bg-background/60 dark:bg-black/40">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-6 md:px-8">
+    <div className="sticky top-4 z-50 mx-auto w-full max-w-7xl px-4 md:px-8">
+      <div className="glass-panel flex h-16 items-center justify-between rounded-full px-4 shadow-lg transition-all md:px-6">
         <Link
           href="/"
-          className="group flex shrink-0 items-center gap-3 transition-all duration-200 hover:scale-105">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-purple-600 font-bold text-white shadow-lg shadow-primary/20 transition-all group-hover:shadow-primary/40">
-            C
+          className="group flex shrink-0 items-center gap-3 transition-opacity hover:opacity-80">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md shadow-primary/20 ring-2 ring-primary/20 transition-all group-hover:shadow-primary/40 group-hover:ring-primary/40">
+            <span className="font-bold">C</span>
           </div>
-          <span className="hidden bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-xl font-bold tracking-tight text-transparent sm:inline-block">
-            Chain Dashboard
+          <span className="hidden text-lg font-bold tracking-tight md:inline-block">
+            Cosmos<span className="text-primary">Dash</span>
           </span>
         </Link>
-        <div className="flex flex-1 items-center justify-end gap-4">
-          <div className="hidden w-full max-w-[460px] md:block">
+        <div className="flex flex-1 items-center justify-end gap-3 md:gap-4">
+          <div className="hidden w-full max-w-[320px] md:block">
             <SearchForm />
           </div>
-          <ChainSwitcher />
-          <ModeToggle />
+          <div className="flex items-center gap-2 border-l border-border/50 pl-4">
+            <ChainSwitcher />
+            <ModeToggle />
+          </div>
         </div>
       </div>
     </div>

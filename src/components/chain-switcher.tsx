@@ -50,20 +50,27 @@ export function ChainSwitcher() {
 
   return (
     <Select value={currentChainId} onValueChange={handleValueChange}>
-      <SelectTrigger className="h-11 w-[200px] border-white/20 bg-white/50 backdrop-blur-sm transition-all duration-200 hover:scale-105 dark:bg-black/50">
+      <SelectTrigger className="h-9 w-[180px] rounded-full border-white/20 bg-white/50 shadow-sm backdrop-blur-md transition-all hover:bg-white/80 focus:ring-0 focus:ring-offset-0 dark:bg-black/50 dark:hover:bg-black/80">
         <SelectValue placeholder="Select chain">
           <div className="flex items-center gap-2">
-            <span>{currentChain?.icon}</span>
-            <span className="font-medium">{currentChain?.name}</span>
+            <span className="flex h-5 w-5 items-center justify-center text-xs">
+              {currentChain?.icon}
+            </span>
+            <span className="text-sm font-medium">{currentChain?.name}</span>
           </div>
         </SelectValue>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="rounded-xl border-white/20 bg-white/80 backdrop-blur-xl dark:bg-black/80">
         {chains.map(chain => (
-          <SelectItem key={chain.id} value={chain.id}>
+          <SelectItem
+            key={chain.id}
+            value={chain.id}
+            className="cursor-pointer rounded-lg focus:bg-black/5 dark:focus:bg-white/10">
             <div className="flex items-center gap-2">
-              <span>{chain.icon}</span>
-              <span>{chain.name}</span>
+              <span className="flex h-5 w-5 items-center justify-center text-xs">
+                {chain.icon}
+              </span>
+              <span className="font-medium">{chain.name}</span>
             </div>
           </SelectItem>
         ))}

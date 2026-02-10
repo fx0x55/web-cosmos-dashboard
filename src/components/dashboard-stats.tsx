@@ -36,6 +36,7 @@ export function DashboardStats() {
       denom: stats?.totalSupply.denom,
       icon: Coins,
       color: 'text-blue-500',
+      bgColor: 'bg-blue-500/10',
     },
     {
       title: 'Bonded Tokens',
@@ -43,6 +44,7 @@ export function DashboardStats() {
       denom: stats?.bondedTokens.denom,
       icon: Lock,
       color: 'text-emerald-500',
+      bgColor: 'bg-emerald-500/10',
     },
     {
       title: 'Not Bonded Tokens',
@@ -50,6 +52,7 @@ export function DashboardStats() {
       denom: stats?.notBondedTokens.denom,
       icon: Unlock,
       color: 'text-amber-500',
+      bgColor: 'bg-amber-500/10',
     },
     {
       title: 'Community Pool',
@@ -57,22 +60,21 @@ export function DashboardStats() {
       denom: stats?.communityPool.denom,
       icon: PiggyBank,
       color: 'text-purple-500',
+      bgColor: 'bg-purple-500/10',
     },
   ]
 
   if (loading) {
     return (
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Card
-            key={i}
-            className="border-white/20 bg-white/40 shadow-lg backdrop-blur-xl dark:bg-black/40">
+          <Card key={i} className="glass-card h-40 border-none shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <div className="h-4 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
-              <div className="h-4 w-4 animate-pulse rounded-full bg-slate-200 dark:bg-slate-800" />
+              <div className="h-4 w-24 animate-pulse rounded bg-muted" />
+              <div className="h-10 w-10 animate-pulse rounded-full bg-muted" />
             </CardHeader>
             <CardContent>
-              <div className="mt-2 h-8 w-32 animate-pulse rounded bg-slate-200 dark:bg-slate-800" />
+              <div className="mt-4 h-8 w-32 animate-pulse rounded bg-muted" />
             </CardContent>
           </Card>
         ))}
@@ -81,29 +83,30 @@ export function DashboardStats() {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((item, i) => (
         <Card
           key={i}
-          className="glass-card border-none ring-1 ring-white/10 dark:ring-white/5">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary">
-              {item.title}
-            </CardTitle>
-            <div className="rounded-xl bg-background/50 p-2 ring-1 ring-white/20 transition-colors group-hover:bg-primary/10 group-hover:ring-primary/20 dark:bg-white/5">
-              <item.icon
-                className={`h-4 w-4 ${item.color} opacity-80 transition-opacity group-hover:opacity-100`}
-              />
+          className="glass-card group relative overflow-hidden border-none shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-primary/5">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+          <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
+            <div className="space-y-1">
+              <CardTitle className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                {item.title}
+              </CardTitle>
+            </div>
+            <div
+              className={`rounded-xl p-2.5 shadow-sm transition-colors ${item.bgColor} ${item.color} group-hover:bg-primary/10 group-hover:text-primary`}>
+              <item.icon className="h-5 w-5" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col gap-1 text-2xl font-bold tracking-tight">
-              <span
-                className="truncate bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent"
-                title={item.value}>
-                {parseInt(item.value || '0').toLocaleString()}
+            <div className="mt-2 flex flex-col gap-1">
+              <span className="text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
+                {item.value ? Number(item.value).toLocaleString() : '0'}
               </span>
-              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground/70">
                 {item.denom}
               </span>
             </div>
