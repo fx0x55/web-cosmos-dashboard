@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getUnbondings, CHAINS } from '@/lib/api'
+import { getUnbondings } from '@/lib/api'
 import type { Unbonding } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
 import { formatAmount, truncateAddress, formatDateTime } from '@/lib/utils'
@@ -13,7 +13,6 @@ import { Badge } from '@/components/ui/badge'
 export function UnbondingList() {
   const searchParams = useSearchParams()
   const chainId = searchParams.get('chain') || 'aifx'
-  const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
   const [data, setData] = useState<Unbonding[]>([])
   const [loading, setLoading] = useState(true)

@@ -1,11 +1,5 @@
 import { getValidatorSummary, CHAINS } from '@/lib/api'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatAmount } from '@/lib/utils'
 import { ArrowLeft, Users, Coins, UserMinus, ExternalLink } from 'lucide-react'

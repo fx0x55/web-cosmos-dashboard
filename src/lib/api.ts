@@ -46,7 +46,7 @@ const BASE_URL = isServer ? `${ENV_API_URL}/api` : '/api'
 // Helper for fetch
 async function fetchAPI<T>(
   endpoint: string,
-  params: Record<string, any> = {}
+  params: Record<string, string | number | boolean | undefined> = {}
 ): Promise<T> {
   const path = `${BASE_URL}${endpoint}`
 
@@ -64,9 +64,6 @@ async function fetchAPI<T>(
     .join('&')
 
   const fullUrl = queryString ? `${path}?${queryString}` : path
-
-  // Debug log to trace requests
-  console.log(`[API] Fetching: ${fullUrl}`)
 
   const res = await fetch(fullUrl)
   if (!res.ok) {
@@ -102,7 +99,7 @@ export const getChainStats = async (chainId: string): Promise<ChainStats> => {
       ])
 
       const communityPoolCoin = communityPoolRes.pool?.find(
-        (c: any) => c.denom === chain.adenom
+        (c: { denom: string }) => c.denom === chain.adenom
       )
 
       const formatValue = (value: string | undefined) => {

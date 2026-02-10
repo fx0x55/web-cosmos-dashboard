@@ -4,13 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BalanceList } from '@/components/lists/balance-list'
 import { DelegationList } from '@/components/lists/delegation-list'
 import { UnbondingList } from '@/components/lists/unbonding-list'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { DashboardStats } from '@/components/dashboard-stats'
 
 export default function Home() {
