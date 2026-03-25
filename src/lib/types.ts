@@ -70,6 +70,100 @@ export interface PaginatedResponse<T> {
   total: number
 }
 
+export interface CoinBalance {
+  denom: string
+  amount: string
+}
+
+export interface DisplayCoinBalance extends CoinBalance {
+  displayDenom?: string
+}
+
+export interface ModuleAccountBalance {
+  name: string
+  address: string
+  permissions: string[]
+  balances: CoinBalance[]
+  primaryAmount: string
+}
+
+export interface CrosschainModuleBalance {
+  chainName: string
+  moduleName: string
+  address: string
+  permissions: string[]
+  balances: DisplayCoinBalance[]
+}
+
+export interface Erc20ModuleBalance {
+  moduleName: string
+  address: string
+  permissions: string[]
+  balances: DisplayCoinBalance[]
+}
+
+export interface ModuleAccountsResponse {
+  accounts?: Array<Record<string, unknown>>
+}
+
+export interface ModuleAccountResponse {
+  account?: Record<string, unknown>
+}
+
+export interface BalanceByDenomResponse {
+  balance?: CoinBalance
+}
+
+export interface AllBalancesResponse {
+  balances?: CoinBalance[]
+}
+
+export interface DenomUnit {
+  denom?: string
+  exponent?: number
+}
+
+export interface Metadata {
+  base?: string
+  display?: string
+  symbol?: string
+  denom_units?: DenomUnit[]
+  denomUnits?: DenomUnit[]
+}
+
+export interface DenomInfo {
+  symbol: string
+  exponent: number
+}
+
+export interface DenomsMetadataResponse {
+  metadatas?: Metadata[]
+}
+
+export interface BridgeChainListResponse {
+  chain_names?: string[]
+}
+
+export interface BridgeToken {
+  chain_name?: string
+  contract?: string
+  denom?: string
+  is_native?: boolean
+}
+
+export interface BridgeTokensByChainResponse {
+  bridge_tokens?: BridgeToken[]
+}
+
+export interface SupplyResponse {
+  supply?: CoinBalance[]
+  pagination?: { next_key?: string | null; total?: string }
+}
+
+export interface SupplyBalance extends DisplayCoinBalance {
+  rawDenom: string
+}
+
 // Validator Types
 
 export interface ValidatorSummaryResponse {

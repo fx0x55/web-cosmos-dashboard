@@ -2,6 +2,10 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BalanceList } from '@/components/lists/balance-list'
+import { ModuleAccountBalanceList } from '@/components/lists/module-account-balance-list'
+import { CrosschainModuleBalanceList } from '@/components/lists/crosschain-module-balance-list'
+import { Erc20ModuleBalanceList } from '@/components/lists/erc20-module-balance-list'
+import { SupplyBalanceList } from '@/components/lists/supply-balance-list'
 import { DelegationList } from '@/components/lists/delegation-list'
 import { UnbondingList } from '@/components/lists/unbonding-list'
 import { DashboardStats } from '@/components/dashboard-stats'
@@ -43,7 +47,82 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <BalanceList />
+          <Tabs defaultValue="accounts" className="space-y-6">
+            <div className="flex justify-start px-1">
+              <TabsList className="grid h-11 w-full max-w-3xl grid-cols-5 rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5">
+                <TabsTrigger
+                  value="accounts"
+                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+                  Accounts
+                </TabsTrigger>
+                <TabsTrigger
+                  value="module-accounts"
+                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+                  Module Accounts
+                </TabsTrigger>
+                <TabsTrigger
+                  value="crosschain-modules"
+                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+                  Cross-chain Modules
+                </TabsTrigger>
+                <TabsTrigger
+                  value="erc20-modules"
+                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+                  ERC20 Modules
+                </TabsTrigger>
+                <TabsTrigger
+                  value="total-supply"
+                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+                  Total Supply
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            <TabsContent value="accounts" className="outline-none">
+              <BalanceList />
+            </TabsContent>
+
+            <TabsContent value="module-accounts" className="space-y-4 outline-none">
+              <div className="px-1">
+                <p className="text-sm text-muted-foreground">
+                  Module accounts fetched from the chain LCD and their current
+                  balances.
+                </p>
+              </div>
+              <ModuleAccountBalanceList />
+            </TabsContent>
+
+            <TabsContent
+              value="crosschain-modules"
+              className="space-y-4 outline-none">
+              <div className="px-1">
+                <p className="text-sm text-muted-foreground">
+                  Supported cross-chain modules from bridge chain list, with
+                  module account addresses and all current balances.
+                </p>
+              </div>
+              <CrosschainModuleBalanceList />
+            </TabsContent>
+
+            <TabsContent value="erc20-modules" className="space-y-4 outline-none">
+              <div className="px-1">
+                <p className="text-sm text-muted-foreground">
+                  ERC20 module accounts fetched from module accounts, with all
+                  current balances.
+                </p>
+              </div>
+              <Erc20ModuleBalanceList />
+            </TabsContent>
+
+            <TabsContent value="total-supply" className="space-y-4 outline-none">
+              <div className="px-1">
+                <p className="text-sm text-muted-foreground">
+                  Total supply of all denominations on the network.
+                </p>
+              </div>
+              <SupplyBalanceList />
+            </TabsContent>
+          </Tabs>
         </TabsContent>
 
         <TabsContent value="delegations" className="space-y-4 outline-none">

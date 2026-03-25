@@ -9,20 +9,14 @@ import type {
   ValidatorDelegation,
   ValidatorUnbonding,
 } from './types'
-
-export const CHAINS: Chain[] = [
-  {
-    id: 'aifx',
-    name: 'Pundi AIFX',
-    icon: '',
-    denom: 'PUNDIAI',
-    decimals: 18,
-    explorer_base_url: 'https://pundiscan.io/pundiaifx/',
-    rest_url: 'https://fx-rest.functionx.io:1317',
-    adenom: 'apundiai',
-  },
-  // { id: 'pundix', name: 'Pundi X', icon: '', denom: 'PUNDIX', decimals: 18 },
-]
+import { CHAINS, getChainConfig } from './config'
+export { CHAINS, DEFAULT_CHAIN_ID } from './config'
+export {
+  getCrosschainModuleBalances,
+  getErc20ModuleBalances,
+  getModuleAccountBalances,
+  getTotalSupply,
+} from './chain-rest'
 
 // Environment variable for API URL (Server-side)
 // Ensure it has a protocol
@@ -82,7 +76,7 @@ export const getChains = async (): Promise<Chain[]> => {
 }
 
 export const getChainStats = async (chainId: string): Promise<ChainStats> => {
-  const chain = CHAINS.find(c => c.id === chainId) || CHAINS[0]
+  const chain = getChainConfig(chainId)
 
   if (chain.rest_url && chain.adenom) {
     try {
