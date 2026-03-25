@@ -1,16 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getAccounts } from '@/lib/api'
+import { CHAINS, DEFAULT_CHAIN_ID, getAccounts } from '@/lib/api'
 import type { Account } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
 import { formatAmount } from '@/lib/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { Badge } from '@/components/ui/badge'
 
 export function BalanceList() {
   const searchParams = useSearchParams()
-  const chainId = searchParams.get('chain') || 'aifx'
+  const chainId = searchParams.get('chain') || DEFAULT_CHAIN_ID
+  const chain = CHAINS.find(item => item.id === chainId) || CHAINS[0]
 
   const [data, setData] = useState<Account[]>([])
   const [loading, setLoading] = useState(true)
@@ -55,11 +57,16 @@ export function BalanceList() {
         },
         {
           header: 'Balance',
-          cell: item => (
-            <div className="flex items-center gap-2">
-              <span>{formatAmount(item.amount.toString())}</span>
-              {/* Denom is not provided by API, assuming standard based on context or hiding it */}
-            </div>
+          cell: item => <span>{formatAmount(item.amount.toString())}</span>,
+        },
+        {
+          header: 'Denom',
+          cell: () => (
+            <Badge
+              variant="outline"
+              className="border-primary/20 bg-primary/10 font-mono text-primary">
+              {chain.denom}
+            </Badge>
           ),
         },
       ]}
