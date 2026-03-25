@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { getChains } from '@/lib/api'
+import { DEFAULT_CHAIN_ID, getChains } from '@/lib/api'
 import type { Chain } from '@/lib/types'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -20,7 +20,7 @@ export function ChainSwitcher() {
   const [loading, setLoading] = React.useState(true)
 
   // Get current chain from URL or default to first chain
-  const currentChainId = searchParams.get('chain') || 'aifx'
+  const currentChainId = searchParams.get('chain') || DEFAULT_CHAIN_ID
 
   React.useEffect(() => {
     const fetchChains = async () => {

@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   transpilePackages: ["geist", "lucide-react"],
   typedRoutes: true,
   reactCompiler: true,
+  allowedDevOrigins: [
+    "127.0.0.1",
+    "localhost",
+    "::1",
+  ],
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",

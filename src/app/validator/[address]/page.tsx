@@ -1,4 +1,4 @@
-import { getValidatorSummary, CHAINS } from '@/lib/api'
+import { DEFAULT_CHAIN_ID, getValidatorSummary, CHAINS } from '@/lib/api'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatAmount } from '@/lib/utils'
@@ -17,7 +17,7 @@ export default async function ValidatorPage({
   searchParams: Promise<{ chain?: string }>
 }) {
   const { address } = await params
-  const { chain: chainId = 'aifx' } = await searchParams
+  const { chain: chainId = DEFAULT_CHAIN_ID } = await searchParams
   const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
   // Fetch validator summary

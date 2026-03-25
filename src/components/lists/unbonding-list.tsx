@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getUnbondings } from '@/lib/api'
+import { DEFAULT_CHAIN_ID, getUnbondings } from '@/lib/api'
 import type { Unbonding } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
-import { formatAmount, truncateAddress, formatDateTime } from '@/lib/utils'
+import { formatAmount, truncateAddress, formatCountdown } from '@/lib/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { CopyButton } from '@/components/copy-button'
@@ -12,12 +12,13 @@ import { Badge } from '@/components/ui/badge'
 
 export function UnbondingList() {
   const searchParams = useSearchParams()
-  const chainId = searchParams.get('chain') || 'aifx'
+  const chainId = searchParams.get('chain') || DEFAULT_CHAIN_ID
 
   const [data, setData] = useState<Unbonding[]>([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
+  const [now, setNow] = useState(() => Date.now())
   const pageSize = 50
 
   useEffect(() => {
@@ -35,6 +36,14 @@ export function UnbondingList() {
     }
     fetchData()
   }, [page])
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setNow(Date.now())
+    }, 1000)
+
+    return () => window.clearInterval(timer)
+  }, [])
 
   return (
     <DataTable
@@ -88,7 +97,7 @@ export function UnbondingList() {
           header: 'Completion Time',
           cell: item => (
             <Badge variant="outline" className="font-mono text-xs">
-              {formatDateTime(item.completion_time_ms)}
+              {formatCountdown(item.completion_time_ms, now)}
             </Badge>
           ),
         },

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getValidatorDelegations } from '@/lib/api'
+import { DEFAULT_CHAIN_ID, getValidatorDelegations } from '@/lib/api'
 import type { ValidatorDelegation } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
 import { formatAmount } from '@/lib/utils'
@@ -16,7 +16,7 @@ export function ValidatorDelegationList({
   valAddress,
 }: ValidatorDelegationListProps) {
   const searchParams = useSearchParams()
-  const chainId = searchParams.get('chain') || 'aifx'
+  const chainId = searchParams.get('chain') || DEFAULT_CHAIN_ID
 
   const [data, setData] = useState<ValidatorDelegation[]>([])
   const [loading, setLoading] = useState(true)

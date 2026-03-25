@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getTopDelegators } from '@/lib/api'
+import { DEFAULT_CHAIN_ID, getTopDelegators } from '@/lib/api'
 import type { Account } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
 import { formatAmount } from '@/lib/utils'
@@ -10,7 +10,7 @@ import { useSearchParams } from 'next/navigation'
 
 export function DelegationList() {
   const searchParams = useSearchParams()
-  const chainId = searchParams.get('chain') || 'aifx'
+  const chainId = searchParams.get('chain') || DEFAULT_CHAIN_ID
 
   const [data, setData] = useState<Account[]>([])
   const [loading, setLoading] = useState(true)
