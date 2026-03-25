@@ -164,6 +164,52 @@ export interface SupplyBalance extends DisplayCoinBalance {
   rawDenom: string
 }
 
+// Crosschain Oracle Types
+
+export interface Oracle {
+  oracle_address: string
+  bridger_address: string
+  external_address: string
+  deposit_amount: CoinBalance
+  start_height: string
+  online: boolean
+  delegate_validator: string
+  delegate_amount: string
+  slash_times: string
+}
+
+export interface OraclesResponse {
+  oracles?: Oracle[]
+}
+
+export interface OracleEventNonceResponse {
+  event_nonce: string
+}
+
+export interface OracleEventBlockHeightResponse {
+  block_height: string
+}
+
+export interface ObservedBlockHeightResponse {
+  external_block_height: string
+  block_height: string
+}
+
+export interface CrosschainOracleInfo {
+  chainName: string
+  oracle_address: string
+  bridger_address: string
+  external_address: string
+  deposit_amount: string
+  start_height: string
+  online: boolean
+  delegate_validator: string
+  delegate_amount: string
+  slash_times: string
+  event_nonce: string
+  block_height: string
+}
+
 // Validator Types
 
 export interface ValidatorSummaryResponse {

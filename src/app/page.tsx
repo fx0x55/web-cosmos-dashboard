@@ -8,6 +8,8 @@ import { Erc20ModuleBalanceList } from '@/components/lists/erc20-module-balance-
 import { SupplyBalanceList } from '@/components/lists/supply-balance-list'
 import { DelegationList } from '@/components/lists/delegation-list'
 import { UnbondingList } from '@/components/lists/unbonding-list'
+import { CrosschainOraclesList } from '@/components/lists/crosschain-oracles-list'
+import { CrosschainBridgeTokensList } from '@/components/lists/crosschain-bridge-tokens-list'
 import { DashboardStats } from '@/components/dashboard-stats'
 
 export default function Home() {
@@ -17,7 +19,7 @@ export default function Home() {
 
       <Tabs defaultValue="balances" className="w-full space-y-8">
         <div className="flex justify-center">
-          <TabsList className="grid h-12 w-full max-w-md grid-cols-3 rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5">
+          <TabsList className="grid h-12 w-full max-w-xl grid-cols-5 rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5">
             <TabsTrigger
               value="balances"
               className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
@@ -32,6 +34,16 @@ export default function Home() {
               value="unbonding"
               className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
               Unbonding
+            </TabsTrigger>
+            <TabsTrigger
+              value="crosschain-oracles"
+              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              Oracles
+            </TabsTrigger>
+            <TabsTrigger
+              value="bridge-tokens"
+              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              Bridge Tokens
             </TabsTrigger>
           </TabsList>
         </div>
@@ -151,6 +163,34 @@ export default function Home() {
             </div>
           </div>
           <UnbondingList />
+        </TabsContent>
+
+        <TabsContent value="crosschain-oracles" className="space-y-4 outline-none">
+          <div className="flex items-center justify-between px-1">
+            <div>
+              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+                Crosschain Oracles
+              </h2>
+              <p className="text-muted-foreground">
+                Oracle status and event information for supported crosschain bridges.
+              </p>
+            </div>
+          </div>
+          <CrosschainOraclesList />
+        </TabsContent>
+
+        <TabsContent value="bridge-tokens" className="space-y-4 outline-none">
+          <div className="flex items-center justify-between px-1">
+            <div>
+              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+                Bridge Tokens
+              </h2>
+              <p className="text-muted-foreground">
+                Registered bridge tokens for supported crosschain bridges.
+              </p>
+            </div>
+          </div>
+          <CrosschainBridgeTokensList />
         </TabsContent>
       </Tabs>
     </div>

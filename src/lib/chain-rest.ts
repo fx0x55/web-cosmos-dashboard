@@ -4,6 +4,7 @@ import type {
   BridgeTokensByChainResponse,
   CoinBalance,
   CrosschainModuleBalance,
+  CrosschainOracleInfo,
   DenomInfo,
   DenomsMetadataResponse,
   DisplayCoinBalance,
@@ -11,6 +12,10 @@ import type {
   ModuleAccountBalance,
   ModuleAccountResponse,
   ModuleAccountsResponse,
+  ObservedBlockHeightResponse,
+  OracleEventBlockHeightResponse,
+  OracleEventNonceResponse,
+  OraclesResponse,
   SupplyBalance,
   SupplyResponse,
 } from './types'
@@ -95,6 +100,16 @@ const cachedErc20ModuleBalancesFetch =
   createCachedFetcher<Erc20ModuleBalance[]>(BALANCE_CACHE_TTL_MS)
 const cachedSupplyFetch =
   createCachedFetcher<SupplyBalance[]>(BALANCE_CACHE_TTL_MS)
+const cachedBridgeChainNamesFetch =
+  createCachedFetcher<string[]>(DEFAULT_CACHE_TTL_MS)
+const cachedObservedBlockHeightFetch =
+  createCachedFetcher<ObservedBlockHeightResponse>(BALANCE_CACHE_TTL_MS)
+const cachedCrosschainOraclesFetch =
+  createCachedFetcher<CrosschainOracleInfo[]>(BALANCE_CACHE_TTL_MS)
+const cachedEventNonceFetch =
+  createCachedFetcher<OracleEventNonceResponse>(BALANCE_CACHE_TTL_MS)
+const cachedEventBlockHeightFetch =
+  createCachedFetcher<OracleEventBlockHeightResponse>(BALANCE_CACHE_TTL_MS)
 
 // --- REST fetch ---
 
@@ -268,7 +283,7 @@ function getDenomMetadataMap(chainId: string): Promise<Map<string, DenomInfo>> {
   })
 }
 
-function getBridgeTokensByChain(
+export function getBridgeTokensByChain(
   chainId: string,
   chainName: string
 ): Promise<BridgeTokensByChainResponse> {
@@ -440,6 +455,128 @@ export function getCrosschainModuleBalances(
     )
 
     return items.sort((a, b) => a.chainName.localeCompare(b.chainName))
+  })
+}
+
+// --- Crosschain Oracle functions ---
+
+export function getBridgeChainNames(chainId: string): Promise<string[]> {
+  return cachedBridgeChainNamesFetch(chainId, async () => {
+    const response = await fetchChainRest<BridgeChainListResponse>(
+      chainId,
+      '/fx/crosschain/v1/bridge_chain_list'
+    )
+    return dedupeStrings(
+      (response.chain_names || [])
+        .filter(Boolean)
+        .filter(name => !/^(arbitrum|optimism)$/i.test(name))
+    ).sort((a, b) => a.localeCompare(b))
+  })
+}
+
+export function getObservedBlockHeight(
+  chainId: string,
+  chainName: string
+): Promise<ObservedBlockHeightResponse> {
+  const cacheKey = `${chainId}:${chainName}`
+  return cachedObservedBlockHeightFetch(cacheKey, () =>
+    fetchChainRest<ObservedBlockHeightResponse>(
+      chainId,
+      '/fx/crosschain/v1/observed/block_height',
+      { chain_name: chainName }
+    )
+  )
+}
+
+function getOracleEventNonce(
+  chainId: string,
+  chainName: string,
+  bridgerAddress: string
+): Promise<OracleEventNonceResponse> {
+  const cacheKey = `${chainId}:${chainName}:${bridgerAddress}`
+  return cachedEventNonceFetch(cacheKey, () =>
+    fetchChainRest<OracleEventNonceResponse>(
+      chainId,
+      '/fx/crosschain/v1/oracle/event_nonce',
+      { chain_name: chainName, bridger_address: bridgerAddress }
+    )
+  )
+}
+
+function getOracleEventBlockHeight(
+  chainId: string,
+  chainName: string,
+  bridgerAddress: string
+): Promise<OracleEventBlockHeightResponse> {
+  const cacheKey = `${chainId}:${chainName}:${bridgerAddress}`
+  return cachedEventBlockHeightFetch(cacheKey, () =>
+    fetchChainRest<OracleEventBlockHeightResponse>(
+      chainId,
+      '/fx/crosschain/v1/oracle/event/block_height',
+      { chain_name: chainName, bridger_address: bridgerAddress }
+    )
+  )
+}
+
+export function getCrosschainOracles(
+  chainId: string,
+  chainName: string
+): Promise<CrosschainOracleInfo[]> {
+  const cacheKey = `${chainId}:${chainName}`
+  return cachedCrosschainOraclesFetch(cacheKey, async () => {
+    const chain = getChainConfig(chainId)
+
+    const oraclesRes = await fetchChainRest<OraclesResponse>(
+      chainId,
+      '/fx/crosschain/v1/oracles',
+      { chain_name: chainName }
+    )
+
+    const oracles = oraclesRes.oracles || []
+
+    const results = await Promise.all(
+      oracles.map(async oracle => {
+        let eventNonce = '0'
+        let blockHeight = '0'
+
+        try {
+          const [nonceRes, heightRes] = await Promise.all([
+            getOracleEventNonce(chainId, chainName, oracle.bridger_address),
+            getOracleEventBlockHeight(chainId, chainName, oracle.bridger_address),
+          ])
+          eventNonce = nonceRes.event_nonce || '0'
+          blockHeight = heightRes.block_height || '0'
+        } catch (error) {
+          console.error(
+            `Failed to fetch event nonce/block height for oracle ${oracle.oracle_address}`,
+            error
+          )
+        }
+
+        const depositAmount = oracle.deposit_amount
+          ? normalizeAmountByExponent(oracle.deposit_amount.amount, chain.decimals)
+          : '0'
+
+        return {
+          chainName,
+          oracle_address: oracle.oracle_address,
+          bridger_address: oracle.bridger_address,
+          external_address: oracle.external_address,
+          deposit_amount: depositAmount,
+          start_height: oracle.start_height || '0',
+          online: oracle.online,
+          delegate_validator: oracle.delegate_validator || '',
+          delegate_amount: oracle.delegate_amount
+            ? normalizeAmountByExponent(oracle.delegate_amount, chain.decimals)
+            : '0',
+          slash_times: oracle.slash_times || '0',
+          event_nonce: eventNonce,
+          block_height: blockHeight,
+        }
+      })
+    )
+
+    return results
   })
 }
 

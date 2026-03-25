@@ -12,7 +12,11 @@ import type {
 import { CHAINS, getChainConfig } from './config'
 export { CHAINS, DEFAULT_CHAIN_ID } from './config'
 export {
+  getBridgeChainNames,
+  getBridgeTokensByChain,
   getCrosschainModuleBalances,
+  getCrosschainOracles,
+  getObservedBlockHeight,
   getErc20ModuleBalances,
   getModuleAccountBalances,
   getTotalSupply,
