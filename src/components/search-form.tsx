@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { DEFAULT_CHAIN_ID } from '@/lib/api'
 import { Search } from 'lucide-react'
 
 export function SearchForm() {
@@ -27,7 +28,7 @@ export function SearchForm() {
     }
 
     setError('')
-    const chain = searchParams.get('chain') || 'aifx'
+    const chain = searchParams.get('chain') || DEFAULT_CHAIN_ID
     router.push(`/address/${query}?chain=${chain}`)
   }
 

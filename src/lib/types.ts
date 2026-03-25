@@ -70,6 +70,146 @@ export interface PaginatedResponse<T> {
   total: number
 }
 
+export interface CoinBalance {
+  denom: string
+  amount: string
+}
+
+export interface DisplayCoinBalance extends CoinBalance {
+  displayDenom?: string
+}
+
+export interface ModuleAccountBalance {
+  name: string
+  address: string
+  permissions: string[]
+  balances: CoinBalance[]
+  primaryAmount: string
+}
+
+export interface CrosschainModuleBalance {
+  chainName: string
+  moduleName: string
+  address: string
+  permissions: string[]
+  balances: DisplayCoinBalance[]
+}
+
+export interface Erc20ModuleBalance {
+  moduleName: string
+  address: string
+  permissions: string[]
+  balances: DisplayCoinBalance[]
+}
+
+export interface ModuleAccountsResponse {
+  accounts?: Array<Record<string, unknown>>
+}
+
+export interface ModuleAccountResponse {
+  account?: Record<string, unknown>
+}
+
+export interface BalanceByDenomResponse {
+  balance?: CoinBalance
+}
+
+export interface AllBalancesResponse {
+  balances?: CoinBalance[]
+}
+
+export interface DenomUnit {
+  denom?: string
+  exponent?: number
+}
+
+export interface Metadata {
+  base?: string
+  display?: string
+  symbol?: string
+  denom_units?: DenomUnit[]
+  denomUnits?: DenomUnit[]
+}
+
+export interface DenomInfo {
+  symbol: string
+  exponent: number
+}
+
+export interface DenomsMetadataResponse {
+  metadatas?: Metadata[]
+}
+
+export interface BridgeChainListResponse {
+  chain_names?: string[]
+}
+
+export interface BridgeToken {
+  chain_name?: string
+  contract?: string
+  denom?: string
+  is_native?: boolean
+}
+
+export interface BridgeTokensByChainResponse {
+  bridge_tokens?: BridgeToken[]
+}
+
+export interface SupplyResponse {
+  supply?: CoinBalance[]
+  pagination?: { next_key?: string | null; total?: string }
+}
+
+export interface SupplyBalance extends DisplayCoinBalance {
+  rawDenom: string
+}
+
+// Crosschain Oracle Types
+
+export interface Oracle {
+  oracle_address: string
+  bridger_address: string
+  external_address: string
+  deposit_amount: CoinBalance
+  start_height: string
+  online: boolean
+  delegate_validator: string
+  delegate_amount: string
+  slash_times: string
+}
+
+export interface OraclesResponse {
+  oracles?: Oracle[]
+}
+
+export interface OracleEventNonceResponse {
+  event_nonce: string
+}
+
+export interface OracleEventBlockHeightResponse {
+  block_height: string
+}
+
+export interface ObservedBlockHeightResponse {
+  external_block_height: string
+  block_height: string
+}
+
+export interface CrosschainOracleInfo {
+  chainName: string
+  oracle_address: string
+  bridger_address: string
+  external_address: string
+  deposit_amount: string
+  start_height: string
+  online: boolean
+  delegate_validator: string
+  delegate_amount: string
+  slash_times: string
+  event_nonce: string
+  block_height: string
+}
+
 // Validator Types
 
 export interface ValidatorSummaryResponse {

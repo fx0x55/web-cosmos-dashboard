@@ -1,0 +1,38 @@
+[
+  {
+    "show_name": "Ethereum",
+    "explorer": "https://etherscan.io",
+    "chain_name": "eth",
+    "bridge_address": "0x6f1D09Fed11115d65E1071CD2109eDb300D80A27"
+  },
+  {
+    "show_name": "BSC",
+    "explorer": "https://bscscan.com",
+    "chain_name": "bsc",
+    "bridge_address": "0x84238c00c8313920826D798e3cF6793Ef4F610ad"
+  },
+  {
+    "show_name": "Polygon",
+    "explorer": "https://polygonscan.com",
+    "chain_name": "polygon",
+    "bridge_address": "0x4052eA614c5a96631C546d8B8d323a7C3D9ABb69"
+  },
+  {
+    "show_name": "Tron",
+    "explorer": "https://tronscan.org",
+    "chain_name": "tron",
+    "bridge_address": "TKLDunqAynYcXRktcYHqncp3R6nJeEXLd5"
+  },
+  {
+    "show_name": "Avalanche",
+    "explorer": "https://snowtrace.io",
+    "chain_name": "avalanche",
+    "bridge_address": "0xDc3706d164d2D88b85ed702079ab331e2476D475"
+  },
+  {
+    "show_name": "Base",
+    "explorer": "https://basescan.com",
+    "chain_name": "layer2",
+    "bridge_address": "0x7a986bA67227acfab86385FF33436a80E2BB4CC5"
+  }
+]

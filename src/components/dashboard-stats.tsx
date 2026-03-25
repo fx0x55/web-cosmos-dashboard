@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { getChainStats } from '@/lib/api'
+import { DEFAULT_CHAIN_ID, getChainStats } from '@/lib/api'
 import type { ChainStats } from '@/lib/types'
 import { useSearchParams } from 'next/navigation'
 import { Coins, Lock, Unlock, PiggyBank } from 'lucide-react'
 
 export function DashboardStats() {
   const searchParams = useSearchParams()
-  const chainId = searchParams.get('chain') || 'aifx'
+  const chainId = searchParams.get('chain') || DEFAULT_CHAIN_ID
 
   const [stats, setStats] = useState<ChainStats | null>(null)
   const [loading, setLoading] = useState(true)

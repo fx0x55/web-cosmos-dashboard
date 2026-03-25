@@ -1,4 +1,4 @@
-import { getAccountDetail, CHAINS } from '@/lib/api'
+import { DEFAULT_CHAIN_ID, getAccountDetail, CHAINS } from '@/lib/api'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatAmount, truncateAddress, formatDateTime } from '@/lib/utils'
@@ -22,7 +22,7 @@ export default async function AddressPage({
   searchParams: Promise<{ chain?: string }>
 }) {
   const { address } = await params
-  const { chain: chainId = 'aifx' } = await searchParams
+  const { chain: chainId = DEFAULT_CHAIN_ID } = await searchParams
   const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
   const data = await getAccountDetail(address)
