@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { DataTable } from '@/components/data-table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -13,6 +14,7 @@ import {
 } from '@/lib/api'
 import type { CrosschainOracleInfo, ObservedBlockHeightResponse } from '@/lib/types'
 import { formatAmount, truncateAddress } from '@/lib/utils'
+import { Copy, Check } from 'lucide-react'
 import bridgeChainsConfig from '@/lib/bridge-chains.json'
 
 const bridgeChainMap = new Map(
@@ -160,25 +162,27 @@ function OracleTable({
         {
           header: 'Oracle Address',
           cell: item => (
-            <span className="font-mono text-xs">
+            <Link
+              href={`/address/${item.oracle_address}?chain=${chainId}`}
+              className="font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:underline hover:text-primary">
               {truncateAddress(item.oracle_address, 10, 8)}
-            </span>
+            </Link>
           ),
         },
         {
           header: 'Bridger Address',
           cell: item => (
-            <span className="font-mono text-xs">
+            <Link
+              href={`/address/${item.bridger_address}?chain=${chainId}`}
+              className="font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:underline hover:text-primary">
               {truncateAddress(item.bridger_address, 10, 8)}
-            </span>
+            </Link>
           ),
         },
         {
           header: 'External Address',
           cell: item => (
-            <span className="font-mono text-xs">
-              {truncateAddress(item.external_address, 10, 8)}
-            </span>
+            <CopyableAddress address={item.external_address} />
           ),
         },
         {
@@ -222,5 +226,29 @@ function OracleTable({
       ]}
     />
     </div>
+  )
+}
+
+function CopyableAddress({ address }: { address: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText(address)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }, [address])
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="inline-flex items-center gap-1 font-mono text-xs transition-all hover:text-primary"
+      title="Click to copy">
+      {truncateAddress(address, 10, 8)}
+      {copied ? (
+        <Check className="h-3 w-3 text-green-400" />
+      ) : (
+        <Copy className="h-3 w-3 opacity-50" />
+      )}
+    </button>
   )
 }
