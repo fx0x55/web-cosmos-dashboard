@@ -99,7 +99,9 @@ export function CrosschainModuleBalanceList() {
             <div className="space-y-2 py-2">
               {item.balances.length > 0 ? (
                 item.balances.map(balance => (
-                  <div key={`${item.address}-${balance.denom}-denom`} className="space-y-1">
+                  <div
+                    key={`${item.address}-${balance.denom}-denom`}
+                    className="space-y-1">
                     <div className="flex flex-wrap items-center gap-2 text-xs">
                       <Badge
                         variant="outline"

@@ -211,7 +211,9 @@ function getBalancesByAddress(
   })
 }
 
-function getModuleAccounts(chainId: string): Promise<ExtractedModuleAccount[]> {
+export function getModuleAccounts(
+  chainId: string
+): Promise<ExtractedModuleAccount[]> {
   return cachedModuleAccountsFetch(chainId, async () => {
     const response = await fetchChainRest<ModuleAccountsResponse>(
       chainId,
@@ -413,7 +415,10 @@ export function getCrosschainModuleBalances(
             const bridgeDenomMap = new Map<string, string>()
             for (const token of bridgeTokensRes.bridge_tokens || []) {
               if (token.chain_name && token.contract && token.denom) {
-                bridgeDenomMap.set(token.chain_name + token.contract, token.denom)
+                bridgeDenomMap.set(
+                  token.chain_name + token.contract,
+                  token.denom
+                )
               }
             }
 
@@ -425,7 +430,11 @@ export function getCrosschainModuleBalances(
                 : balance
               return {
                 ...balance,
-                ...resolveDisplayBalance(resolveBalance, chain, denomMetadataMap),
+                ...resolveDisplayBalance(
+                  resolveBalance,
+                  chain,
+                  denomMetadataMap
+                ),
               }
             })
 
@@ -542,7 +551,11 @@ export function getCrosschainOracles(
         try {
           const [nonceRes, heightRes] = await Promise.all([
             getOracleEventNonce(chainId, chainName, oracle.bridger_address),
-            getOracleEventBlockHeight(chainId, chainName, oracle.bridger_address),
+            getOracleEventBlockHeight(
+              chainId,
+              chainName,
+              oracle.bridger_address
+            ),
           ])
           eventNonce = nonceRes.event_nonce || '0'
           blockHeight = heightRes.block_height || '0'
@@ -554,7 +567,10 @@ export function getCrosschainOracles(
         }
 
         const depositAmount = oracle.deposit_amount
-          ? normalizeAmountByExponent(oracle.deposit_amount.amount, chain.decimals)
+          ? normalizeAmountByExponent(
+              oracle.deposit_amount.amount,
+              chain.decimals
+            )
           : '0'
 
         return {
@@ -622,10 +638,7 @@ export function getTotalSupply(chainId: string): Promise<SupplyBalance[]> {
           )
           for (const token of bridgeTokensRes.bridge_tokens || []) {
             if (token.chain_name && token.contract && token.denom) {
-              bridgeDenomMap.set(
-                token.chain_name + token.contract,
-                token.denom
-              )
+              bridgeDenomMap.set(token.chain_name + token.contract, token.denom)
             }
           }
         } catch {
@@ -648,7 +661,11 @@ export function getTotalSupply(chainId: string): Promise<SupplyBalance[]> {
         const resolveTarget = bridgeDenom
           ? { ...coin, denom: bridgeDenom }
           : coin
-        const resolved = resolveDisplayBalance(resolveTarget, chain, denomMetadataMap)
+        const resolved = resolveDisplayBalance(
+          resolveTarget,
+          chain,
+          denomMetadataMap
+        )
 
         return {
           ...coin,

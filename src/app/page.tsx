@@ -94,7 +94,9 @@ export default function Home() {
               <BalanceList />
             </TabsContent>
 
-            <TabsContent value="module-accounts" className="space-y-4 outline-none">
+            <TabsContent
+              value="module-accounts"
+              className="space-y-4 outline-none">
               <div className="px-1">
                 <p className="text-sm text-muted-foreground">
                   Module accounts fetched from the chain LCD and their current
@@ -116,7 +118,9 @@ export default function Home() {
               <CrosschainModuleBalanceList />
             </TabsContent>
 
-            <TabsContent value="erc20-modules" className="space-y-4 outline-none">
+            <TabsContent
+              value="erc20-modules"
+              className="space-y-4 outline-none">
               <div className="px-1">
                 <p className="text-sm text-muted-foreground">
                   ERC20 module accounts fetched from module accounts, with all
@@ -126,7 +130,9 @@ export default function Home() {
               <Erc20ModuleBalanceList />
             </TabsContent>
 
-            <TabsContent value="total-supply" className="space-y-4 outline-none">
+            <TabsContent
+              value="total-supply"
+              className="space-y-4 outline-none">
               <div className="px-1">
                 <p className="text-sm text-muted-foreground">
                   Total supply of all denominations on the network.
@@ -165,14 +171,17 @@ export default function Home() {
           <UnbondingList />
         </TabsContent>
 
-        <TabsContent value="crosschain-oracles" className="space-y-4 outline-none">
+        <TabsContent
+          value="crosschain-oracles"
+          className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
               <h2 className="text-gradient text-2xl font-bold tracking-tight">
                 Crosschain Oracles
               </h2>
               <p className="text-muted-foreground">
-                Oracle status and event information for supported crosschain bridges.
+                Oracle status and event information for supported crosschain
+                bridges.
               </p>
             </div>
           </div>

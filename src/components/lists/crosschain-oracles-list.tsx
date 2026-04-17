@@ -12,14 +12,15 @@ import {
   getCrosschainOracles,
   getObservedBlockHeight,
 } from '@/lib/api'
-import type { CrosschainOracleInfo, ObservedBlockHeightResponse } from '@/lib/types'
+import type {
+  CrosschainOracleInfo,
+  ObservedBlockHeightResponse,
+} from '@/lib/types'
 import { formatAmount, truncateAddress } from '@/lib/utils'
 import { Copy, Check } from 'lucide-react'
 import bridgeChainsConfig from '@/lib/bridge-chains.json'
 
-const bridgeChainMap = new Map(
-  bridgeChainsConfig.map(c => [c.chain_name, c])
-)
+const bridgeChainMap = new Map(bridgeChainsConfig.map(c => [c.chain_name, c]))
 
 export function CrosschainOraclesList() {
   const searchParams = useSearchParams()
@@ -72,7 +73,7 @@ export function CrosschainOraclesList() {
       className="space-y-6">
       <div className="flex justify-start px-1">
         <TabsList
-          className={`grid h-11 w-full max-w-3xl rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5`}
+          className="grid h-11 w-full max-w-3xl rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5"
           style={{
             gridTemplateColumns: `repeat(${chainNames.length}, minmax(0, 1fr))`,
           }}>
@@ -108,7 +109,9 @@ function OracleTable({
   chainName: string
 }) {
   const [data, setData] = useState<CrosschainOracleInfo[]>([])
-  const [observed, setObserved] = useState<ObservedBlockHeightResponse | null>(null)
+  const [observed, setObserved] = useState<ObservedBlockHeightResponse | null>(
+    null
+  )
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const pageSize = 20
@@ -142,89 +145,97 @@ function OracleTable({
       {observed && (
         <div className="flex gap-6 px-1">
           <div className="glass-panel flex items-center gap-3 rounded-xl px-5 py-3">
-            <span className="text-sm text-muted-foreground">External Block Height</span>
-            <span className="font-mono text-sm font-semibold">{observed.external_block_height}</span>
+            <span className="text-sm text-muted-foreground">
+              External Block Height
+            </span>
+            <span className="font-mono text-sm font-semibold">
+              {observed.external_block_height}
+            </span>
           </div>
           <div className="glass-panel flex items-center gap-3 rounded-xl px-5 py-3">
-            <span className="text-sm text-muted-foreground">Observed Block Height</span>
-            <span className="font-mono text-sm font-semibold">{observed.block_height}</span>
+            <span className="text-sm text-muted-foreground">
+              Observed Block Height
+            </span>
+            <span className="font-mono text-sm font-semibold">
+              {observed.block_height}
+            </span>
           </div>
         </div>
       )}
-    <DataTable
-      data={pageData}
-      loading={loading}
-      page={page}
-      pageSize={pageSize}
-      total={data.length}
-      onPageChange={setPage}
-      columns={[
-        {
-          header: 'Oracle Address',
-          cell: item => (
-            <Link
-              href={`/address/${item.oracle_address}?chain=${chainId}`}
-              className="font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:underline hover:text-primary">
-              {truncateAddress(item.oracle_address, 10, 8)}
-            </Link>
-          ),
-        },
-        {
-          header: 'Bridger Address',
-          cell: item => (
-            <Link
-              href={`/address/${item.bridger_address}?chain=${chainId}`}
-              className="font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:underline hover:text-primary">
-              {truncateAddress(item.bridger_address, 10, 8)}
-            </Link>
-          ),
-        },
-        {
-          header: 'External Address',
-          cell: item => (
-            <CopyableAddress address={item.external_address} />
-          ),
-        },
-        {
-          header: 'Status',
-          cell: item => (
-            <Badge
-              variant={item.online ? 'default' : 'destructive'}
-              className={
-                item.online
-                  ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
-                  : ''
-              }>
-              {item.online ? 'Online' : 'Offline'}
-            </Badge>
-          ),
-        },
-        {
-          header: 'Delegate Amount',
-          cell: item => (
-            <span className="font-medium">{formatAmount(item.delegate_amount)}</span>
-          ),
-        },
-        {
-          header: 'Event Nonce',
-          cell: item => (
-            <span className="font-mono text-sm">{item.event_nonce}</span>
-          ),
-        },
-        {
-          header: 'Block Height',
-          cell: item => (
-            <span className="font-mono text-sm">{item.block_height}</span>
-          ),
-        },
-        {
-          header: 'Slash Times',
-          cell: item => (
-            <span className="font-mono text-sm">{item.slash_times}</span>
-          ),
-        },
-      ]}
-    />
+      <DataTable
+        data={pageData}
+        loading={loading}
+        page={page}
+        pageSize={pageSize}
+        total={data.length}
+        onPageChange={setPage}
+        columns={[
+          {
+            header: 'Oracle Address',
+            cell: item => (
+              <Link
+                href={`/address/${item.oracle_address}?chain=${chainId}`}
+                className="font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:text-primary hover:underline">
+                {truncateAddress(item.oracle_address, 10, 8)}
+              </Link>
+            ),
+          },
+          {
+            header: 'Bridger Address',
+            cell: item => (
+              <Link
+                href={`/address/${item.bridger_address}?chain=${chainId}`}
+                className="font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:text-primary hover:underline">
+                {truncateAddress(item.bridger_address, 10, 8)}
+              </Link>
+            ),
+          },
+          {
+            header: 'External Address',
+            cell: item => <CopyableAddress address={item.external_address} />,
+          },
+          {
+            header: 'Status',
+            cell: item => (
+              <Badge
+                variant={item.online ? 'default' : 'destructive'}
+                className={
+                  item.online
+                    ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                    : ''
+                }>
+                {item.online ? 'Online' : 'Offline'}
+              </Badge>
+            ),
+          },
+          {
+            header: 'Delegate Amount',
+            cell: item => (
+              <span className="font-medium">
+                {formatAmount(item.delegate_amount)}
+              </span>
+            ),
+          },
+          {
+            header: 'Event Nonce',
+            cell: item => (
+              <span className="font-mono text-sm">{item.event_nonce}</span>
+            ),
+          },
+          {
+            header: 'Block Height',
+            cell: item => (
+              <span className="font-mono text-sm">{item.block_height}</span>
+            ),
+          },
+          {
+            header: 'Slash Times',
+            cell: item => (
+              <span className="font-mono text-sm">{item.slash_times}</span>
+            ),
+          },
+        ]}
+      />
     </div>
   )
 }

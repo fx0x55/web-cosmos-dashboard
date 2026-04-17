@@ -14,11 +14,12 @@ import type { BridgeToken } from '@/lib/types'
 import { ExternalLink } from 'lucide-react'
 import bridgeChainsConfig from '@/lib/bridge-chains.json'
 
-const bridgeChainMap = new Map(
-  bridgeChainsConfig.map(c => [c.chain_name, c])
-)
+const bridgeChainMap = new Map(bridgeChainsConfig.map(c => [c.chain_name, c]))
 
-function getContractExplorerUrl(chainName: string, contract: string): string | null {
+function getContractExplorerUrl(
+  chainName: string,
+  contract: string
+): string | null {
   const config = bridgeChainMap.get(chainName)
   if (!config?.explorer || !contract) return null
   return `${config.explorer}/token/${contract}`
@@ -164,9 +165,7 @@ function BridgeTokenTable({
       columns={[
         {
           header: 'Denom',
-          cell: item => (
-            <span className="font-mono text-xs">{item.denom}</span>
-          ),
+          cell: item => <span className="font-mono text-xs">{item.denom}</span>,
         },
         {
           header: 'Contract',
@@ -177,7 +176,7 @@ function BridgeTokenTable({
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:underline hover:text-primary">
+                className="inline-flex items-center gap-1 font-mono text-xs decoration-zinc-400 underline-offset-4 transition-all hover:text-primary hover:underline">
                 {item.contract}
                 <ExternalLink className="h-3 w-3" />
               </a>

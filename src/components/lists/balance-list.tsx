@@ -1,7 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CHAINS, DEFAULT_CHAIN_ID, getAccounts } from '@/lib/api'
+import {
+  CHAINS,
+  DEFAULT_CHAIN_ID,
+  getAccounts,
+  getModuleAccounts,
+} from '@/lib/api'
 import type { Account } from '@/lib/types'
 import { DataTable } from '@/components/data-table'
 import { formatAmount } from '@/lib/utils'
@@ -18,7 +23,22 @@ export function BalanceList() {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
+  const [moduleAccountMap, setModuleAccountMap] = useState<Map<string, string>>(
+    new Map()
+  )
   const pageSize = 50
+
+  useEffect(() => {
+    getModuleAccounts(chainId)
+      .then(accounts => {
+        const map = new Map<string, string>()
+        for (const account of accounts) {
+          map.set(account.address, account.name)
+        }
+        setModuleAccountMap(map)
+      })
+      .catch(() => {})
+  }, [chainId])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,13 +67,25 @@ export function BalanceList() {
       columns={[
         {
           header: 'Address',
-          cell: item => (
-            <Link
-              href={`/address/${item.address}?chain=${chainId}`}
-              className="font-medium decoration-zinc-400 underline-offset-4 transition-all hover:underline">
-              {item.address}
-            </Link>
-          ),
+          cell: item => {
+            const moduleName = moduleAccountMap.get(item.address)
+            return (
+              <div className="flex items-center gap-2">
+                <Link
+                  href={`/address/${item.address}?chain=${chainId}`}
+                  className="font-medium decoration-zinc-400 underline-offset-4 transition-all hover:underline">
+                  {item.address}
+                </Link>
+                {moduleName && (
+                  <Badge
+                    variant="outline"
+                    className="shrink-0 border-amber-500/30 bg-amber-500/10 font-mono text-amber-600">
+                    {moduleName}
+                  </Badge>
+                )}
+              </div>
+            )
+          },
         },
         {
           header: 'Balance',

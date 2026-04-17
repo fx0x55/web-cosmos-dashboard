@@ -19,6 +19,7 @@ export {
   getObservedBlockHeight,
   getErc20ModuleBalances,
   getModuleAccountBalances,
+  getModuleAccounts,
   getTotalSupply,
 } from './chain-rest'
 
