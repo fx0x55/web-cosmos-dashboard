@@ -83,19 +83,50 @@ export const getChains = async (): Promise<Chain[]> => {
 export const getChainStats = async (chainId: string): Promise<ChainStats> => {
   const chain = getChainConfig(chainId)
 
+  const emptyMigration = {
+    migratedSupply: '0',
+    ethModuleBalance: '0',
+    userBalance: '0',
+    userDelegation: '0',
+    userUnbonding: '0',
+    denom: chain.denom,
+  }
+
   if (chain.rest_url && chain.adenom) {
     try {
-      const [supplyRes, poolRes, communityPoolRes] = await Promise.all([
-        fetch(
-          `${chain.rest_url}/cosmos/bank/v1beta1/supply/by_denom?denom=${chain.adenom}`
-        ).then(res => res.json()),
-        fetch(`${chain.rest_url}/cosmos/staking/v1beta1/pool`).then(res =>
-          res.json()
-        ),
-        fetch(
-          `${chain.rest_url}/cosmos/distribution/v1beta1/community_pool`
-        ).then(res => res.json()),
-      ])
+      const [supplyRes, poolRes, communityPoolRes, ethModuleRes] =
+        await Promise.all([
+          fetch(
+            `${chain.rest_url}/cosmos/bank/v1beta1/supply/by_denom?denom=${chain.adenom}`
+          ).then(res => res.json()),
+          fetch(`${chain.rest_url}/cosmos/staking/v1beta1/pool`).then(res =>
+            res.json()
+          ),
+          fetch(
+            `${chain.rest_url}/cosmos/distribution/v1beta1/community_pool`
+          ).then(res => res.json()),
+          fetch(
+            `${chain.rest_url}/cosmos/auth/v1beta1/module_accounts/${encodeURIComponent('eth')}`
+          )
+            .then(res => res.json())
+            .then(async (modRes: { account?: Record<string, unknown> }) => {
+              const baseAccount = (modRes.account?.base_account ??
+                modRes.account?.baseAccount) as
+                | Record<string, unknown>
+                | undefined
+              const address = (modRes.account?.address ??
+                baseAccount?.address) as string | undefined
+              if (!address) return { amount: '0' }
+              const balRes = await fetch(
+                `${chain.rest_url}/cosmos/bank/v1beta1/balances/${address}`
+              ).then(res => res.json())
+              const coin = (balRes.balances || []).find(
+                (c: { denom: string }) => c.denom === chain.adenom
+              )
+              return { amount: coin?.amount || '0' }
+            })
+            .catch(() => ({ amount: '0' })),
+        ])
 
       const communityPoolCoin = communityPoolRes.pool?.find(
         (c: { denom: string }) => c.denom === chain.adenom
@@ -103,10 +134,7 @@ export const getChainStats = async (chainId: string): Promise<ChainStats> => {
 
       const formatValue = (value: string | undefined) => {
         if (!value) return '0'
-        // Handle potentially very large numbers by using BigInt
-        // Then divide by 10^decimals to get the main unit value
         try {
-          // Remove any decimal part first for BigInt (API might return decimals for some fields)
           const integerPart = value.split('.')[0]
           const bigValue = BigInt(integerPart)
           const str = bigValue.toString().padStart(chain.decimals + 1, '0')
@@ -118,42 +146,70 @@ export const getChainStats = async (chainId: string): Promise<ChainStats> => {
         }
       }
 
+      const totalSupplyAmount = BigInt(
+        formatValue(supplyRes.amount?.amount) || '0'
+      )
+      const ethModuleAmount = BigInt(formatValue(ethModuleRes.amount) || '0')
+      const bondedAmount = BigInt(
+        formatValue(poolRes.pool?.bonded_tokens) || '0'
+      )
+      const notBondedAmount = BigInt(
+        formatValue(poolRes.pool?.not_bonded_tokens) || '0'
+      )
+      const communityPoolAmount = BigInt(
+        formatValue(communityPoolCoin?.amount) || '0'
+      )
+
+      const migratedSupply = totalSupplyAmount - ethModuleAmount
+      const userDelegation = bondedAmount
+      const userUnbonding = notBondedAmount
+      const userBalance =
+        migratedSupply - userDelegation - userUnbonding - communityPoolAmount
+
       return {
         totalSupply: {
-          amount: formatValue(supplyRes.amount?.amount),
+          amount: totalSupplyAmount.toString(),
           denom: chain.denom,
         },
         bondedTokens: {
-          amount: formatValue(poolRes.pool?.bonded_tokens),
+          amount: bondedAmount.toString(),
           denom: chain.denom,
         },
         notBondedTokens: {
-          amount: formatValue(poolRes.pool?.not_bonded_tokens),
+          amount: notBondedAmount.toString(),
           denom: chain.denom,
         },
         communityPool: {
-          amount: formatValue(communityPoolCoin?.amount),
+          amount: communityPoolAmount.toString(),
+          denom: chain.denom,
+        },
+        migration: {
+          migratedSupply: migratedSupply.toString(),
+          ethModuleBalance: ethModuleAmount.toString(),
+          userBalance: userBalance < 0n ? '0' : userBalance.toString(),
+          userDelegation: userDelegation.toString(),
+          userUnbonding: userUnbonding.toString(),
           denom: chain.denom,
         },
       }
     } catch (error) {
       console.error('Failed to fetch chain stats from REST API:', error)
-      // Return 0 values on failure as requested
       return {
         totalSupply: { amount: '0', denom: chain.denom },
         bondedTokens: { amount: '0', denom: chain.denom },
         notBondedTokens: { amount: '0', denom: chain.denom },
         communityPool: { amount: '0', denom: chain.denom },
+        migration: emptyMigration,
       }
     }
   }
 
-  // Fallback for chains without REST API config or if logic falls through (though above returns in catch)
   return {
     totalSupply: { amount: '0', denom: chain.denom },
     bondedTokens: { amount: '0', denom: chain.denom },
     notBondedTokens: { amount: '0', denom: chain.denom },
     communityPool: { amount: '0', denom: chain.denom },
+    migration: emptyMigration,
   }
 }
 

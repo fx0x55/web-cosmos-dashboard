@@ -15,6 +15,14 @@ export interface ChainStats {
     amount: string
     denom: string
   }
+  migration: {
+    migratedSupply: string
+    ethModuleBalance: string
+    userBalance: string
+    userDelegation: string
+    userUnbonding: string
+    denom: string
+  }
 }
 
 export interface Chain {
