@@ -13,6 +13,8 @@ import {
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { CopyButton } from '@/components/copy-button'
+import { AddressToggle } from '@/components/address-toggle'
+import { getAccountTypeLabels } from '@/lib/address-labels'
 
 export default async function AddressPage({
   params,
@@ -26,6 +28,7 @@ export default async function AddressPage({
   const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
   const data = await getAccountDetail(address)
+  const typeLabels = getAccountTypeLabels(data.account)
 
   return (
     <div className="space-y-10 duration-700 animate-in fade-in slide-in-from-bottom-8">
@@ -45,17 +48,17 @@ export default async function AddressPage({
               className="border-primary/20 bg-primary/10 px-3 py-1 font-mono text-sm uppercase tracking-wider text-primary backdrop-blur-sm">
               {chainId}
             </Badge>
+            {typeLabels.map((label, i) => (
+              <Badge key={i} variant="outline" className={label.className}>
+                {label.label}
+              </Badge>
+            ))}
           </div>
-          <div className="flex w-fit items-center gap-3 rounded-md border border-white/10 bg-muted/50 p-2 pl-4">
-            <a
-              href={`${chainConfig.explorer_base_url}address/${address}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="break-all font-mono text-base text-muted-foreground transition-colors hover:text-primary hover:underline">
-              {address}
-            </a>
-            <CopyButton value={address} />
-          </div>
+          <AddressToggle
+            address={address}
+            ethAddress={data.account.eth_address}
+            explorerBaseUrl={`${chainConfig.explorer_base_url}address/`}
+          />
           <div className="flex flex-wrap items-center gap-3 text-sm">
             <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md transition-colors hover:bg-white/10">
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">

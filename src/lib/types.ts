@@ -47,6 +47,9 @@ export interface Account {
   staking_count: number
   reward_amount: number
   unbonding_amount: number
+  address_type?: number
+  pub_key_type?: number
+  eth_address?: string
 }
 
 export interface Staking {

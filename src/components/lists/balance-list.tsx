@@ -13,7 +13,7 @@ import { formatAmount } from '@/lib/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-import { getAddressLabel } from '@/lib/address-labels'
+import { getAddressLabel, getAccountTypeLabels } from '@/lib/address-labels'
 
 export function BalanceList() {
   const searchParams = useSearchParams()
@@ -71,12 +71,15 @@ export function BalanceList() {
           cell: item => {
             const moduleName = moduleAccountMap.get(item.address)
             const customLabel = getAddressLabel(item.address)
+            const typeLabels = getAccountTypeLabels(item)
+            const hasEth = !!item.eth_address
+            const displayAddress = hasEth ? item.eth_address! : item.address
             return (
               <div className="flex items-center gap-2">
                 <Link
                   href={`/address/${item.address}?chain=${chainId}`}
                   className="font-medium decoration-zinc-400 underline-offset-4 transition-all hover:underline">
-                  {item.address}
+                  {displayAddress}
                 </Link>
                 {moduleName && (
                   <Badge
@@ -90,6 +93,11 @@ export function BalanceList() {
                     {customLabel.label}
                   </Badge>
                 )}
+                {typeLabels.map((label, i) => (
+                  <Badge key={i} variant="outline" className={label.className}>
+                    {label.label}
+                  </Badge>
+                ))}
               </div>
             )
           },
