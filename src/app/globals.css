@@ -142,5 +142,132 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(
+        ellipse 100% 60% at 50% -10%,
+        hsl(265 59% 48% / 0.07),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 80% 50% at 85% 5%,
+        hsl(280 60% 55% / 0.05),
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 10% 0%,
+        hsl(250 50% 50% / 0.04),
+        transparent 50%
+      );
+    background-attachment: fixed;
+  }
+}
+
+/* ── Hero glow behind the stats section ── */
+.hero-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Main purple wash */
+.hero-glow::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 360px;
+  background:
+    radial-gradient(
+      ellipse 70% 60% at 50% 30%,
+      hsl(265 59% 48% / 0.1),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 40% 50% at 25% 50%,
+      hsl(280 60% 55% / 0.06),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 40% 50% at 80% 20%,
+      hsl(250 50% 50% / 0.05),
+      transparent 60%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle grid lines for texture */
+.hero-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 280px;
+  background-image:
+    linear-gradient(hsl(265 59% 48% / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(265 59% 48% / 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5) 0%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-glow > * {
+  position: relative;
+  z-index: 1;
+}
+
+@variant dark {
+  body {
+    background-image:
+      radial-gradient(
+        ellipse 100% 60% at 50% -10%,
+        hsl(265 80% 65% / 0.1),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 80% 50% at 85% 5%,
+        hsl(280 60% 55% / 0.06),
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 10% 0%,
+        hsl(250 50% 50% / 0.05),
+        transparent 50%
+      );
+  }
+  .hero-glow::before {
+    background:
+      radial-gradient(
+        ellipse 70% 60% at 50% 30%,
+        hsl(265 80% 65% / 0.14),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 40% 50% at 25% 50%,
+        hsl(280 60% 55% / 0.08),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 40% 50% at 80% 20%,
+        hsl(250 50% 50% / 0.07),
+        transparent 60%
+      );
+  }
+  .hero-glow::after {
+    background-image:
+      linear-gradient(hsl(265 80% 65% / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(265 80% 65% / 0.04) 1px, transparent 1px);
   }
 }

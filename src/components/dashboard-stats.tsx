@@ -15,6 +15,7 @@ import {
   RefreshCw,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 function calcPercent(value: string, total: string): number {
   const v = Number(value)
@@ -64,9 +65,10 @@ export function DashboardStats() {
       value: m?.userBalance,
       denom: stats?.totalSupply.denom,
       icon: Wallet,
-      color: 'text-cyan-500',
+      color: 'text-cyan-600 dark:text-cyan-400',
       bgColor: 'bg-cyan-500/10',
       barColor: 'bg-cyan-500',
+      borderColor: 'border-t-cyan-500',
       percent: m ? calcPercent(m.userBalance, migrated) : 0,
     },
     {
@@ -74,9 +76,10 @@ export function DashboardStats() {
       value: stats?.bondedTokens.amount,
       denom: stats?.bondedTokens.denom,
       icon: Lock,
-      color: 'text-emerald-500',
+      color: 'text-emerald-600 dark:text-emerald-400',
       bgColor: 'bg-emerald-500/10',
       barColor: 'bg-emerald-500',
+      borderColor: 'border-t-emerald-500',
       percent: m ? calcPercent(m.userDelegation, migrated) : 0,
     },
     {
@@ -84,9 +87,10 @@ export function DashboardStats() {
       value: stats?.notBondedTokens.amount,
       denom: stats?.notBondedTokens.denom,
       icon: Unlock,
-      color: 'text-amber-500',
+      color: 'text-amber-600 dark:text-amber-400',
       bgColor: 'bg-amber-500/10',
       barColor: 'bg-amber-500',
+      borderColor: 'border-t-amber-500',
       percent: m ? calcPercent(m.userUnbonding, migrated) : 0,
     },
     {
@@ -94,9 +98,10 @@ export function DashboardStats() {
       value: stats?.communityPool.amount,
       denom: stats?.communityPool.denom,
       icon: PiggyBank,
-      color: 'text-purple-500',
+      color: 'text-purple-600 dark:text-purple-400',
       bgColor: 'bg-purple-500/10',
       barColor: 'bg-purple-500',
+      borderColor: 'border-t-purple-500',
       percent: m
         ? calcPercent(stats?.communityPool.amount || '0', migrated)
         : 0,
@@ -212,12 +217,16 @@ export function DashboardStats() {
       {/* Secondary Metrics - 2x2 grid */}
       <div className="grid grid-cols-2 gap-4">
         {percentItems.map((item, i) => (
-          <Card key={i} className="surface-card group">
+          <Card
+            key={i}
+            className={cn('surface-card group border-t-2', item.borderColor)}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-1 pt-4">
               <CardTitle className="truncate text-[11px] font-medium text-muted-foreground">
                 {item.title}
               </CardTitle>
-              <item.icon className="h-4 w-4 shrink-0 text-muted-foreground/60" />
+              <div className={cn('rounded-md p-1', item.bgColor)}>
+                <item.icon className={cn('h-3.5 w-3.5 shrink-0', item.color)} />
+              </div>
             </CardHeader>
             <CardContent className="px-4 pb-4 pt-0">
               <div className="flex flex-col gap-2">

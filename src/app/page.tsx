@@ -53,7 +53,22 @@ export default function Home() {
 
   return (
     <div className="space-y-10">
-      <DashboardStats />
+      {/* Hero section with glow */}
+      <section className="hero-glow -mx-6 -mt-8 px-6 pb-6 pt-10 md:-mx-8 md:px-8">
+        <div className="mx-auto max-w-6xl">
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            Chain Overview
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Real-time migration and staking metrics
+          </p>
+          <div className="mt-6">
+            <DashboardStats />
+          </div>
+        </div>
+      </section>
+
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
 
       <Tabs value={tab} onValueChange={setTab} className="w-full space-y-8">
         <TabsList className="flex h-auto w-full justify-start gap-0 rounded-none border-b border-border bg-transparent p-0">
