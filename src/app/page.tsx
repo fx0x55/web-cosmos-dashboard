@@ -1,5 +1,7 @@
 'use client'
 
+import { useCallback } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BalanceList } from '@/components/lists/balance-list'
 import { ModuleAccountBalanceList } from '@/components/lists/module-account-balance-list'
@@ -13,11 +15,35 @@ import { CrosschainBridgeTokensList } from '@/components/lists/crosschain-bridge
 import { DashboardStats } from '@/components/dashboard-stats'
 
 export default function Home() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const tab = searchParams.get('tab') || 'balances'
+  const subtab = searchParams.get('subtab') || 'accounts'
+
+  const setTab = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set('tab', value)
+      params.delete('subtab')
+      router.push(`?${params.toString()}`, { scroll: false })
+    },
+    [router, searchParams]
+  )
+
+  const setSubtab = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set('subtab', value)
+      router.push(`?${params.toString()}`, { scroll: false })
+    },
+    [router, searchParams]
+  )
   return (
-    <div className="space-y-10 duration-700 animate-in fade-in slide-in-from-bottom-4">
+    <div className="space-y-10">
       <DashboardStats />
 
-      <Tabs defaultValue="balances" className="w-full space-y-8">
+      <Tabs value={tab} onValueChange={setTab} className="w-full space-y-8">
         <div className="flex justify-center">
           <TabsList className="grid h-12 w-full max-w-xl grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
             <TabsTrigger
@@ -59,7 +85,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <Tabs defaultValue="accounts" className="space-y-6">
+          <Tabs value={subtab} onValueChange={setSubtab} className="space-y-6">
             <div className="flex justify-start px-1">
               <TabsList className="grid h-11 w-full max-w-3xl grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
                 <TabsTrigger

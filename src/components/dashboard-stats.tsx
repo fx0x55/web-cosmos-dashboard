@@ -5,7 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DEFAULT_CHAIN_ID, getChainStats } from '@/lib/api'
 import type { ChainStats } from '@/lib/types'
 import { useSearchParams } from 'next/navigation'
-import { Lock, Unlock, PiggyBank, ArrowRightLeft, Wallet } from 'lucide-react'
+import {
+  Lock,
+  Unlock,
+  PiggyBank,
+  ArrowRightLeft,
+  Wallet,
+  AlertCircle,
+  RefreshCw,
+} from 'lucide-react'
 
 function calcPercent(value: string, total: string): number {
   const v = Number(value)
@@ -24,19 +32,23 @@ export function DashboardStats() {
 
   const [stats, setStats] = useState<ChainStats | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchStats = async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const data = await getChainStats(chainId)
+      setStats(data)
+    } catch (err) {
+      console.error(err)
+      setError('Failed to load chain stats.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchStats = async () => {
-      setLoading(true)
-      try {
-        const data = await getChainStats(chainId)
-        setStats(data)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
-    }
     fetchStats()
   }, [chainId])
 
@@ -102,6 +114,23 @@ export function DashboardStats() {
             </CardContent>
           </Card>
         ))}
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-card py-12">
+        <div className="flex items-center gap-2 text-destructive">
+          <AlertCircle className="h-5 w-5" />
+          <span className="text-sm font-medium">{error}</span>
+        </div>
+        <button
+          onClick={fetchStats}
+          className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted">
+          <RefreshCw className="h-3.5 w-3.5" />
+          Retry
+        </button>
       </div>
     )
   }

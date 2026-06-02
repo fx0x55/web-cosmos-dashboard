@@ -20,30 +20,36 @@ export function ValidatorDelegationList({
 
   const [data, setData] = useState<ValidatorDelegation[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
+  const [retryCount, setRetryCount] = useState(0)
   const pageSize = 10
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
+      setError(null)
       try {
         const res = await getValidatorDelegations(valAddress, page, pageSize)
         setData(res.list)
         setTotal(res.total)
-      } catch (error) {
-        console.error(error)
+      } catch (err) {
+        console.error(err)
+        setError('Failed to load delegations. Please try again.')
       } finally {
         setLoading(false)
       }
     }
     fetchData()
-  }, [page, valAddress])
+  }, [page, valAddress, retryCount])
 
   return (
     <DataTable
       data={data}
       loading={loading}
+      error={error}
+      onRetry={() => setRetryCount(c => c + 1)}
       page={page}
       pageSize={pageSize}
       total={total}

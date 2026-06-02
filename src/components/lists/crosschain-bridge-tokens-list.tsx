@@ -131,25 +131,31 @@ function BridgeTokenTable({
 }) {
   const [data, setData] = useState<BridgeToken[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
+  const [retryCount, setRetryCount] = useState(0)
   const pageSize = 20
 
   useEffect(() => {
     const fetchTokens = async () => {
       setLoading(true)
       setPage(1)
+      setError(null)
       try {
         const res = await getBridgeTokensByChain(chainId, chainName)
         setData(res.bridge_tokens || [])
-      } catch (error) {
-        console.error(`Failed to fetch bridge tokens for ${chainName}`, error)
+      } catch (err) {
+        console.error(`Failed to fetch bridge tokens for ${chainName}`, err)
         setData([])
+        setError(
+          `Failed to load bridge tokens for ${chainName}. Please try again.`
+        )
       } finally {
         setLoading(false)
       }
     }
     fetchTokens()
-  }, [chainId, chainName])
+  }, [chainId, chainName, retryCount])
 
   const start = (page - 1) * pageSize
   const pageData = data.slice(start, start + pageSize)
@@ -158,6 +164,8 @@ function BridgeTokenTable({
     <DataTable
       data={pageData}
       loading={loading}
+      error={error}
+      onRetry={() => setRetryCount(c => c + 1)}
       page={page}
       pageSize={pageSize}
       total={data.length}

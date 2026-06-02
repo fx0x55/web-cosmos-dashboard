@@ -38,7 +38,7 @@ export default async function ValidatorPage({
   }
 
   return (
-    <div className="space-y-10 duration-700 animate-in fade-in slide-in-from-bottom-8">
+    <div className="space-y-10">
       {/* Header Section */}
       <div className="flex items-start gap-6 pt-4">
         <Link

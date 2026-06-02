@@ -20,27 +20,31 @@ export function ModuleAccountBalanceList() {
 
   const [allData, setAllData] = useState<ModuleAccountBalance[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
+  const [retryCount, setRetryCount] = useState(0)
   const pageSize = 20
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       setPage(1)
+      setError(null)
 
       try {
         const balances = await getModuleAccountBalances(chainId)
         setAllData(balances)
-      } catch (error) {
-        console.error(error)
+      } catch (err) {
+        console.error(err)
         setAllData([])
+        setError('Failed to load module accounts. Please try again.')
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [chainId])
+  }, [chainId, retryCount])
 
   const sortedRows = useMemo<ModuleAccountRow[]>(() => {
     return allData
@@ -58,6 +62,8 @@ export function ModuleAccountBalanceList() {
     <DataTable
       data={data}
       loading={loading}
+      error={error}
+      onRetry={() => setRetryCount(c => c + 1)}
       page={page}
       pageSize={pageSize}
       total={sortedRows.length}

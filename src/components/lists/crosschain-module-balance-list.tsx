@@ -15,27 +15,31 @@ export function CrosschainModuleBalanceList() {
 
   const [allData, setAllData] = useState<CrosschainModuleBalance[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
+  const [retryCount, setRetryCount] = useState(0)
   const pageSize = 20
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       setPage(1)
+      setError(null)
 
       try {
         const balances = await getCrosschainModuleBalances(chainId)
         setAllData(balances)
-      } catch (error) {
-        console.error(error)
+      } catch (err) {
+        console.error(err)
         setAllData([])
+        setError('Failed to load cross-chain modules. Please try again.')
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [chainId])
+  }, [chainId, retryCount])
 
   const rows = useMemo(
     () =>
@@ -52,6 +56,8 @@ export function CrosschainModuleBalanceList() {
     <DataTable
       data={data}
       loading={loading}
+      error={error}
+      onRetry={() => setRetryCount(c => c + 1)}
       page={page}
       pageSize={pageSize}
       total={rows.length}

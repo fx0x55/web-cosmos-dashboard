@@ -113,13 +113,16 @@ function OracleTable({
     null
   )
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
+  const [retryCount, setRetryCount] = useState(0)
   const pageSize = 20
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       setPage(1)
+      setError(null)
       try {
         const [oracles, observedRes] = await Promise.all([
           getCrosschainOracles(chainId, chainName),
@@ -127,15 +130,16 @@ function OracleTable({
         ])
         setData(oracles)
         setObserved(observedRes)
-      } catch (error) {
-        console.error(`Failed to fetch oracles for ${chainName}`, error)
+      } catch (err) {
+        console.error(`Failed to fetch oracles for ${chainName}`, err)
         setData([])
+        setError(`Failed to load oracles for ${chainName}. Please try again.`)
       } finally {
         setLoading(false)
       }
     }
     fetchData()
-  }, [chainId, chainName])
+  }, [chainId, chainName, retryCount])
 
   const start = (page - 1) * pageSize
   const pageData = data.slice(start, start + pageSize)
@@ -165,6 +169,8 @@ function OracleTable({
       <DataTable
         data={pageData}
         loading={loading}
+        error={error}
+        onRetry={() => setRetryCount(c => c + 1)}
         page={page}
         pageSize={pageSize}
         total={data.length}

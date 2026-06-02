@@ -31,7 +31,7 @@ export default async function AddressPage({
   const typeLabels = getAccountTypeLabels(data.account)
 
   return (
-    <div className="space-y-10 duration-700 animate-in fade-in slide-in-from-bottom-8">
+    <div className="space-y-10">
       <div className="flex items-start gap-6 pt-4">
         <Link
           href={`/?chain=${chainId}`}

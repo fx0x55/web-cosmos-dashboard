@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, AlertCircle, RefreshCw } from 'lucide-react'
 
 interface DataTableProps<T> {
   data: T[]
@@ -23,6 +23,8 @@ interface DataTableProps<T> {
   total: number
   onPageChange: (page: number) => void
   loading?: boolean
+  error?: string | null
+  onRetry?: () => void
 }
 
 export function DataTable<T>({
@@ -33,6 +35,8 @@ export function DataTable<T>({
   total,
   onPageChange,
   loading,
+  error,
+  onRetry,
 }: DataTableProps<T>) {
   const totalPages = Math.ceil(total / pageSize)
 
@@ -62,7 +66,31 @@ export function DataTable<T>({
                   ))}
                 </TableRow>
               ))}
-            {!loading && data.length === 0 && (
+            {!loading && error && (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-32 text-center">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="flex items-center gap-2 text-destructive">
+                      <AlertCircle className="h-5 w-5" />
+                      <span className="text-sm font-medium">{error}</span>
+                    </div>
+                    {onRetry && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={onRetry}
+                        className="gap-2 rounded-lg">
+                        <RefreshCw className="h-3.5 w-3.5" />
+                        Retry
+                      </Button>
+                    )}
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+            {!loading && !error && data.length === 0 && (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}

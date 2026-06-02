@@ -16,26 +16,30 @@ export function UnbondingList() {
 
   const [data, setData] = useState<Unbonding[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [now, setNow] = useState(() => Date.now())
+  const [retryCount, setRetryCount] = useState(0)
   const pageSize = 50
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
+      setError(null)
       try {
         const res = await getUnbondings(page, pageSize)
         setData(res.list)
         setTotal(res.total)
-      } catch (error) {
-        console.error(error)
+      } catch (err) {
+        console.error(err)
+        setError('Failed to load unbonding records. Please try again.')
       } finally {
         setLoading(false)
       }
     }
     fetchData()
-  }, [page])
+  }, [page, retryCount])
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -49,6 +53,8 @@ export function UnbondingList() {
     <DataTable
       data={data}
       loading={loading}
+      error={error}
+      onRetry={() => setRetryCount(c => c + 1)}
       page={page}
       pageSize={pageSize}
       total={total}

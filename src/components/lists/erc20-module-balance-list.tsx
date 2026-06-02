@@ -15,27 +15,31 @@ export function Erc20ModuleBalanceList() {
 
   const [allData, setAllData] = useState<Erc20ModuleBalance[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
+  const [retryCount, setRetryCount] = useState(0)
   const pageSize = 20
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       setPage(1)
+      setError(null)
 
       try {
         const balances = await getErc20ModuleBalances(chainId)
         setAllData(balances)
-      } catch (error) {
-        console.error(error)
+      } catch (err) {
+        console.error(err)
         setAllData([])
+        setError('Failed to load ERC20 modules. Please try again.')
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [chainId])
+  }, [chainId, retryCount])
 
   const moduleAccount = allData[0]
 
@@ -63,6 +67,8 @@ export function Erc20ModuleBalanceList() {
       <DataTable
         data={data}
         loading={loading}
+        error={error}
+        onRetry={() => setRetryCount(c => c + 1)}
         page={page}
         pageSize={pageSize}
         total={balanceRows.length}
