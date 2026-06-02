@@ -29,7 +29,7 @@ export default async function ValidatorPage({
     // Handle error gracefully, maybe show not found or empty
     summary = {
       val_address: address,
-      val_moniker: 'Unknown Validator',
+      val_moniker: 'Validator not found',
       total_delegators_count: 0,
       total_delegated_amount: 0,
       total_undelegators_count: 0,
@@ -80,7 +80,7 @@ export default async function ValidatorPage({
         <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Delegated
+              Total Delegated Tokens
             </CardTitle>
             <Coins className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
           </CardHeader>
@@ -94,9 +94,9 @@ export default async function ValidatorPage({
         <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Delegators
+              Active Delegators
             </CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-blue-500" />
+            <Users className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
@@ -108,9 +108,9 @@ export default async function ValidatorPage({
         <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Unbonding
+              Tokens Unbonding
             </CardTitle>
-            <UserMinus className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-orange-500" />
+            <UserMinus className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
@@ -122,9 +122,9 @@ export default async function ValidatorPage({
         <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Undelegators
+              Unbonding Delegators
             </CardTitle>
-            <UserMinus className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-red-500" />
+            <UserMinus className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
@@ -139,12 +139,12 @@ export default async function ValidatorPage({
           <TabsList className="grid h-12 w-full max-w-md grid-cols-2 rounded-full border border-border bg-muted/50 p-1">
             <TabsTrigger
               value="delegations"
-              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
               Delegations
             </TabsTrigger>
             <TabsTrigger
               value="unbonding"
-              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
               Unbonding
             </TabsTrigger>
           </TabsList>

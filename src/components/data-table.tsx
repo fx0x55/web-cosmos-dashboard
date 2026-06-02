@@ -94,8 +94,8 @@ export function DataTable<T>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-32 text-center text-lg text-muted-foreground">
-                  No results found.
+                  className="h-32 text-center text-muted-foreground">
+                  No data available for this view.
                 </TableCell>
               </TableRow>
             )}

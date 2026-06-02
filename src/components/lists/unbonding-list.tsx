@@ -33,7 +33,9 @@ export function UnbondingList() {
         setTotal(res.total)
       } catch (err) {
         console.error(err)
-        setError('Failed to load unbonding records. Please try again.')
+        setError(
+          'Unable to load unbonding records. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }

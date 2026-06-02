@@ -32,7 +32,9 @@ export function Erc20ModuleBalanceList() {
       } catch (err) {
         console.error(err)
         setAllData([])
-        setError('Failed to load ERC20 modules. Please try again.')
+        setError(
+          'Unable to load ERC20 modules. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -75,7 +77,7 @@ export function Erc20ModuleBalanceList() {
         onPageChange={setPage}
         columns={[
           {
-            header: 'Denom',
+            header: 'Token',
             cell: balance => (
               <Badge
                 variant="outline"

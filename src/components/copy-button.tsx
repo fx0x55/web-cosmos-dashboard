@@ -36,7 +36,7 @@ export function CopyButton({ value, className }: CopyButtonProps) {
       ) : (
         <Copy className="h-3 w-3" />
       )}
-      <span className="sr-only">Copy address</span>
+      <span className="sr-only">Copy to clipboard</span>
     </Button>
   )
 }

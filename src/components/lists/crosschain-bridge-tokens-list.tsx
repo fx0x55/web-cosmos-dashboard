@@ -69,7 +69,7 @@ export function CrosschainBridgeTokensList() {
   if (chainNames.length === 0) {
     return (
       <div className="py-16 text-center text-muted-foreground">
-        No supported crosschain bridges found.
+        No cross-chain bridges are configured for this network.
       </div>
     )
   }
@@ -93,7 +93,7 @@ export function CrosschainBridgeTokensList() {
               <TabsTrigger
                 key={name}
                 value={name}
-                className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+                className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
                 <span className="inline-flex items-center gap-1">
                   {showName}
                   {bridgeUrl && (
@@ -148,7 +148,7 @@ function BridgeTokenTable({
         console.error(`Failed to fetch bridge tokens for ${chainName}`, err)
         setData([])
         setError(
-          `Failed to load bridge tokens for ${chainName}. Please try again.`
+          `Unable to load bridge tokens for ${chainName}. Check your connection and try again.`
         )
       } finally {
         setLoading(false)
@@ -172,7 +172,7 @@ function BridgeTokenTable({
       onPageChange={setPage}
       columns={[
         {
-          header: 'Denom',
+          header: 'Token',
           cell: item => <span className="font-mono text-xs">{item.denom}</span>,
         },
         {
@@ -194,7 +194,7 @@ function BridgeTokenTable({
           },
         },
         {
-          header: 'Native',
+          header: 'Origin',
           cell: item => (
             <Badge
               variant={item.is_native ? 'default' : 'outline'}
@@ -203,7 +203,7 @@ function BridgeTokenTable({
                   ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
                   : ''
               }>
-              {item.is_native ? 'Yes' : 'No'}
+              {item.is_native ? 'Native to destination' : 'Wrapped'}
             </Badge>
           ),
         },

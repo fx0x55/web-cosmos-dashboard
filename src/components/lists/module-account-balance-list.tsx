@@ -37,7 +37,9 @@ export function ModuleAccountBalanceList() {
       } catch (err) {
         console.error(err)
         setAllData([])
-        setError('Failed to load module accounts. Please try again.')
+        setError(
+          'Unable to load module accounts. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -97,7 +99,7 @@ export function ModuleAccountBalanceList() {
           cell: item => <span>{formatAmount(item.pundiaiAmount)}</span>,
         },
         {
-          header: 'Denom',
+          header: 'Token',
           cell: () => (
             <Badge
               variant="outline"

@@ -3,6 +3,7 @@
 import { useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { cn } from '@/lib/utils'
 import { BalanceList } from '@/components/lists/balance-list'
 import { ModuleAccountBalanceList } from '@/components/lists/module-account-balance-list'
 import { CrosschainModuleBalanceList } from '@/components/lists/crosschain-module-balance-list'
@@ -13,6 +14,14 @@ import { UnbondingList } from '@/components/lists/unbonding-list'
 import { CrosschainOraclesList } from '@/components/lists/crosschain-oracles-list'
 import { CrosschainBridgeTokensList } from '@/components/lists/crosschain-bridge-tokens-list'
 import { DashboardStats } from '@/components/dashboard-stats'
+
+const BALANCE_SUBTABS = [
+  { value: 'accounts', label: 'Accounts' },
+  { value: 'module-accounts', label: 'Chain Modules' },
+  { value: 'crosschain-modules', label: 'Bridge Modules' },
+  { value: 'erc20-modules', label: 'ERC20 Module' },
+  { value: 'total-supply', label: 'Total Supply' },
+] as const
 
 export default function Home() {
   const router = useRouter()
@@ -25,7 +34,9 @@ export default function Home() {
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString())
       params.set('tab', value)
-      params.delete('subtab')
+      if (value !== 'balances') {
+        params.delete('subtab')
+      }
       router.push(`?${params.toString()}`, { scroll: false })
     },
     [router, searchParams]
@@ -39,191 +50,165 @@ export default function Home() {
     },
     [router, searchParams]
   )
+
   return (
     <div className="space-y-10">
       <DashboardStats />
 
       <Tabs value={tab} onValueChange={setTab} className="w-full space-y-8">
         <div className="flex justify-center">
-          <TabsList className="grid h-12 w-full max-w-xl grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
+          <TabsList className="grid h-11 w-full max-w-lg grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
             <TabsTrigger
               value="balances"
-              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
               Balances
             </TabsTrigger>
             <TabsTrigger
               value="delegations"
-              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
               Delegations
             </TabsTrigger>
             <TabsTrigger
               value="unbonding"
-              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
               Unbonding
             </TabsTrigger>
             <TabsTrigger
               value="crosschain-oracles"
-              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
               Oracles
             </TabsTrigger>
             <TabsTrigger
               value="bridge-tokens"
-              className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Bridge Tokens
+              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+              Bridges
             </TabsTrigger>
           </TabsList>
         </div>
 
-        <TabsContent value="balances" className="space-y-4 outline-none">
-          <div className="flex items-center justify-between px-1">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Latest Balances
-              </h2>
-              <p className="text-muted-foreground">
-                Recent account balance updates on the network.
-              </p>
+        {/* Balances: secondary pill navigation */}
+        <TabsContent value="balances" className="space-y-6 outline-none">
+          <div className="space-y-4 px-1">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Token Balances
+            </h2>
+            <div
+              className="flex flex-wrap gap-2"
+              role="tablist"
+              aria-label="Balance type">
+              {BALANCE_SUBTABS.map(st => (
+                <button
+                  key={st.value}
+                  role="tab"
+                  aria-selected={subtab === st.value}
+                  onClick={() => setSubtab(st.value)}
+                  className={cn(
+                    'rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200',
+                    subtab === st.value
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  )}>
+                  {st.label}
+                </button>
+              ))}
             </div>
           </div>
-          <Tabs value={subtab} onValueChange={setSubtab} className="space-y-6">
-            <div className="flex justify-start px-1">
-              <TabsList className="grid h-11 w-full max-w-3xl grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
-                <TabsTrigger
-                  value="accounts"
-                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-                  Accounts
-                </TabsTrigger>
-                <TabsTrigger
-                  value="module-accounts"
-                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-                  Module Accounts
-                </TabsTrigger>
-                <TabsTrigger
-                  value="crosschain-modules"
-                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-                  Cross-chain Modules
-                </TabsTrigger>
-                <TabsTrigger
-                  value="erc20-modules"
-                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-                  ERC20 Modules
-                </TabsTrigger>
-                <TabsTrigger
-                  value="total-supply"
-                  className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-                  Total Supply
-                </TabsTrigger>
-              </TabsList>
-            </div>
 
-            <TabsContent value="accounts" className="outline-none">
-              <BalanceList />
-            </TabsContent>
+          {subtab === 'accounts' && <BalanceList />}
 
-            <TabsContent
-              value="module-accounts"
-              className="space-y-4 outline-none">
-              <div className="px-1">
-                <p className="text-sm text-muted-foreground">
-                  Module accounts fetched from the chain LCD and their current
-                  balances.
-                </p>
-              </div>
+          {subtab === 'module-accounts' && (
+            <div className="space-y-4">
+              <p className="px-1 text-sm text-muted-foreground">
+                Built-in chain modules (e.g. staking, distribution) and their
+                token holdings.
+              </p>
               <ModuleAccountBalanceList />
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent
-              value="crosschain-modules"
-              className="space-y-4 outline-none">
-              <div className="px-1">
-                <p className="text-sm text-muted-foreground">
-                  Supported cross-chain modules from bridge chain list, with
-                  module account addresses and all current balances.
-                </p>
-              </div>
+          {subtab === 'crosschain-modules' && (
+            <div className="space-y-4">
+              <p className="px-1 text-sm text-muted-foreground">
+                Bridge modules that hold tokens for cross-chain transfers.
+              </p>
               <CrosschainModuleBalanceList />
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent
-              value="erc20-modules"
-              className="space-y-4 outline-none">
-              <div className="px-1">
-                <p className="text-sm text-muted-foreground">
-                  ERC20 module accounts fetched from module accounts, with all
-                  current balances.
-                </p>
-              </div>
+          {subtab === 'erc20-modules' && (
+            <div className="space-y-4">
+              <p className="px-1 text-sm text-muted-foreground">
+                The ERC20 module account, which manages EVM-compatible token
+                representations on-chain.
+              </p>
               <Erc20ModuleBalanceList />
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent
-              value="total-supply"
-              className="space-y-4 outline-none">
-              <div className="px-1">
-                <p className="text-sm text-muted-foreground">
-                  Total supply of all denominations on the network.
-                </p>
-              </div>
+          {subtab === 'total-supply' && (
+            <div className="space-y-4">
+              <p className="px-1 text-sm text-muted-foreground">
+                Every token type currently in circulation on the network.
+              </p>
               <SupplyBalanceList />
-            </TabsContent>
-          </Tabs>
+            </div>
+          )}
         </TabsContent>
 
-        <TabsContent value="delegations" className="space-y-4 outline-none">
-          <div className="flex items-center justify-between px-1">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Active Delegations
-              </h2>
-              <p className="text-muted-foreground">
-                Recent delegation activities to validators.
-              </p>
-            </div>
+        {/* Delegations */}
+        <TabsContent value="delegations" className="space-y-6 outline-none">
+          <div className="px-1">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Delegations
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Accounts ranked by staked token amount.
+            </p>
           </div>
           <DelegationList />
         </TabsContent>
 
-        <TabsContent value="unbonding" className="space-y-4 outline-none">
-          <div className="flex items-center justify-between px-1">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Unbonding Delegations
-              </h2>
-              <p className="text-muted-foreground">
-                Delegations currently in the unbonding period.
-              </p>
-            </div>
+        {/* Unbonding */}
+        <TabsContent value="unbonding" className="space-y-6 outline-none">
+          <div className="px-1">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Unbonding
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Tokens currently in the 21-day unbonding period before they can be
+              withdrawn.
+            </p>
           </div>
           <UnbondingList />
         </TabsContent>
 
+        {/* Oracles */}
         <TabsContent
           value="crosschain-oracles"
-          className="space-y-4 outline-none">
-          <div className="flex items-center justify-between px-1">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Crosschain Oracles
-              </h2>
-              <p className="text-muted-foreground">
-                Oracle status and event information for supported crosschain
-                bridges.
-              </p>
-            </div>
+          className="space-y-6 outline-none">
+          <div className="px-1">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Oracles
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Relayers that attest to events on connected external chains (e.g.
+              Ethereum). Each oracle monitors a bridge and reports block heights
+              and events.
+            </p>
           </div>
           <CrosschainOraclesList />
         </TabsContent>
 
-        <TabsContent value="bridge-tokens" className="space-y-4 outline-none">
-          <div className="flex items-center justify-between px-1">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Bridge Tokens
-              </h2>
-              <p className="text-muted-foreground">
-                Registered bridge tokens for supported crosschain bridges.
-              </p>
-            </div>
+        {/* Bridge Tokens */}
+        <TabsContent value="bridge-tokens" className="space-y-6 outline-none">
+          <div className="px-1">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Bridge Tokens
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Tokens registered for transfer between this chain and external
+              networks via bridges.
+            </p>
           </div>
           <CrosschainBridgeTokensList />
         </TabsContent>

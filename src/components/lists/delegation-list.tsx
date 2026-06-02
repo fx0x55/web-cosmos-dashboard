@@ -30,7 +30,9 @@ export function DelegationList() {
         setTotal(res.total)
       } catch (err) {
         console.error(err)
-        setError('Failed to load delegations. Please try again.')
+        setError(
+          'Unable to load delegations. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -60,7 +62,7 @@ export function DelegationList() {
           ),
         },
         {
-          header: 'Staked Amount',
+          header: 'Staked',
           cell: item => (
             <div className="flex items-center gap-2">
               <span>{formatAmount(item.staking_amount.toString())}</span>
@@ -68,7 +70,7 @@ export function DelegationList() {
           ),
         },
         {
-          header: 'Total Delegations',
+          header: 'Validators',
           cell: item => <span className="font-mono">{item.staking_count}</span>,
         },
       ]}

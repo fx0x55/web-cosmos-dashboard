@@ -14,6 +14,7 @@ import {
   AlertCircle,
   RefreshCw,
 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 function calcPercent(value: string, total: string): number {
   const v = Number(value)
@@ -42,7 +43,9 @@ export function DashboardStats() {
       setStats(data)
     } catch (err) {
       console.error(err)
-      setError('Failed to load chain stats.')
+      setError(
+        'Unable to load chain statistics. Check your connection and try again.'
+      )
     } finally {
       setLoading(false)
     }
@@ -57,7 +60,7 @@ export function DashboardStats() {
 
   const percentItems = [
     {
-      title: 'User Balance',
+      title: 'User Balances',
       value: m?.userBalance,
       denom: stats?.totalSupply.denom,
       icon: Wallet,
@@ -67,7 +70,7 @@ export function DashboardStats() {
       percent: m ? calcPercent(m.userBalance, migrated) : 0,
     },
     {
-      title: 'Bonded',
+      title: 'Bonded Tokens',
       value: stats?.bondedTokens.amount,
       denom: stats?.bondedTokens.denom,
       icon: Lock,
@@ -77,7 +80,7 @@ export function DashboardStats() {
       percent: m ? calcPercent(m.userDelegation, migrated) : 0,
     },
     {
-      title: 'Unbonding',
+      title: 'Unbonding Tokens',
       value: stats?.notBondedTokens.amount,
       denom: stats?.notBondedTokens.denom,
       icon: Unlock,
@@ -102,18 +105,34 @@ export function DashboardStats() {
 
   if (loading) {
     return (
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Card key={i} className="surface-card h-36">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-2 pt-4">
-              <div className="h-4 w-20 animate-pulse rounded bg-muted" />
-              <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
-            </CardHeader>
-            <CardContent className="px-4 pb-4 pt-0">
-              <div className="mt-2 h-6 w-28 animate-pulse rounded bg-muted" />
-            </CardContent>
-          </Card>
-        ))}
+      <div className="grid gap-5 lg:grid-cols-3">
+        <div className="surface-card h-48 lg:col-span-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 px-5 pb-2 pt-5">
+            <div className="h-4 w-24 animate-pulse rounded bg-muted" />
+            <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
+          </CardHeader>
+          <CardContent className="px-5 pb-5 pt-0">
+            <div className="mt-2 h-8 w-40 animate-pulse rounded bg-muted" />
+            <div className="mt-4 space-y-2">
+              <div className="h-3 w-full animate-pulse rounded bg-muted" />
+              <div className="h-3 w-full animate-pulse rounded bg-muted" />
+              <div className="h-3 w-3/4 animate-pulse rounded bg-muted" />
+            </div>
+          </CardContent>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="surface-card h-[88px]">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-1 pt-4">
+                <div className="h-3.5 w-16 animate-pulse rounded bg-muted" />
+                <div className="h-7 w-7 animate-pulse rounded-lg bg-muted" />
+              </CardHeader>
+              <CardContent className="px-4 pb-3 pt-0">
+                <div className="mt-1 h-5 w-20 animate-pulse rounded bg-muted" />
+              </CardContent>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
@@ -125,109 +144,100 @@ export function DashboardStats() {
           <AlertCircle className="h-5 w-5" />
           <span className="text-sm font-medium">{error}</span>
         </div>
-        <button
+        <Button
+          variant="outline"
+          size="sm"
           onClick={fetchStats}
-          className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted">
+          className="gap-2 rounded-lg">
           <RefreshCw className="h-3.5 w-3.5" />
           Retry
-        </button>
+        </Button>
       </div>
     )
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-      {/* Migration Total Card */}
-      <Card className="surface-card group relative overflow-hidden">
-        <div className="absolute inset-0 z-10 flex flex-col justify-center bg-background/95 px-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <p className="mb-2 text-[10px] font-medium text-muted-foreground">
-            Calculation
-          </p>
-          <div className="space-y-1.5 text-xs">
+    <div className="grid gap-5 lg:grid-cols-3">
+      {/* Migration Total - Hero Metric */}
+      <Card className="surface-card lg:col-span-2">
+        <CardHeader className="flex flex-row items-start justify-between space-y-0 px-5 pb-2 pt-5">
+          <div className="min-w-0">
+            <CardTitle className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Migrated Supply
+            </CardTitle>
+            <p className="mt-0.5 text-[11px] text-muted-foreground/70">
+              Total token supply, excluding the ETH module reserve
+            </p>
+          </div>
+          <div className="shrink-0 rounded-lg bg-primary/10 p-2 text-primary">
+            <ArrowRightLeft className="h-4 w-4" />
+          </div>
+        </CardHeader>
+        <CardContent className="px-5 pb-5 pt-0">
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-bold tabular-nums tracking-tight text-foreground">
+              {fmt(m?.migratedSupply)}
+            </span>
+            <span className="text-sm font-medium text-muted-foreground">
+              {stats?.totalSupply.denom}
+            </span>
+          </div>
+
+          {/* Formula breakdown - always visible */}
+          <div className="mt-4 space-y-2 rounded-lg bg-muted/50 px-4 py-3 text-sm">
             <div className="flex items-baseline justify-between gap-3">
-              <span className="shrink-0 text-muted-foreground">
-                Total Supply
-              </span>
-              <span className="truncate font-mono tabular-nums">
+              <span className="text-muted-foreground">Total Supply</span>
+              <span className="font-mono tabular-nums text-foreground">
                 {fmt(stats?.totalSupply.amount)}
               </span>
             </div>
             <div className="flex items-baseline justify-between gap-3">
-              <span className="shrink-0 text-muted-foreground">ETH Module</span>
-              <span className="truncate font-mono tabular-nums text-red-500">
+              <span className="text-muted-foreground">ETH Module Reserve</span>
+              <span className="font-mono tabular-nums text-red-500">
                 −{fmt(m?.ethModuleBalance)}
               </span>
             </div>
-            <div className="border-t border-border/50 pt-1.5">
+            <div className="border-t border-border pt-2">
               <div className="flex items-baseline justify-between gap-3 font-semibold">
-                <span>= </span>
-                <span className="truncate font-mono tabular-nums text-indigo-500">
+                <span className="text-muted-foreground">Migrated Supply</span>
+                <span className="font-mono tabular-nums text-primary">
                   {fmt(m?.migratedSupply)}
                 </span>
               </div>
             </div>
           </div>
-        </div>
-
-        <CardHeader className="flex flex-row items-start justify-between space-y-0 px-4 pb-2 pt-4">
-          <div className="min-w-0">
-            <CardTitle className="truncate text-xs font-medium text-muted-foreground">
-              Migration Total
-            </CardTitle>
-          </div>
-          <div className="shrink-0 rounded-lg bg-indigo-500/10 p-2 text-indigo-500 transition-colors group-hover:bg-primary/10 group-hover:text-primary">
-            <ArrowRightLeft className="h-4 w-4" />
-          </div>
-        </CardHeader>
-        <CardContent className="px-4 pb-4 pt-0">
-          <div className="flex flex-col gap-1">
-            <span className="truncate text-xl font-bold tabular-nums tracking-tight text-foreground transition-colors group-hover:text-primary">
-              {fmt(m?.migratedSupply)}
-            </span>
-            <span className="truncate text-[10px] font-medium text-muted-foreground/70">
-              {stats?.totalSupply.denom}
-            </span>
-          </div>
         </CardContent>
       </Card>
 
-      {/* Percentage Cards */}
-      {percentItems.map((item, i) => (
-        <Card key={i} className="surface-card group relative overflow-hidden">
-          <CardHeader className="flex flex-row items-start justify-between space-y-0 px-4 pb-2 pt-4">
-            <div className="min-w-0">
-              <CardTitle className="truncate text-xs font-medium text-muted-foreground">
+      {/* Secondary Metrics - 2x2 grid */}
+      <div className="grid grid-cols-2 gap-4">
+        {percentItems.map((item, i) => (
+          <Card key={i} className="surface-card group">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-1 pt-4">
+              <CardTitle className="truncate text-[11px] font-medium text-muted-foreground">
                 {item.title}
               </CardTitle>
-            </div>
-            <div
-              className={`shrink-0 rounded-lg p-2 transition-colors ${item.bgColor} ${item.color} group-hover:bg-primary/10 group-hover:text-primary`}>
-              <item.icon className="h-4 w-4" />
-            </div>
-          </CardHeader>
-          <CardContent className="px-4 pb-4 pt-0">
-            <div className="flex flex-col gap-1.5">
-              <span className="truncate text-xl font-bold tabular-nums tracking-tight text-foreground transition-colors group-hover:text-primary">
-                {fmt(item.value)}
-              </span>
-              <span className="truncate text-[10px] font-medium text-muted-foreground/70">
-                {item.denom}
-              </span>
-              <div className="h-5 w-full overflow-hidden rounded-full bg-muted">
-                <div className="relative h-full w-full">
+              <item.icon className="h-4 w-4 shrink-0 text-muted-foreground/60" />
+            </CardHeader>
+            <CardContent className="px-4 pb-4 pt-0">
+              <div className="flex flex-col gap-2">
+                <span className="truncate text-lg font-bold tabular-nums tracking-tight text-foreground">
+                  {fmt(item.value)}
+                </span>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
                   <div
-                    className={`absolute inset-y-0 left-0 rounded-full transition-all duration-700 ease-out ${item.barColor}`}
+                    className={`h-full rounded-full transition-all duration-700 ease-out ${item.barColor}`}
                     style={{ width: `${Math.min(item.percent, 100)}%` }}
                   />
-                  <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold tabular-nums text-foreground/70">
-                    {item.percent.toFixed(2)}%
-                  </span>
                 </div>
+                <span className="text-[11px] font-medium tabular-nums text-muted-foreground">
+                  {item.percent.toFixed(1)}%
+                </span>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   )
 }

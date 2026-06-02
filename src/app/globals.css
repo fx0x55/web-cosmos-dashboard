@@ -4,24 +4,24 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: 240 10% 98%;
-  --foreground: 240 10% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
+  --background: 252 8% 98%;
+  --foreground: 252 10% 3.9%;
+  --card: 252 5% 100%;
+  --card-foreground: 252 10% 3.9%;
+  --popover: 252 5% 100%;
+  --popover-foreground: 252 10% 3.9%;
   --primary: 252 59% 48%; /* Cosmos Violet */
   --primary-foreground: 0 0% 98%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
+  --secondary: 252 4% 95.9%;
+  --secondary-foreground: 252 5.9% 10%;
+  --muted: 252 4% 95.9%;
+  --muted-foreground: 252 3.8% 46.1%;
   --accent: 252 59% 96%;
   --accent-foreground: 252 59% 48%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
+  --border: 252 5% 90%;
+  --input: 252 5% 90%;
   --ring: 252 59% 48%;
   --radius: 0.75rem;
 }
@@ -31,34 +31,61 @@
 }
 
 .dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 5%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 5%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 252 80% 65%; /* More vibrant violet */
-  --primary-foreground: 240 5.9% 10%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
+  --background: 252 10% 3.9%;
+  --foreground: 252 5% 98%;
+  --card: 252 8% 5.5%;
+  --card-foreground: 252 5% 98%;
+  --popover: 252 8% 5.5%;
+  --popover-foreground: 252 5% 98%;
+  --primary: 252 80% 65%; /* Cosmos Violet (bright) */
+  --primary-foreground: 252 5.9% 10%;
+  --secondary: 252 3% 15.9%;
+  --secondary-foreground: 252 5% 98%;
+  --muted: 252 3% 15.9%;
+  --muted-foreground: 252 5% 70%;
   --accent: 252 30% 20%;
-  --accent-foreground: 0 0% 98%;
+  --accent-foreground: 252 5% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
+  --border: 252 3% 15.9%;
+  --input: 252 3% 15.9%;
   --ring: 252 80% 65%;
 }
 
 @layer utilities {
   .surface-card {
-    @apply border border-border bg-card;
+    @apply rounded-xl border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 ease-out;
+  }
+
+  .surface-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    border-color: hsl(252 59% 48% / 0.15);
   }
 
   .surface-panel {
-    @apply border border-border bg-card;
+    @apply rounded-xl border border-border bg-card;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surface-card {
+    transition: none;
+  }
+  .surface-card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: inherit;
+  }
+}
+
+/* Dark mode: use violet glow instead of invisible shadow */
+@variant dark {
+  .surface-card:hover {
+    box-shadow:
+      0 0 0 1px hsl(252 80% 65% / 0.1),
+      0 8px 32px rgba(0, 0, 0, 0.3);
+    border-color: hsl(252 80% 65% / 0.15);
   }
 }
 
@@ -118,12 +145,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.surface-card {
-  @apply rounded-xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)];
-}
-
-.surface-panel {
-  @apply rounded-xl border border-border bg-card;
 }

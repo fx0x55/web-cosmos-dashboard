@@ -17,13 +17,12 @@ export function SearchForm() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (!query.trim()) {
-      setError('Address is required')
+      setError('Enter a wallet address to look up')
       return
     }
 
-    // Simple mock validation
     if (query.length < 5) {
-      setError('Address is too short')
+      setError('This address looks too short. Check and try again.')
       return
     }
 
@@ -44,7 +43,7 @@ export function SearchForm() {
           <Input
             id="search-address"
             type="text"
-            placeholder="Search address..."
+            placeholder="Enter a wallet or validator address..."
             value={query}
             onChange={e => {
               setQuery(e.target.value)

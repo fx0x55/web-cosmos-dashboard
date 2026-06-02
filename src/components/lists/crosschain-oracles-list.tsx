@@ -61,7 +61,7 @@ export function CrosschainOraclesList() {
   if (chainNames.length === 0) {
     return (
       <div className="py-16 text-center text-muted-foreground">
-        No supported crosschain bridges found.
+        No cross-chain bridges are configured for this network.
       </div>
     )
   }
@@ -84,7 +84,7 @@ export function CrosschainOraclesList() {
               <TabsTrigger
                 key={name}
                 value={name}
-                className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
+                className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
                 {showName}
               </TabsTrigger>
             )
@@ -133,7 +133,9 @@ function OracleTable({
       } catch (err) {
         console.error(`Failed to fetch oracles for ${chainName}`, err)
         setData([])
-        setError(`Failed to load oracles for ${chainName}. Please try again.`)
+        setError(
+          `Unable to load oracle data for ${chainName}. Check your connection and try again.`
+        )
       } finally {
         setLoading(false)
       }
@@ -150,18 +152,18 @@ function OracleTable({
         <div className="flex gap-6 px-1">
           <div className="surface-panel flex items-center gap-3 rounded-xl px-5 py-3">
             <span className="text-sm text-muted-foreground">
-              External Block Height
+              External chain block
             </span>
             <span className="font-mono text-sm font-semibold">
-              {observed.external_block_height}
+              #{observed.external_block_height}
             </span>
           </div>
           <div className="surface-panel flex items-center gap-3 rounded-xl px-5 py-3">
             <span className="text-sm text-muted-foreground">
-              Observed Block Height
+              Last observed block
             </span>
             <span className="font-mono text-sm font-semibold">
-              {observed.block_height}
+              #{observed.block_height}
             </span>
           </div>
         </div>
@@ -215,7 +217,7 @@ function OracleTable({
             ),
           },
           {
-            header: 'Delegate Amount',
+            header: 'Staked by Oracle',
             cell: item => (
               <span className="font-medium">
                 {formatAmount(item.delegate_amount)}
@@ -223,7 +225,7 @@ function OracleTable({
             ),
           },
           {
-            header: 'Event Nonce',
+            header: 'Event Count',
             cell: item => (
               <span className="font-mono text-sm">{item.event_nonce}</span>
             ),
@@ -235,7 +237,7 @@ function OracleTable({
             ),
           },
           {
-            header: 'Slash Times',
+            header: 'Penalties',
             cell: item => (
               <span className="font-mono text-sm">{item.slash_times}</span>
             ),
@@ -259,7 +261,7 @@ function CopyableAddress({ address }: { address: string }) {
     <button
       onClick={handleCopy}
       className="inline-flex items-center gap-1 font-mono text-xs transition-all hover:text-primary"
-      title="Click to copy">
+      title="Copy to clipboard">
       {truncateAddress(address, 10, 8)}
       {copied ? (
         <Check className="h-3 w-3 text-green-400" />

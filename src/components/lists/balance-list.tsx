@@ -53,7 +53,9 @@ export function BalanceList() {
         setTotal(res.total)
       } catch (err) {
         console.error(err)
-        setError('Failed to load accounts. Please try again.')
+        setError(
+          'Unable to load accounts. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -113,7 +115,7 @@ export function BalanceList() {
           cell: item => <span>{formatAmount(item.amount.toString())}</span>,
         },
         {
-          header: 'Denom',
+          header: 'Token',
           cell: () => (
             <Badge
               variant="outline"

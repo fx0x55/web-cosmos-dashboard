@@ -37,7 +37,9 @@ export function ValidatorUnbondingList({
         setTotal(res.total)
       } catch (err) {
         console.error(err)
-        setError('Failed to load unbonding records. Please try again.')
+        setError(
+          'Unable to load unbonding records. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -57,7 +59,7 @@ export function ValidatorUnbondingList({
       onPageChange={setPage}
       columns={[
         {
-          header: 'Delegator Address',
+          header: 'Delegator',
           cell: item => (
             <Link
               href={`/address/${item.address}?chain=${chainId}`}

@@ -31,7 +31,9 @@ export function SupplyBalanceList() {
       } catch (err) {
         console.error(err)
         setAllData([])
-        setError('Failed to load total supply. Please try again.')
+        setError(
+          'Unable to load total supply. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -55,7 +57,7 @@ export function SupplyBalanceList() {
       onPageChange={setPage}
       columns={[
         {
-          header: 'Denom',
+          header: 'Token',
           cell: item => (
             <Badge
               variant="outline"
@@ -65,7 +67,7 @@ export function SupplyBalanceList() {
           ),
         },
         {
-          header: 'Raw Denom',
+          header: 'On-chain Denom',
           cell: item => (
             <span
               className="max-w-[300px] truncate font-mono text-xs text-muted-foreground"

@@ -32,7 +32,9 @@ export function CrosschainModuleBalanceList() {
       } catch (err) {
         console.error(err)
         setAllData([])
-        setError('Failed to load cross-chain modules. Please try again.')
+        setError(
+          'Unable to load cross-chain modules. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -93,14 +95,14 @@ export function CrosschainModuleBalanceList() {
                 ))
               ) : (
                 <span className="text-sm text-muted-foreground">
-                  No balances found.
+                  No token balances recorded.
                 </span>
               )}
             </div>
           ),
         },
         {
-          header: 'Denom',
+          header: 'Token',
           cell: item => (
             <div className="space-y-2 py-2">
               {item.balances.length > 0 ? (
@@ -115,14 +117,14 @@ export function CrosschainModuleBalanceList() {
                         {balance.displayDenom || balance.denom}
                       </Badge>
                       <span className="font-mono text-muted-foreground">
-                        raw: {balance.denom}
+                        on-chain: {balance.denom}
                       </span>
                     </div>
                   </div>
                 ))
               ) : (
                 <span className="text-sm text-muted-foreground">
-                  No balances found.
+                  No token balances recorded.
                 </span>
               )}
             </div>

@@ -68,9 +68,11 @@ export default async function AddressPage({
                 {data.account.account_number}
               </span>
             </div>
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-1.5 transition-colors hover:bg-muted">
+            <div
+              className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-1.5 transition-colors hover:bg-muted"
+              title="Number of transactions sent from this account">
               <span className="text-xs font-medium text-muted-foreground">
-                Sequence
+                Tx Count
               </span>
               <span className="font-mono font-medium text-foreground">
                 {data.account.sequence}
@@ -84,7 +86,7 @@ export default async function AddressPage({
         <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
             <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
-              Available
+              Spendable Balance
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -98,8 +100,8 @@ export default async function AddressPage({
 
         <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-blue-500">
-              Staked
+            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
+              Staked (Delegated)
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -113,7 +115,7 @@ export default async function AddressPage({
 
         <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-orange-500">
+            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
               Unbonding
             </CardTitle>
           </CardHeader>
@@ -128,8 +130,8 @@ export default async function AddressPage({
 
         <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-emerald-500">
-              Rewards
+            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
+              Pending Rewards
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -175,8 +177,8 @@ export default async function AddressPage({
                   <TableRow>
                     <TableCell
                       colSpan={3}
-                      className="h-32 text-center text-lg text-muted-foreground">
-                      No delegations found
+                      className="h-32 text-center text-muted-foreground">
+                      This address has no active delegations.
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -247,8 +249,8 @@ export default async function AddressPage({
                   <TableRow>
                     <TableCell
                       colSpan={3}
-                      className="h-32 text-center text-lg text-muted-foreground">
-                      No unbonding records found
+                      className="h-32 text-center text-muted-foreground">
+                      No tokens are currently unbonding from this address.
                     </TableCell>
                   </TableRow>
                 ) : (

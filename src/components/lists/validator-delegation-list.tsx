@@ -36,7 +36,9 @@ export function ValidatorDelegationList({
         setTotal(res.total)
       } catch (err) {
         console.error(err)
-        setError('Failed to load delegations. Please try again.')
+        setError(
+          'Unable to load delegations. Check your connection and try again.'
+        )
       } finally {
         setLoading(false)
       }
@@ -56,7 +58,7 @@ export function ValidatorDelegationList({
       onPageChange={setPage}
       columns={[
         {
-          header: 'Delegator Address',
+          header: 'Delegator',
           cell: item => (
             <Link
               href={`/address/${item.address}?chain=${chainId}`}
@@ -66,7 +68,7 @@ export function ValidatorDelegationList({
           ),
         },
         {
-          header: 'Delegation Amount',
+          header: 'Delegated Amount',
           cell: item => (
             <div className="flex items-center gap-2">
               <span>{formatAmount(item.delegation_amount.toString())}</span>
@@ -74,7 +76,7 @@ export function ValidatorDelegationList({
           ),
         },
         {
-          header: 'Reward Amount',
+          header: 'Pending Reward',
           cell: item => (
             <div className="flex items-center gap-2">
               <span>{formatAmount(item.reward_amount.toString())}</span>
