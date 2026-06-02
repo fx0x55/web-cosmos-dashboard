@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DEFAULT_CHAIN_ID, getChainStats } from '@/lib/api'
 import type { ChainStats } from '@/lib/types'
@@ -36,25 +36,43 @@ export function DashboardStats() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchStats = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const data = await getChainStats(chainId)
-      setStats(data)
-    } catch (err) {
-      console.error(err)
-      setError(
-        'Unable to load chain statistics. Check your connection and try again.'
-      )
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const data = await getChainStats(chainId)
+        if (!cancelled) setStats(data)
+      } catch (err) {
+        if (!cancelled) {
+          console.error(err)
+          setError(
+            'Unable to load chain statistics. Check your connection and try again.'
+          )
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
     }
   }, [chainId])
 
-  useEffect(() => {
-    fetchStats()
-  }, [fetchStats])
+  const fetchStats = useCallback(() => {
+    setLoading(true)
+    setError(null)
+    getChainStats(chainId)
+      .then(data => setStats(data))
+      .catch(err => {
+        console.error(err)
+        setError(
+          'Unable to load chain statistics. Check your connection and try again.'
+        )
+      })
+      .finally(() => setLoading(false))
+  }, [chainId])
 
   const m = stats?.migration
   const migrated = m?.migratedSupply || '0'

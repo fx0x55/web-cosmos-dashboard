@@ -70,7 +70,7 @@ src/
 ### Prerequisites
 
 - Node.js 20+
-- npm (or yarn / pnpm / bun)
+- pnpm
 - A running backend API server (see [Environment Variables](#environment-variables))
 
 ### Installation
@@ -78,7 +78,7 @@ src/
 ```bash
 git clone https://github.com/fx0x55/web-cosmos-dashboard.git
 cd web-cosmos-dashboard
-npm install
+pnpm install
 ```
 
 ### Environment Variables
@@ -96,7 +96,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8081
 ### Development
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -104,16 +104,16 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Build & Production
 
 ```bash
-npm run build
-npm start
+pnpm build
+pnpm start
 ```
 
 ### Linting & Formatting
 
 ```bash
-npm run lint        # Run ESLint
-npm run lint:fix    # Auto-fix ESLint issues
-npm run format      # Format with Prettier
+pnpm lint        # Run ESLint
+pnpm lint:fix    # Auto-fix ESLint issues
+pnpm format      # Format with Prettier
 ```
 
 ## Backend API Endpoints
