@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 import './globals.css'
 import { MainNav } from '@/components/main-nav'
 import { Suspense } from 'react'
 import { ThemeProvider } from '@/components/theme-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const dmSans = DM_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Chain Data Dashboard',
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} min-h-screen bg-background text-foreground antialiased selection:bg-primary/30`}>
+        className={`${dmSans.className} min-h-screen bg-background text-foreground antialiased selection:bg-primary/30`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -29,7 +29,7 @@ export default function RootLayout({
           <Suspense>
             <MainNav />
           </Suspense>
-          <main className="mx-auto max-w-6xl space-y-12 px-6 py-12 md:px-8">
+          <main className="mx-auto max-w-6xl space-y-10 px-6 py-8 md:px-8">
             <Suspense fallback={<div className="p-6">Loading...</div>}>
               {children}
             </Suspense>

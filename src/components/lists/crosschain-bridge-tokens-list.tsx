@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { DataTable } from '@/components/data-table'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import {
   DEFAULT_CHAIN_ID,
@@ -11,6 +10,7 @@ import {
   getBridgeTokensByChain,
 } from '@/lib/api'
 import type { BridgeToken } from '@/lib/types'
+import { cn } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
 import bridgeChainsConfig from '@/lib/bridge-chains.json'
 
@@ -75,50 +75,47 @@ export function CrosschainBridgeTokensList() {
   }
 
   return (
-    <Tabs
-      value={selectedChain}
-      onValueChange={setSelectedChain}
-      className="space-y-6">
-      <div className="flex justify-start px-1">
-        <TabsList
-          className="grid h-11 w-full max-w-3xl rounded-full border border-border bg-muted/50 p-1"
-          style={{
-            gridTemplateColumns: `repeat(${chainNames.length}, minmax(0, 1fr))`,
-          }}>
-          {chainNames.map(name => {
-            const config = bridgeChainMap.get(name)
-            const showName = config?.show_name || name
-            const bridgeUrl = getBridgeAddressUrl(name)
-            return (
-              <TabsTrigger
-                key={name}
-                value={name}
-                className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-                <span className="inline-flex items-center gap-1">
-                  {showName}
-                  {bridgeUrl && (
-                    <a
-                      href={bridgeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded p-0.5 opacity-50 transition-opacity hover:opacity-100"
-                      onClick={e => e.stopPropagation()}>
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  )}
-                </span>
-              </TabsTrigger>
-            )
-          })}
-        </TabsList>
+    <div className="space-y-6">
+      <div className="flex flex-wrap gap-2 px-1" role="tablist">
+        {chainNames.map(name => {
+          const config = bridgeChainMap.get(name)
+          const showName = config?.show_name || name
+          const bridgeUrl = getBridgeAddressUrl(name)
+          return (
+            <button
+              key={name}
+              role="tab"
+              aria-selected={selectedChain === name}
+              onClick={() => setSelectedChain(name)}
+              className={cn(
+                'inline-flex items-center gap-1 rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200',
+                selectedChain === name
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+              )}>
+              {showName}
+              {bridgeUrl && (
+                <a
+                  href={bridgeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded p-0.5 opacity-50 transition-opacity hover:opacity-100"
+                  onClick={e => e.stopPropagation()}>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              )}
+            </button>
+          )
+        })}
       </div>
 
-      {chainNames.map(name => (
-        <TabsContent key={name} value={name} className="outline-none">
-          <BridgeTokenTable chainId={chainId} chainName={name} />
-        </TabsContent>
-      ))}
-    </Tabs>
+      {chainNames.map(
+        name =>
+          selectedChain === name && (
+            <BridgeTokenTable key={name} chainId={chainId} chainName={name} />
+          )
+      )}
+    </div>
   )
 }
 

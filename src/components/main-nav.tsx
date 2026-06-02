@@ -5,15 +5,15 @@ import { ModeToggle } from '@/components/mode-toggle'
 
 export function MainNav() {
   return (
-    <div className="sticky top-4 z-50 mx-auto w-full max-w-7xl px-4 md:px-8">
-      <div className="surface-panel flex h-16 items-center justify-between rounded-full px-4 shadow-[0_4px_24px_rgba(0,0,0,0.08)] md:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 md:px-8">
         <Link
           href="/"
-          className="group flex shrink-0 items-center gap-3 transition-opacity hover:opacity-80">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors group-hover:bg-primary/90">
-            <span className="font-bold">C</span>
+          className="group flex shrink-0 items-center gap-2.5 transition-opacity hover:opacity-80">
+          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-xs font-bold text-primary-foreground transition-colors group-hover:bg-primary/90">
+            C
           </div>
-          <span className="hidden text-lg font-bold tracking-tight md:inline-block">
+          <span className="hidden text-base font-bold tracking-tight md:inline-block">
             Cosmos<span className="text-primary">Dash</span>
           </span>
         </Link>
@@ -27,6 +27,6 @@ export function MainNav() {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   )
 }

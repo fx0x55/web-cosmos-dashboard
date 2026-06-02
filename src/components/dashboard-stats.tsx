@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DEFAULT_CHAIN_ID, getChainStats } from '@/lib/api'
 import type { ChainStats } from '@/lib/types'
@@ -35,7 +35,7 @@ export function DashboardStats() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
@@ -49,11 +49,11 @@ export function DashboardStats() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [chainId])
 
   useEffect(() => {
     fetchStats()
-  }, [chainId])
+  }, [fetchStats])
 
   const m = stats?.migration
   const migrated = m?.migratedSupply || '0'
@@ -162,7 +162,7 @@ export function DashboardStats() {
       <Card className="surface-card lg:col-span-2">
         <CardHeader className="flex flex-row items-start justify-between space-y-0 px-5 pb-2 pt-5">
           <div className="min-w-0">
-            <CardTitle className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            <CardTitle className="text-xs font-medium tracking-wide text-muted-foreground">
               Migrated Supply
             </CardTitle>
             <p className="mt-0.5 text-[11px] text-muted-foreground/70">

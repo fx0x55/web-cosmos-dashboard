@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { DataTable } from '@/components/data-table'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import {
   DEFAULT_CHAIN_ID,
@@ -16,7 +15,7 @@ import type {
   CrosschainOracleInfo,
   ObservedBlockHeightResponse,
 } from '@/lib/types'
-import { formatAmount, truncateAddress } from '@/lib/utils'
+import { cn, formatAmount, truncateAddress } from '@/lib/utils'
 import { Copy, Check } from 'lucide-react'
 import bridgeChainsConfig from '@/lib/bridge-chains.json'
 
@@ -67,37 +66,36 @@ export function CrosschainOraclesList() {
   }
 
   return (
-    <Tabs
-      value={selectedChain}
-      onValueChange={setSelectedChain}
-      className="space-y-6">
-      <div className="flex justify-start px-1">
-        <TabsList
-          className="grid h-11 w-full max-w-3xl rounded-full border border-border bg-muted/50 p-1"
-          style={{
-            gridTemplateColumns: `repeat(${chainNames.length}, minmax(0, 1fr))`,
-          }}>
-          {chainNames.map(name => {
-            const config = bridgeChainMap.get(name)
-            const showName = config?.show_name || name
-            return (
-              <TabsTrigger
-                key={name}
-                value={name}
-                className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-                {showName}
-              </TabsTrigger>
-            )
-          })}
-        </TabsList>
+    <div className="space-y-6">
+      <div className="flex flex-wrap gap-2 px-1" role="tablist">
+        {chainNames.map(name => {
+          const config = bridgeChainMap.get(name)
+          const showName = config?.show_name || name
+          return (
+            <button
+              key={name}
+              role="tab"
+              aria-selected={selectedChain === name}
+              onClick={() => setSelectedChain(name)}
+              className={cn(
+                'rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200',
+                selectedChain === name
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+              )}>
+              {showName}
+            </button>
+          )
+        })}
       </div>
 
-      {chainNames.map(name => (
-        <TabsContent key={name} value={name} className="outline-none">
-          <OracleTable chainId={chainId} chainName={name} />
-        </TabsContent>
-      ))}
-    </Tabs>
+      {chainNames.map(
+        name =>
+          selectedChain === name && (
+            <OracleTable key={name} chainId={chainId} chainName={name} />
+          )
+      )}
+    </div>
   )
 }
 

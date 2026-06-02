@@ -49,7 +49,7 @@ export function DataTable<T>({
               {columns.map((col, index) => (
                 <TableHead
                   key={index}
-                  className="h-12 px-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                  className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
                   {col.header}
                 </TableHead>
               ))}

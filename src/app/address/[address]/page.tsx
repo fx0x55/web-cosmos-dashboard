@@ -161,13 +161,13 @@ export default async function AddressPage({
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 px-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
                     Validator
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-right text-xs font-medium tracking-wide text-muted-foreground/80">
                     Amount
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-right text-xs font-medium tracking-wide text-muted-foreground/80">
                     Reward
                   </TableHead>
                 </TableRow>
@@ -233,13 +233,13 @@ export default async function AddressPage({
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 px-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
                     Validator
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
                     Completion
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-right text-xs font-medium tracking-wide text-muted-foreground/80">
                     Amount
                   </TableHead>
                 </TableRow>

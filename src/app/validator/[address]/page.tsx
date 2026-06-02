@@ -135,20 +135,18 @@ export default async function ValidatorPage({
       </div>
 
       <Tabs defaultValue="delegations" className="w-full space-y-8">
-        <div className="flex justify-center">
-          <TabsList className="grid h-12 w-full max-w-md grid-cols-2 rounded-full border border-border bg-muted/50 p-1">
-            <TabsTrigger
-              value="delegations"
-              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Delegations
-            </TabsTrigger>
-            <TabsTrigger
-              value="unbonding"
-              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Unbonding
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        <TabsList className="flex h-auto w-full justify-start gap-0 rounded-none border-b border-border bg-transparent p-0">
+          <TabsTrigger
+            value="delegations"
+            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            Delegations
+          </TabsTrigger>
+          <TabsTrigger
+            value="unbonding"
+            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            Unbonding
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="delegations" className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">

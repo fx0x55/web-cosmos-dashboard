@@ -56,35 +56,33 @@ export default function Home() {
       <DashboardStats />
 
       <Tabs value={tab} onValueChange={setTab} className="w-full space-y-8">
-        <div className="flex justify-center">
-          <TabsList className="grid h-11 w-full max-w-lg grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
-            <TabsTrigger
-              value="balances"
-              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Balances
-            </TabsTrigger>
-            <TabsTrigger
-              value="delegations"
-              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Delegations
-            </TabsTrigger>
-            <TabsTrigger
-              value="unbonding"
-              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Unbonding
-            </TabsTrigger>
-            <TabsTrigger
-              value="crosschain-oracles"
-              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Oracles
-            </TabsTrigger>
-            <TabsTrigger
-              value="bridge-tokens"
-              className="rounded-full text-sm font-medium transition-colors duration-200 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
-              Bridges
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        <TabsList className="flex h-auto w-full justify-start gap-0 rounded-none border-b border-border bg-transparent p-0">
+          <TabsTrigger
+            value="balances"
+            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            Balances
+          </TabsTrigger>
+          <TabsTrigger
+            value="delegations"
+            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            Delegations
+          </TabsTrigger>
+          <TabsTrigger
+            value="unbonding"
+            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            Unbonding
+          </TabsTrigger>
+          <TabsTrigger
+            value="crosschain-oracles"
+            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            Oracles
+          </TabsTrigger>
+          <TabsTrigger
+            value="bridge-tokens"
+            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            Bridges
+          </TabsTrigger>
+        </TabsList>
 
         {/* Balances: secondary pill navigation */}
         <TabsContent value="balances" className="space-y-6 outline-none">
