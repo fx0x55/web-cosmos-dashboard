@@ -43,7 +43,7 @@ export default async function ValidatorPage({
       <div className="flex items-start gap-6 pt-4">
         <Link
           href={`/?chain=${chainId}`}
-          className="group rounded-lg border border-white/10 bg-white/50 p-3 shadow-sm transition-colors hover:bg-white/80 dark:bg-white/5 dark:hover:bg-white/10">
+          className="group rounded-lg border border-border bg-muted/50 p-3 transition-colors hover:bg-muted">
           <ArrowLeft className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-primary" />
         </Link>
         <div className="flex flex-1 flex-col gap-3">
@@ -53,16 +53,16 @@ export default async function ValidatorPage({
             </h1>
             <Badge
               variant="outline"
-              className="border-primary/20 bg-primary/10 px-3 py-1 font-mono text-sm uppercase tracking-wider text-primary backdrop-blur-sm">
+              className="border-primary/20 bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
               Validator
             </Badge>
           </div>
-          <div className="flex w-fit items-center gap-3 rounded-md border border-white/10 bg-muted/50 p-2 pl-4">
+          <div className="flex w-fit items-center gap-3 rounded-md border border-border bg-muted/50 p-2 pl-4">
             <span className="break-all font-mono text-base text-muted-foreground">
               {address}
             </span>
             <CopyButton value={address} />
-            <div className="mx-1 h-4 w-px bg-white/10" />
+            <div className="mx-1 h-4 w-px bg-border" />
             <a
               href={`${chainConfig.explorer_base_url}validator/${address}`}
               target="_blank"
@@ -77,10 +77,9 @@ export default async function ValidatorPage({
 
       {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="glass-card group relative overflow-hidden border-none shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+        <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Total Delegated
             </CardTitle>
             <Coins className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
@@ -92,10 +91,9 @@ export default async function ValidatorPage({
           </CardContent>
         </Card>
 
-        <Card className="glass-card group relative overflow-hidden border-none shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+        <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Delegators
             </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-blue-500" />
@@ -107,10 +105,9 @@ export default async function ValidatorPage({
           </CardContent>
         </Card>
 
-        <Card className="glass-card group relative overflow-hidden border-none shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-500/5">
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+        <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Total Unbonding
             </CardTitle>
             <UserMinus className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-orange-500" />
@@ -122,10 +119,9 @@ export default async function ValidatorPage({
           </CardContent>
         </Card>
 
-        <Card className="glass-card group relative overflow-hidden border-none shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-red-500/5">
-          <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+        <Card className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Undelegators
             </CardTitle>
             <UserMinus className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-red-500" />
@@ -140,7 +136,7 @@ export default async function ValidatorPage({
 
       <Tabs defaultValue="delegations" className="w-full space-y-8">
         <div className="flex justify-center">
-          <TabsList className="grid h-12 w-full max-w-md grid-cols-2 rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5">
+          <TabsList className="grid h-12 w-full max-w-md grid-cols-2 rounded-full border border-border bg-muted/50 p-1">
             <TabsTrigger
               value="delegations"
               className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
@@ -157,7 +153,7 @@ export default async function ValidatorPage({
         <TabsContent value="delegations" className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
-              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Delegations
               </h2>
               <p className="text-muted-foreground">
@@ -171,7 +167,7 @@ export default async function ValidatorPage({
         <TabsContent value="unbonding" className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
-              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Unbonding
               </h2>
               <p className="text-muted-foreground">

@@ -50,7 +50,7 @@ export function ChainSwitcher() {
 
   return (
     <Select value={currentChainId} onValueChange={handleValueChange}>
-      <SelectTrigger className="h-9 w-[180px] rounded-full border-white/20 bg-white/50 shadow-sm backdrop-blur-md transition-all hover:bg-white/80 focus:ring-0 focus:ring-offset-0 dark:bg-black/50 dark:hover:bg-black/80">
+      <SelectTrigger className="h-9 w-[180px] rounded-full border-border bg-card transition-colors hover:bg-muted focus:ring-0 focus:ring-offset-0">
         <SelectValue placeholder="Select chain">
           <div className="flex items-center gap-2">
             <span className="flex h-5 w-5 items-center justify-center text-xs">
@@ -60,12 +60,12 @@ export function ChainSwitcher() {
           </div>
         </SelectValue>
       </SelectTrigger>
-      <SelectContent className="rounded-xl border-white/20 bg-white/80 backdrop-blur-xl dark:bg-black/80">
+      <SelectContent className="rounded-xl border-border bg-card">
         {chains.map(chain => (
           <SelectItem
             key={chain.id}
             value={chain.id}
-            className="cursor-pointer rounded-lg focus:bg-black/5 dark:focus:bg-white/10">
+            className="cursor-pointer rounded-lg focus:bg-muted">
             <div className="flex items-center gap-2">
               <span className="flex h-5 w-5 items-center justify-center text-xs">
                 {chain.icon}

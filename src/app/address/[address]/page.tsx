@@ -35,7 +35,7 @@ export default async function AddressPage({
       <div className="flex items-start gap-6 pt-4">
         <Link
           href={`/?chain=${chainId}`}
-          className="group rounded-lg border border-white/10 bg-white/50 p-3 shadow-sm transition-colors hover:bg-white/80 dark:bg-white/5 dark:hover:bg-white/10">
+          className="group rounded-lg border border-border bg-muted/50 p-3 transition-colors hover:bg-muted">
           <ArrowLeft className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-primary" />
         </Link>
         <div className="flex flex-1 flex-col gap-3">
@@ -45,7 +45,7 @@ export default async function AddressPage({
             </h1>
             <Badge
               variant="outline"
-              className="border-primary/20 bg-primary/10 px-3 py-1 font-mono text-sm uppercase tracking-wider text-primary backdrop-blur-sm">
+              className="border-primary/20 bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
               {chainId}
             </Badge>
             {typeLabels.map((label, i) => (
@@ -60,16 +60,16 @@ export default async function AddressPage({
             explorerBaseUrl={`${chainConfig.explorer_base_url}address/`}
           />
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md transition-colors hover:bg-white/10">
-              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-1.5 transition-colors hover:bg-muted">
+              <span className="text-xs font-medium text-muted-foreground">
                 Account #
               </span>
               <span className="font-mono font-medium text-foreground">
                 {data.account.account_number}
               </span>
             </div>
-            <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md transition-colors hover:bg-white/10">
-              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-1.5 transition-colors hover:bg-muted">
+              <span className="text-xs font-medium text-muted-foreground">
                 Sequence
               </span>
               <span className="font-mono font-medium text-foreground">
@@ -81,60 +81,60 @@ export default async function AddressPage({
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
+        <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-primary">
+            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
               Available
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
-              <span className="bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+              <span className="text-foreground">
                 {formatAmount(data.account.amount.toString())}
               </span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5">
+        <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-blue-500">
+            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-blue-500">
               Staked
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
-              <span className="bg-gradient-to-br from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-blue-600 dark:text-blue-400">
                 {formatAmount(data.account.staking_amount.toString())}
               </span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-orange-500/5">
+        <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-orange-500">
+            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-orange-500">
               Unbonding
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
-              <span className="bg-gradient-to-br from-orange-600 to-orange-400 bg-clip-text text-transparent">
+              <span className="text-orange-600 dark:text-orange-400">
                 {formatAmount(data.account.unbonding_amount.toString())}
               </span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="glass-card group border-none transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/5">
+        <Card className="surface-card group">
           <CardHeader className="space-y-2 pb-4">
-            <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground transition-colors group-hover:text-emerald-500">
+            <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-emerald-500">
               Rewards
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
-              <span className="bg-gradient-to-br from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+              <span className="text-emerald-600 dark:text-emerald-400">
                 +{formatAmount(data.account.reward_amount.toString())}
               </span>
             </div>
@@ -145,7 +145,7 @@ export default async function AddressPage({
       <div className="space-y-12">
         <div className="space-y-4">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-gradient flex items-center gap-3 text-2xl font-bold tracking-tight">
+            <h2 className="flex items-center gap-3 text-2xl font-bold tracking-tight text-foreground">
               Delegations
               <Badge
                 variant="secondary"
@@ -155,7 +155,7 @@ export default async function AddressPage({
             </h2>
           </div>
 
-          <div className="glass-panel overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
+          <div className="surface-panel overflow-hidden rounded-xl">
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
@@ -222,12 +222,12 @@ export default async function AddressPage({
 
         <div className="space-y-4">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-gradient text-2xl font-bold tracking-tight">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
               Unbonding
             </h2>
           </div>
 
-          <div className="glass-panel overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
+          <div className="surface-panel overflow-hidden rounded-xl">
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">

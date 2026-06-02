@@ -38,7 +38,7 @@ export function DataTable<T>({
 
   return (
     <div className="space-y-6">
-      <div className="glass-panel overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl">
+      <div className="surface-panel overflow-hidden rounded-xl">
         <Table>
           <TableHeader>
             <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
@@ -102,7 +102,7 @@ export function DataTable<T>({
             size="icon"
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1 || loading}
-            className="h-11 w-11 rounded-xl border-white/20 transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 hover:text-primary">
+            className="h-11 w-11 rounded-xl border-border transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 hover:text-primary">
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
@@ -110,7 +110,7 @@ export function DataTable<T>({
             size="icon"
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages || loading}
-            className="h-11 w-11 rounded-xl border-white/20 transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 hover:text-primary">
+            className="h-11 w-11 rounded-xl border-border transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 hover:text-primary">
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>

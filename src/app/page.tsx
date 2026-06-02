@@ -19,7 +19,7 @@ export default function Home() {
 
       <Tabs defaultValue="balances" className="w-full space-y-8">
         <div className="flex justify-center">
-          <TabsList className="grid h-12 w-full max-w-xl grid-cols-5 rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5">
+          <TabsList className="grid h-12 w-full max-w-xl grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
             <TabsTrigger
               value="balances"
               className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
@@ -51,7 +51,7 @@ export default function Home() {
         <TabsContent value="balances" className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
-              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Latest Balances
               </h2>
               <p className="text-muted-foreground">
@@ -61,7 +61,7 @@ export default function Home() {
           </div>
           <Tabs defaultValue="accounts" className="space-y-6">
             <div className="flex justify-start px-1">
-              <TabsList className="grid h-11 w-full max-w-3xl grid-cols-5 rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5">
+              <TabsList className="grid h-11 w-full max-w-3xl grid-cols-5 rounded-full border border-border bg-muted/50 p-1">
                 <TabsTrigger
                   value="accounts"
                   className="rounded-full text-sm font-medium transition-all duration-300 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm">
@@ -146,7 +146,7 @@ export default function Home() {
         <TabsContent value="delegations" className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
-              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Active Delegations
               </h2>
               <p className="text-muted-foreground">
@@ -160,7 +160,7 @@ export default function Home() {
         <TabsContent value="unbonding" className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
-              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Unbonding Delegations
               </h2>
               <p className="text-muted-foreground">
@@ -176,7 +176,7 @@ export default function Home() {
           className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
-              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Crosschain Oracles
               </h2>
               <p className="text-muted-foreground">
@@ -191,7 +191,7 @@ export default function Home() {
         <TabsContent value="bridge-tokens" className="space-y-4 outline-none">
           <div className="flex items-center justify-between px-1">
             <div>
-              <h2 className="text-gradient text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Bridge Tokens
               </h2>
               <p className="text-muted-foreground">

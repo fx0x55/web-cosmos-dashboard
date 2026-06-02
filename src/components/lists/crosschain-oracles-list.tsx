@@ -73,7 +73,7 @@ export function CrosschainOraclesList() {
       className="space-y-6">
       <div className="flex justify-start px-1">
         <TabsList
-          className="grid h-11 w-full max-w-3xl rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5"
+          className="grid h-11 w-full max-w-3xl rounded-full border border-border bg-muted/50 p-1"
           style={{
             gridTemplateColumns: `repeat(${chainNames.length}, minmax(0, 1fr))`,
           }}>
@@ -144,7 +144,7 @@ function OracleTable({
     <div className="space-y-4">
       {observed && (
         <div className="flex gap-6 px-1">
-          <div className="glass-panel flex items-center gap-3 rounded-xl px-5 py-3">
+          <div className="surface-panel flex items-center gap-3 rounded-xl px-5 py-3">
             <span className="text-sm text-muted-foreground">
               External Block Height
             </span>
@@ -152,7 +152,7 @@ function OracleTable({
               {observed.external_block_height}
             </span>
           </div>
-          <div className="glass-panel flex items-center gap-3 rounded-xl px-5 py-3">
+          <div className="surface-panel flex items-center gap-3 rounded-xl px-5 py-3">
             <span className="text-sm text-muted-foreground">
               Observed Block Height
             </span>

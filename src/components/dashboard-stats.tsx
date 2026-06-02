@@ -92,7 +92,7 @@ export function DashboardStats() {
     return (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Card key={i} className="glass-card h-36 border-none shadow-lg">
+          <Card key={i} className="surface-card h-36">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-2 pt-4">
               <div className="h-4 w-20 animate-pulse rounded bg-muted" />
               <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
@@ -109,10 +109,9 @@ export function DashboardStats() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {/* Migration Total Card */}
-      <Card className="glass-card group relative overflow-hidden border-none shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-primary/5">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-        <div className="absolute inset-0 z-10 flex flex-col justify-center bg-background/95 px-4 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
-          <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+      <Card className="surface-card group relative overflow-hidden">
+        <div className="absolute inset-0 z-10 flex flex-col justify-center bg-background/95 px-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <p className="mb-2 text-[10px] font-medium text-muted-foreground">
             Calculation
           </p>
           <div className="space-y-1.5 text-xs">
@@ -143,11 +142,11 @@ export function DashboardStats() {
 
         <CardHeader className="flex flex-row items-start justify-between space-y-0 px-4 pb-2 pt-4">
           <div className="min-w-0">
-            <CardTitle className="truncate text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <CardTitle className="truncate text-xs font-medium text-muted-foreground">
               Migration Total
             </CardTitle>
           </div>
-          <div className="shrink-0 rounded-lg bg-indigo-500/10 p-2 text-indigo-500 shadow-sm transition-colors group-hover:bg-primary/10 group-hover:text-primary">
+          <div className="shrink-0 rounded-lg bg-indigo-500/10 p-2 text-indigo-500 transition-colors group-hover:bg-primary/10 group-hover:text-primary">
             <ArrowRightLeft className="h-4 w-4" />
           </div>
         </CardHeader>
@@ -156,7 +155,7 @@ export function DashboardStats() {
             <span className="truncate text-xl font-bold tabular-nums tracking-tight text-foreground transition-colors group-hover:text-primary">
               {fmt(m?.migratedSupply)}
             </span>
-            <span className="truncate text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70">
+            <span className="truncate text-[10px] font-medium text-muted-foreground/70">
               {stats?.totalSupply.denom}
             </span>
           </div>
@@ -165,19 +164,15 @@ export function DashboardStats() {
 
       {/* Percentage Cards */}
       {percentItems.map((item, i) => (
-        <Card
-          key={i}
-          className="glass-card group relative overflow-hidden border-none shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-primary/5">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
+        <Card key={i} className="surface-card group relative overflow-hidden">
           <CardHeader className="flex flex-row items-start justify-between space-y-0 px-4 pb-2 pt-4">
             <div className="min-w-0">
-              <CardTitle className="truncate text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <CardTitle className="truncate text-xs font-medium text-muted-foreground">
                 {item.title}
               </CardTitle>
             </div>
             <div
-              className={`shrink-0 rounded-lg p-2 shadow-sm transition-colors ${item.bgColor} ${item.color} group-hover:bg-primary/10 group-hover:text-primary`}>
+              className={`shrink-0 rounded-lg p-2 transition-colors ${item.bgColor} ${item.color} group-hover:bg-primary/10 group-hover:text-primary`}>
               <item.icon className="h-4 w-4" />
             </div>
           </CardHeader>
@@ -186,7 +181,7 @@ export function DashboardStats() {
               <span className="truncate text-xl font-bold tabular-nums tracking-tight text-foreground transition-colors group-hover:text-primary">
                 {fmt(item.value)}
               </span>
-              <span className="truncate text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70">
+              <span className="truncate text-[10px] font-medium text-muted-foreground/70">
                 {item.denom}
               </span>
               <div className="h-5 w-full overflow-hidden rounded-full bg-muted">

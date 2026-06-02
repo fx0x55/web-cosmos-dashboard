@@ -81,7 +81,7 @@ export function CrosschainBridgeTokensList() {
       className="space-y-6">
       <div className="flex justify-start px-1">
         <TabsList
-          className="grid h-11 w-full max-w-3xl rounded-full border border-white/10 bg-black/5 p-1 shadow-inner backdrop-blur-xl dark:bg-white/5"
+          className="grid h-11 w-full max-w-3xl rounded-full border border-border bg-muted/50 p-1"
           style={{
             gridTemplateColumns: `repeat(${chainNames.length}, minmax(0, 1fr))`,
           }}>

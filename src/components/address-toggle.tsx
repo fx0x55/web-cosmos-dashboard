@@ -21,7 +21,7 @@ export function AddressToggle({
   const currentAddress = hasEth && showEth ? ethAddress : address
 
   return (
-    <div className="flex w-fit items-center gap-3 rounded-md border border-white/10 bg-muted/50 p-2 pl-4">
+    <div className="flex w-fit items-center gap-3 rounded-md border border-border bg-muted/50 p-2 pl-4">
       <a
         href={explorerBaseUrl ? `${explorerBaseUrl}${currentAddress}` : '#'}
         target="_blank"
