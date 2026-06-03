@@ -45,11 +45,11 @@ export function DataTable<T>({
       <div className="surface-panel overflow-hidden rounded-xl">
         <Table>
           <TableHeader>
-            <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
+            <TableRow className="border-b border-border/40 bg-gradient-to-r from-muted/40 to-muted/20 hover:bg-muted/30">
               {columns.map((col, index) => (
                 <TableHead
                   key={index}
-                  className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
+                  className="h-12 px-6 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                   {col.header}
                 </TableHead>
               ))}
@@ -58,10 +58,10 @@ export function DataTable<T>({
           <TableBody>
             {loading &&
               Array.from({ length: 5 }).map((_, i) => (
-                <TableRow key={i} className="h-16 border-b border-border/50">
+                <TableRow key={i} className="h-16 border-b border-border/30">
                   {columns.map((_, j) => (
                     <TableCell key={j} className="px-6">
-                      <div className="h-5 w-full max-w-[100px] animate-pulse rounded-md bg-muted/50" />
+                      <div className="shimmer h-5 w-full max-w-[100px] rounded-md bg-muted/50" />
                     </TableCell>
                   ))}
                 </TableRow>
@@ -104,7 +104,7 @@ export function DataTable<T>({
               data.map((item, i) => (
                 <TableRow
                   key={i}
-                  className="group h-16 border-b border-border/50 transition-colors hover:bg-primary/5">
+                  className="group h-16 border-b border-border/30 transition-all duration-200 hover:bg-primary/[0.03] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary))]">
                   {columns.map((col, j) => (
                     <TableCell
                       key={j}
@@ -130,7 +130,7 @@ export function DataTable<T>({
             size="icon"
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1 || loading}
-            className="h-11 w-11 rounded-xl border-border transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 hover:text-primary">
+            className="h-10 w-10 rounded-xl border-border/60 transition-all duration-200 hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:shadow-sm">
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
@@ -138,7 +138,7 @@ export function DataTable<T>({
             size="icon"
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages || loading}
-            className="h-11 w-11 rounded-xl border-border transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 hover:text-primary">
+            className="h-10 w-10 rounded-xl border-border/60 transition-all duration-200 hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:shadow-sm">
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>

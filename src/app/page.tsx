@@ -59,7 +59,7 @@ export default function Home() {
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
             Chain Overview
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-muted-foreground/70">
             Real-time migration and staking metrics
           </p>
           <div className="mt-6">
@@ -68,33 +68,33 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <Tabs value={tab} onValueChange={setTab} className="w-full space-y-8">
-        <TabsList className="flex h-auto w-full justify-start gap-0 rounded-none border-b border-border bg-transparent p-0">
+        <TabsList className="flex h-auto w-full justify-start gap-1 rounded-none border-b border-border/40 bg-transparent p-0">
           <TabsTrigger
             value="balances"
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Balances
           </TabsTrigger>
           <TabsTrigger
             value="delegations"
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Delegations
           </TabsTrigger>
           <TabsTrigger
             value="unbonding"
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Unbonding
           </TabsTrigger>
           <TabsTrigger
             value="crosschain-oracles"
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Oracles
           </TabsTrigger>
           <TabsTrigger
             value="bridge-tokens"
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Bridges
           </TabsTrigger>
         </TabsList>
@@ -116,10 +116,10 @@ export default function Home() {
                   aria-selected={subtab === st.value}
                   onClick={() => setSubtab(st.value)}
                   className={cn(
-                    'rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200',
+                    'rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200',
                     subtab === st.value
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                      ? 'bg-primary/10 text-primary shadow-sm shadow-primary/10'
+                      : 'text-muted-foreground hover:bg-muted/80 hover:text-foreground'
                   )}>
                   {st.label}
                 </button>
@@ -131,7 +131,7 @@ export default function Home() {
 
           {subtab === 'module-accounts' && (
             <div className="space-y-4">
-              <p className="px-1 text-sm text-muted-foreground">
+              <p className="px-1 text-sm text-muted-foreground/70">
                 Built-in chain modules (e.g. staking, distribution) and their
                 token holdings.
               </p>
@@ -141,7 +141,7 @@ export default function Home() {
 
           {subtab === 'crosschain-modules' && (
             <div className="space-y-4">
-              <p className="px-1 text-sm text-muted-foreground">
+              <p className="px-1 text-sm text-muted-foreground/70">
                 Bridge modules that hold tokens for cross-chain transfers.
               </p>
               <CrosschainModuleBalanceList />
@@ -150,7 +150,7 @@ export default function Home() {
 
           {subtab === 'erc20-modules' && (
             <div className="space-y-4">
-              <p className="px-1 text-sm text-muted-foreground">
+              <p className="px-1 text-sm text-muted-foreground/70">
                 The ERC20 module account, which manages EVM-compatible token
                 representations on-chain.
               </p>
@@ -160,7 +160,7 @@ export default function Home() {
 
           {subtab === 'total-supply' && (
             <div className="space-y-4">
-              <p className="px-1 text-sm text-muted-foreground">
+              <p className="px-1 text-sm text-muted-foreground/70">
                 Every token type currently in circulation on the network.
               </p>
               <SupplyBalanceList />
@@ -174,7 +174,7 @@ export default function Home() {
             <h2 className="text-xl font-semibold tracking-tight text-foreground">
               Delegations
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground/70">
               Accounts ranked by staked token amount.
             </p>
           </div>
@@ -187,7 +187,7 @@ export default function Home() {
             <h2 className="text-xl font-semibold tracking-tight text-foreground">
               Unbonding
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground/70">
               Tokens currently in the 21-day unbonding period before they can be
               withdrawn.
             </p>
@@ -203,7 +203,7 @@ export default function Home() {
             <h2 className="text-xl font-semibold tracking-tight text-foreground">
               Oracles
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground/70">
               Relayers that attest to events on connected external chains (e.g.
               Ethereum). Each oracle monitors a bridge and reports block heights
               and events.
@@ -218,7 +218,7 @@ export default function Home() {
             <h2 className="text-xl font-semibold tracking-tight text-foreground">
               Bridge Tokens
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground/70">
               Tokens registered for transfer between this chain and external
               networks via bridges.
             </p>

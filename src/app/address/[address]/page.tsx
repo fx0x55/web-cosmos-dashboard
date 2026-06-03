@@ -35,7 +35,7 @@ export default async function AddressPage({
       <div className="flex items-start gap-6 pt-4">
         <Link
           href={`/?chain=${chainId}`}
-          className="group rounded-lg border border-border bg-muted/50 p-3 transition-colors hover:bg-muted">
+          className="group rounded-xl border border-border/60 bg-gradient-to-br from-muted/50 to-muted/30 p-3 transition-all duration-200 hover:border-primary/30 hover:shadow-sm">
           <ArrowLeft className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-primary" />
         </Link>
         <div className="flex flex-1 flex-col gap-3">
@@ -45,7 +45,7 @@ export default async function AddressPage({
             </h1>
             <Badge
               variant="outline"
-              className="border-primary/20 bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
+              className="border-primary/20 bg-gradient-to-r from-primary/10 to-purple-500/10 px-3 py-1 font-mono text-sm text-primary">
               {chainId}
             </Badge>
             {typeLabels.map((label, i) => (
@@ -60,7 +60,7 @@ export default async function AddressPage({
             explorerBaseUrl={`${chainConfig.explorer_base_url}address/`}
           />
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-1.5 transition-colors hover:bg-muted">
+            <div className="flex items-center gap-2 rounded-lg border border-border/50 bg-gradient-to-br from-muted/40 to-transparent px-3 py-1.5 transition-colors hover:bg-muted/60">
               <span className="text-xs font-medium text-muted-foreground">
                 Account #
               </span>
@@ -69,7 +69,7 @@ export default async function AddressPage({
               </span>
             </div>
             <div
-              className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 px-3 py-1.5 transition-colors hover:bg-muted"
+              className="flex items-center gap-2 rounded-lg border border-border/50 bg-gradient-to-br from-muted/40 to-transparent px-3 py-1.5 transition-colors hover:bg-muted/60"
               title="Number of transactions sent from this account">
               <span className="text-xs font-medium text-muted-foreground">
                 Tx Count
@@ -83,7 +83,7 @@ export default async function AddressPage({
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="surface-card group">
+        <Card className="surface-card gradient-border-top group">
           <CardHeader className="space-y-2 pb-4">
             <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
               Spendable Balance
@@ -98,7 +98,7 @@ export default async function AddressPage({
           </CardContent>
         </Card>
 
-        <Card className="surface-card group">
+        <Card className="surface-card group border-t-2 border-t-blue-400">
           <CardHeader className="space-y-2 pb-4">
             <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
               Staked (Delegated)
@@ -106,14 +106,14 @@ export default async function AddressPage({
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
-              <span className="text-blue-600 dark:text-blue-400">
+              <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent dark:from-blue-400 dark:to-blue-300">
                 {formatAmount(data.account.staking_amount.toString())}
               </span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="surface-card group">
+        <Card className="surface-card group border-t-2 border-t-orange-400">
           <CardHeader className="space-y-2 pb-4">
             <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
               Unbonding
@@ -121,14 +121,14 @@ export default async function AddressPage({
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
-              <span className="text-orange-600 dark:text-orange-400">
+              <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent dark:from-orange-400 dark:to-orange-300">
                 {formatAmount(data.account.unbonding_amount.toString())}
               </span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="surface-card group">
+        <Card className="surface-card group border-t-2 border-t-emerald-400">
           <CardHeader className="space-y-2 pb-4">
             <CardTitle className="text-xs font-medium text-muted-foreground transition-colors group-hover:text-primary">
               Pending Rewards
@@ -136,7 +136,7 @@ export default async function AddressPage({
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
-              <span className="text-emerald-600 dark:text-emerald-400">
+              <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent dark:from-emerald-400 dark:to-emerald-300">
                 +{formatAmount(data.account.reward_amount.toString())}
               </span>
             </div>
@@ -160,14 +160,14 @@ export default async function AddressPage({
           <div className="surface-panel overflow-hidden rounded-xl">
             <Table>
               <TableHeader>
-                <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
+                <TableRow className="border-b border-border/40 bg-gradient-to-r from-muted/40 to-muted/20 hover:bg-muted/30">
+                  <TableHead className="h-12 px-6 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                     Validator
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-right text-xs font-medium tracking-wide text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-right text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                     Amount
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-right text-xs font-medium tracking-wide text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-right text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                     Reward
                   </TableHead>
                 </TableRow>
@@ -185,7 +185,7 @@ export default async function AddressPage({
                   data.stakings.map((item, i) => (
                     <TableRow
                       key={i}
-                      className="group h-16 border-b border-border/50 transition-colors hover:bg-primary/5">
+                      className="group h-16 border-b border-border/30 transition-all duration-200 hover:bg-primary/[0.03] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary))]">
                       <TableCell className="px-6 text-sm font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                         <div className="flex flex-col gap-0.5">
                           <Link
@@ -232,14 +232,14 @@ export default async function AddressPage({
           <div className="surface-panel overflow-hidden rounded-xl">
             <Table>
               <TableHeader>
-                <TableRow className="border-b border-border/50 bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
+                <TableRow className="border-b border-border/40 bg-gradient-to-r from-muted/40 to-muted/20 hover:bg-muted/30">
+                  <TableHead className="h-12 px-6 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                     Validator
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-xs font-medium tracking-wide text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                     Completion
                   </TableHead>
-                  <TableHead className="h-12 px-6 text-right text-xs font-medium tracking-wide text-muted-foreground/80">
+                  <TableHead className="h-12 px-6 text-right text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                     Amount
                   </TableHead>
                 </TableRow>
@@ -257,7 +257,7 @@ export default async function AddressPage({
                   data.unbondings.map((item, i) => (
                     <TableRow
                       key={i}
-                      className="group h-16 border-b border-border/50 transition-colors hover:bg-primary/5">
+                      className="group h-16 border-b border-border/30 transition-all duration-200 hover:bg-primary/[0.03] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary))]">
                       <TableCell className="px-6 text-sm font-medium text-foreground/80 transition-colors group-hover:text-foreground">
                         <div className="flex flex-col gap-0.5">
                           <Link

@@ -20,13 +20,11 @@ export default async function ValidatorPage({
   const { chain: chainId = DEFAULT_CHAIN_ID } = await searchParams
   const chainConfig = CHAINS.find(c => c.id === chainId) || CHAINS[0]
 
-  // Fetch validator summary
   let summary
   try {
     summary = await getValidatorSummary(address)
   } catch (error) {
     console.error('Failed to fetch validator summary', error)
-    // Handle error gracefully, maybe show not found or empty
     summary = {
       val_address: address,
       val_moniker: 'Validator not found',
@@ -43,7 +41,7 @@ export default async function ValidatorPage({
       <div className="flex items-start gap-6 pt-4">
         <Link
           href={`/?chain=${chainId}`}
-          className="group rounded-lg border border-border bg-muted/50 p-3 transition-colors hover:bg-muted">
+          className="group rounded-xl border border-border/60 bg-gradient-to-br from-muted/50 to-muted/30 p-3 transition-all duration-200 hover:border-primary/30 hover:shadow-sm">
           <ArrowLeft className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-primary" />
         </Link>
         <div className="flex flex-1 flex-col gap-3">
@@ -53,16 +51,16 @@ export default async function ValidatorPage({
             </h1>
             <Badge
               variant="outline"
-              className="border-primary/20 bg-primary/10 px-3 py-1 font-mono text-sm text-primary">
+              className="border-primary/20 bg-gradient-to-r from-primary/10 to-purple-500/10 px-3 py-1 font-mono text-sm text-primary">
               Validator
             </Badge>
           </div>
-          <div className="flex w-fit items-center gap-3 rounded-md border border-border bg-muted/50 p-2 pl-4">
+          <div className="flex w-fit items-center gap-3 rounded-lg border border-border/50 bg-gradient-to-br from-muted/40 to-transparent p-2 pl-4">
             <span className="break-all font-mono text-base text-muted-foreground">
               {address}
             </span>
             <CopyButton value={address} />
-            <div className="mx-1 h-4 w-px bg-border" />
+            <div className="mx-1 h-4 w-px bg-border/50" />
             <a
               href={`${chainConfig.explorer_base_url}validator/${address}`}
               target="_blank"
@@ -77,7 +75,7 @@ export default async function ValidatorPage({
 
       {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="surface-card group relative overflow-hidden">
+        <Card className="surface-card gradient-border-top group relative overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Total Delegated Tokens
@@ -91,7 +89,7 @@ export default async function ValidatorPage({
           </CardContent>
         </Card>
 
-        <Card className="surface-card group relative overflow-hidden">
+        <Card className="surface-card group relative overflow-hidden border-t-2 border-t-cyan-400">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Active Delegators
@@ -105,7 +103,7 @@ export default async function ValidatorPage({
           </CardContent>
         </Card>
 
-        <Card className="surface-card group relative overflow-hidden">
+        <Card className="surface-card group relative overflow-hidden border-t-2 border-t-orange-400">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Tokens Unbonding
@@ -119,7 +117,7 @@ export default async function ValidatorPage({
           </CardContent>
         </Card>
 
-        <Card className="surface-card group relative overflow-hidden">
+        <Card className="surface-card group relative overflow-hidden border-t-2 border-t-purple-400">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Unbonding Delegators
@@ -135,15 +133,15 @@ export default async function ValidatorPage({
       </div>
 
       <Tabs defaultValue="delegations" className="w-full space-y-8">
-        <TabsList className="flex h-auto w-full justify-start gap-0 rounded-none border-b border-border bg-transparent p-0">
+        <TabsList className="flex h-auto w-full justify-start gap-1 rounded-none border-b border-border/40 bg-transparent p-0">
           <TabsTrigger
             value="delegations"
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Delegations
           </TabsTrigger>
           <TabsTrigger
             value="unbonding"
-            className="rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Unbonding
           </TabsTrigger>
         </TabsList>
@@ -154,7 +152,7 @@ export default async function ValidatorPage({
               <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Delegations
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground/70">
                 Current delegations to this validator.
               </p>
             </div>
@@ -168,7 +166,7 @@ export default async function ValidatorPage({
               <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Unbonding
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground/70">
                 Delegations currently unbonding from this validator.
               </p>
             </div>

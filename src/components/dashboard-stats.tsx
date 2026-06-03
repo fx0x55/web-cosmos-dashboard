@@ -84,9 +84,9 @@ export function DashboardStats() {
       denom: stats?.totalSupply.denom,
       icon: Wallet,
       color: 'text-cyan-600 dark:text-cyan-400',
-      bgColor: 'bg-cyan-500/10',
-      barColor: 'bg-cyan-500',
-      borderColor: 'border-t-cyan-500',
+      bgColor: 'bg-cyan-500/10 dark:bg-cyan-500/15',
+      barColor: 'bg-gradient-to-r from-cyan-400 to-cyan-500',
+      borderColor: 'border-t-cyan-400',
       percent: m ? calcPercent(m.userBalance, migrated) : 0,
     },
     {
@@ -95,9 +95,9 @@ export function DashboardStats() {
       denom: stats?.bondedTokens.denom,
       icon: Lock,
       color: 'text-emerald-600 dark:text-emerald-400',
-      bgColor: 'bg-emerald-500/10',
-      barColor: 'bg-emerald-500',
-      borderColor: 'border-t-emerald-500',
+      bgColor: 'bg-emerald-500/10 dark:bg-emerald-500/15',
+      barColor: 'bg-gradient-to-r from-emerald-400 to-emerald-500',
+      borderColor: 'border-t-emerald-400',
       percent: m ? calcPercent(m.userDelegation, migrated) : 0,
     },
     {
@@ -106,9 +106,9 @@ export function DashboardStats() {
       denom: stats?.notBondedTokens.denom,
       icon: Unlock,
       color: 'text-amber-600 dark:text-amber-400',
-      bgColor: 'bg-amber-500/10',
-      barColor: 'bg-amber-500',
-      borderColor: 'border-t-amber-500',
+      bgColor: 'bg-amber-500/10 dark:bg-amber-500/15',
+      barColor: 'bg-gradient-to-r from-amber-400 to-amber-500',
+      borderColor: 'border-t-amber-400',
       percent: m ? calcPercent(m.userUnbonding, migrated) : 0,
     },
     {
@@ -117,9 +117,9 @@ export function DashboardStats() {
       denom: stats?.communityPool.denom,
       icon: PiggyBank,
       color: 'text-purple-600 dark:text-purple-400',
-      bgColor: 'bg-purple-500/10',
-      barColor: 'bg-purple-500',
-      borderColor: 'border-t-purple-500',
+      bgColor: 'bg-purple-500/10 dark:bg-purple-500/15',
+      barColor: 'bg-gradient-to-r from-purple-400 to-purple-500',
+      borderColor: 'border-t-purple-400',
       percent: m
         ? calcPercent(stats?.communityPool.amount || '0', migrated)
         : 0,
@@ -131,15 +131,15 @@ export function DashboardStats() {
       <div className="grid gap-5 lg:grid-cols-3">
         <div className="surface-card h-48 lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 px-5 pb-2 pt-5">
-            <div className="h-4 w-24 animate-pulse rounded bg-muted" />
-            <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
+            <div className="shimmer h-4 w-24 rounded bg-muted" />
+            <div className="shimmer h-8 w-8 rounded-full bg-muted" />
           </CardHeader>
           <CardContent className="px-5 pb-5 pt-0">
-            <div className="mt-2 h-8 w-40 animate-pulse rounded bg-muted" />
+            <div className="shimmer mt-2 h-8 w-40 rounded bg-muted" />
             <div className="mt-4 space-y-2">
-              <div className="h-3 w-full animate-pulse rounded bg-muted" />
-              <div className="h-3 w-full animate-pulse rounded bg-muted" />
-              <div className="h-3 w-3/4 animate-pulse rounded bg-muted" />
+              <div className="shimmer h-3 w-full rounded bg-muted" />
+              <div className="shimmer h-3 w-full rounded bg-muted" />
+              <div className="shimmer h-3 w-3/4 rounded bg-muted" />
             </div>
           </CardContent>
         </div>
@@ -147,11 +147,11 @@ export function DashboardStats() {
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="surface-card h-[88px]">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-1 pt-4">
-                <div className="h-3.5 w-16 animate-pulse rounded bg-muted" />
-                <div className="h-7 w-7 animate-pulse rounded-lg bg-muted" />
+                <div className="shimmer h-3.5 w-16 rounded bg-muted" />
+                <div className="shimmer h-7 w-7 rounded-lg bg-muted" />
               </CardHeader>
               <CardContent className="px-4 pb-3 pt-0">
-                <div className="mt-1 h-5 w-20 animate-pulse rounded bg-muted" />
+                <div className="shimmer mt-1 h-5 w-20 rounded bg-muted" />
               </CardContent>
             </div>
           ))}
@@ -182,23 +182,23 @@ export function DashboardStats() {
   return (
     <div className="grid gap-5 lg:grid-cols-3">
       {/* Migration Total - Hero Metric */}
-      <Card className="surface-card lg:col-span-2">
+      <Card className="surface-card gradient-border-top lg:col-span-2">
         <CardHeader className="flex flex-row items-start justify-between space-y-0 px-5 pb-2 pt-5">
           <div className="min-w-0">
-            <CardTitle className="text-xs font-medium tracking-wide text-muted-foreground">
+            <CardTitle className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               Migrated Supply
             </CardTitle>
-            <p className="mt-0.5 text-[11px] text-muted-foreground/70">
+            <p className="mt-0.5 text-[11px] text-muted-foreground/60">
               Total token supply, excluding the ETH module reserve
             </p>
           </div>
-          <div className="shrink-0 rounded-lg bg-primary/10 p-2 text-primary">
+          <div className="shrink-0 rounded-lg bg-gradient-to-br from-primary/15 to-purple-500/10 p-2 text-primary">
             <ArrowRightLeft className="h-4 w-4" />
           </div>
         </CardHeader>
         <CardContent className="px-5 pb-5 pt-0">
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-bold tabular-nums tracking-tight text-foreground">
+            <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-3xl font-bold tabular-nums tracking-tight text-transparent">
               {fmt(m?.migratedSupply)}
             </span>
             <span className="text-sm font-medium text-muted-foreground">
@@ -206,8 +206,7 @@ export function DashboardStats() {
             </span>
           </div>
 
-          {/* Formula breakdown - always visible */}
-          <div className="mt-4 space-y-2 rounded-lg bg-muted/50 px-4 py-3 text-sm">
+          <div className="mt-4 space-y-2 rounded-xl bg-gradient-to-br from-muted/60 to-muted/30 px-4 py-3 text-sm">
             <div className="flex items-baseline justify-between gap-3">
               <span className="text-muted-foreground">Total Supply</span>
               <span className="font-mono tabular-nums text-foreground">
@@ -217,10 +216,10 @@ export function DashboardStats() {
             <div className="flex items-baseline justify-between gap-3">
               <span className="text-muted-foreground">ETH Module Reserve</span>
               <span className="font-mono tabular-nums text-red-500">
-                −{fmt(m?.ethModuleBalance)}
+                -{fmt(m?.ethModuleBalance)}
               </span>
             </div>
-            <div className="border-t border-border pt-2">
+            <div className="border-t border-border/50 pt-2">
               <div className="flex items-baseline justify-between gap-3 font-semibold">
                 <span className="text-muted-foreground">Migrated Supply</span>
                 <span className="font-mono tabular-nums text-primary">
@@ -251,9 +250,12 @@ export function DashboardStats() {
                 <span className="truncate text-lg font-bold tabular-nums tracking-tight text-foreground">
                   {fmt(item.value)}
                 </span>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted/80">
                   <div
-                    className={`h-full rounded-full transition-all duration-700 ease-out ${item.barColor}`}
+                    className={cn(
+                      'progress-animate h-full rounded-full',
+                      item.barColor
+                    )}
                     style={{ width: `${Math.min(item.percent, 100)}%` }}
                   />
                 </div>
