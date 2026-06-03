@@ -54,13 +54,13 @@ export default function Home() {
   return (
     <div className="space-y-10">
       {/* Hero section with glow */}
-      <section className="hero-glow -mx-6 -mt-8 px-6 pb-6 pt-10 md:-mx-8 md:px-8">
+      <section className="hero-glow -mx-6 -mt-8 px-6 pb-8 pt-12 md:-mx-8 md:px-8">
         <div className="mx-auto max-w-6xl">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="text-display text-4xl font-black tracking-tight md:text-5xl">
             Chain Overview
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground/70">
-            Real-time migration and staking metrics
+          <p className="mt-2 text-base text-muted-foreground">
+            Balances and staking metrics
           </p>
           <div className="mt-6">
             <DashboardStats />
@@ -68,33 +68,33 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
       <Tabs value={tab} onValueChange={setTab} className="w-full space-y-8">
-        <TabsList className="flex h-auto w-full justify-start gap-1 rounded-none border-b border-border/30 bg-transparent p-0">
+        <TabsList className="flex h-auto w-full justify-start gap-2 rounded-none border-b border-border/30 bg-transparent p-0">
           <TabsTrigger
             value="balances"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
+            className="relative rounded-none border-b-[3px] border-transparent px-5 pb-3.5 text-sm font-semibold text-muted-foreground transition-all duration-300 ease-out hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Balances
           </TabsTrigger>
           <TabsTrigger
             value="delegations"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
+            className="relative rounded-none border-b-[3px] border-transparent px-5 pb-3.5 text-sm font-semibold text-muted-foreground transition-all duration-300 ease-out hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Delegations
           </TabsTrigger>
           <TabsTrigger
             value="unbonding"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
+            className="relative rounded-none border-b-[3px] border-transparent px-5 pb-3.5 text-sm font-semibold text-muted-foreground transition-all duration-300 ease-out hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Unbonding
           </TabsTrigger>
           <TabsTrigger
             value="crosschain-oracles"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
+            className="relative rounded-none border-b-[3px] border-transparent px-5 pb-3.5 text-sm font-semibold text-muted-foreground transition-all duration-300 ease-out hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Oracles
           </TabsTrigger>
           <TabsTrigger
             value="bridge-tokens"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
+            className="relative rounded-none border-b-[3px] border-transparent px-5 pb-3.5 text-sm font-semibold text-muted-foreground transition-all duration-300 ease-out hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Bridges
           </TabsTrigger>
         </TabsList>
@@ -102,7 +102,7 @@ export default function Home() {
         {/* Balances: secondary pill navigation */}
         <TabsContent value="balances" className="space-y-6 outline-none">
           <div className="space-y-4 px-1">
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            <h2 className="section-accent text-2xl font-bold tracking-tight text-foreground">
               Token Balances
             </h2>
             <div
@@ -116,10 +116,10 @@ export default function Home() {
                   aria-selected={subtab === st.value}
                   onClick={() => setSubtab(st.value)}
                   className={cn(
-                    'rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ease-out',
+                    'rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ease-out',
                     subtab === st.value
-                      ? 'bg-primary/[0.08] text-primary shadow-sm shadow-primary/[0.06]'
-                      : 'text-muted-foreground/70 hover:bg-muted/60 hover:text-muted-foreground'
+                      ? 'border border-primary/20 bg-gradient-to-r from-primary/[0.12] to-purple-500/[0.08] text-primary shadow-md shadow-primary/[0.1]'
+                      : 'border border-transparent text-muted-foreground hover:bg-muted/70 hover:text-foreground'
                   )}>
                   {st.label}
                 </button>
@@ -171,7 +171,7 @@ export default function Home() {
         {/* Delegations */}
         <TabsContent value="delegations" className="space-y-6 outline-none">
           <div className="px-1">
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            <h2 className="section-accent text-2xl font-bold tracking-tight text-foreground">
               Delegations
             </h2>
             <p className="mt-1 text-sm text-muted-foreground/70">
@@ -184,7 +184,7 @@ export default function Home() {
         {/* Unbonding */}
         <TabsContent value="unbonding" className="space-y-6 outline-none">
           <div className="px-1">
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            <h2 className="section-accent text-2xl font-bold tracking-tight text-foreground">
               Unbonding
             </h2>
             <p className="mt-1 text-sm text-muted-foreground/70">
@@ -200,7 +200,7 @@ export default function Home() {
           value="crosschain-oracles"
           className="space-y-6 outline-none">
           <div className="px-1">
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            <h2 className="section-accent text-2xl font-bold tracking-tight text-foreground">
               Oracles
             </h2>
             <p className="mt-1 text-sm text-muted-foreground/70">
@@ -215,7 +215,7 @@ export default function Home() {
         {/* Bridge Tokens */}
         <TabsContent value="bridge-tokens" className="space-y-6 outline-none">
           <div className="px-1">
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            <h2 className="section-accent text-2xl font-bold tracking-tight text-foreground">
               Bridge Tokens
             </h2>
             <p className="mt-1 text-sm text-muted-foreground/70">

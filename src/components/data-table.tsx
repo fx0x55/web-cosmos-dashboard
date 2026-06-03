@@ -45,7 +45,7 @@ export function DataTable<T>({
       <div className="surface-panel overflow-hidden rounded-xl">
         <Table>
           <TableHeader>
-            <TableRow className="border-b border-border/30 bg-gradient-to-r from-muted/30 to-muted/10 hover:bg-muted/30">
+            <TableRow className="border-b border-border/20 bg-gradient-to-r from-muted/40 to-muted/15 hover:bg-muted/40">
               {columns.map((col, index) => (
                 <TableHead
                   key={index}
@@ -107,7 +107,7 @@ export function DataTable<T>({
               data.map((item, i) => (
                 <TableRow
                   key={i}
-                  className="group h-14 border-b border-border/20 transition-all duration-300 ease-out hover:bg-primary/[0.025] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary)/0.7)]">
+                  className="group h-14 border-b border-border/15 transition-all duration-300 ease-out hover:bg-primary/[0.04] hover:shadow-[inset_4px_0_0_0_hsl(var(--primary))]">
                   {columns.map((col, j) => (
                     <TableCell
                       key={j}

@@ -49,7 +49,7 @@ export function SearchForm() {
               setQuery(e.target.value)
               if (error) setError('')
             }}
-            className={`h-10 w-full border-border/60 bg-card transition-all duration-300 ease-out focus-visible:ring-1 focus-visible:ring-primary/30 focus-visible:border-primary/40 ${error ? 'border-red-500 ring-red-500' : ''}`}
+            className={`h-10 w-full border-border/60 bg-card transition-all duration-300 ease-out focus-visible:border-primary/40 focus-visible:ring-1 focus-visible:ring-primary/30 ${error ? 'border-red-500 ring-red-500' : ''}`}
           />
           {error && (
             <p className="absolute -bottom-5 left-0 text-xs text-red-500">
@@ -62,7 +62,7 @@ export function SearchForm() {
         type="submit"
         size="icon"
         variant="ghost"
-        className="h-10 w-10 shrink-0 border border-border/60 bg-card transition-all duration-200 ease-out hover:bg-muted/80 hover:border-border">
+        className="h-10 w-10 shrink-0 border border-border/60 bg-card transition-all duration-200 ease-out hover:border-border hover:bg-muted/80">
         <Search className="h-4 w-4 text-slate-500" />
       </Button>
     </form>

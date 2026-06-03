@@ -188,20 +188,20 @@ export function DashboardStats() {
       <Card className="surface-card gradient-border-top lg:col-span-2">
         <CardHeader className="flex flex-row items-start justify-between space-y-0 px-5 pb-2 pt-5">
           <div className="min-w-0">
-            <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
+            <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
               Migrated Supply
             </CardTitle>
-            <p className="mt-0.5 text-[11px] text-muted-foreground/60">
+            <p className="mt-0.5 text-xs text-muted-foreground/70">
               Total token supply, excluding the ETH module reserve
             </p>
           </div>
-          <div className="shrink-0 rounded-lg bg-gradient-to-br from-primary/15 to-purple-500/10 p-2 text-primary">
-            <ArrowRightLeft className="h-4 w-4" />
+          <div className="shrink-0 rounded-xl bg-gradient-to-br from-primary/20 to-purple-500/15 p-2.5 text-primary shadow-sm shadow-primary/10">
+            <ArrowRightLeft className="h-5 w-5" />
           </div>
         </CardHeader>
         <CardContent className="px-5 pb-5 pt-0">
           <div className="flex items-baseline gap-2">
-            <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-3xl font-bold tabular-nums tracking-tight text-transparent">
+            <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-5xl font-black tabular-nums tracking-tighter text-transparent">
               {fmt(m?.migratedSupply)}
             </span>
             <span className="text-sm font-medium text-muted-foreground">
@@ -209,7 +209,7 @@ export function DashboardStats() {
             </span>
           </div>
 
-          <div className="mt-4 space-y-2 rounded-xl bg-gradient-to-br from-muted/60 to-muted/30 px-4 py-3 text-sm">
+          <div className="mt-5 space-y-2.5 rounded-xl bg-gradient-to-br from-muted/80 to-muted/40 px-5 py-3.5 text-sm">
             <div className="flex items-baseline justify-between gap-3">
               <span className="text-muted-foreground">Total Supply</span>
               <span className="font-mono tabular-nums text-foreground">
@@ -241,28 +241,31 @@ export function DashboardStats() {
             key={i}
             className={cn('surface-card group border-t-2', item.borderColor)}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-1 pt-4">
-              <CardTitle className="truncate text-[11px] font-medium text-muted-foreground/70">
+              <CardTitle className="truncate text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                 {item.title}
               </CardTitle>
-              <div className={cn('rounded-md p-1', item.bgColor)}>
-                <item.icon className={cn('h-3.5 w-3.5 shrink-0', item.color)} />
+              <div className={cn('rounded-lg p-1.5', item.bgColor)}>
+                <item.icon className={cn('h-4 w-4 shrink-0', item.color)} />
               </div>
             </CardHeader>
             <CardContent className="px-4 pb-4 pt-0">
               <div className="flex flex-col gap-2">
-                <span className="truncate text-lg font-bold tabular-nums tracking-tight text-foreground">
+                <span className="truncate text-xl font-extrabold tabular-nums tracking-tight text-foreground">
                   {fmt(item.value)}
                 </span>
-                <div className="h-1 w-full overflow-hidden rounded-full bg-muted/60">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted/80">
                   <div
                     className={cn(
                       'progress-animate h-full rounded-full',
                       item.barColor
                     )}
-                    style={{ width: `${Math.min(item.percent, 100)}%` }}
+                    style={{
+                      width: `${Math.min(item.percent, 100)}%`,
+                      filter: 'brightness(1.1)',
+                    }}
                   />
                 </div>
-                <span className="text-[11px] font-medium tabular-nums text-muted-foreground/60">
+                <span className="text-xs font-bold tabular-nums text-muted-foreground">
                   {item.percent.toFixed(1)}%
                 </span>
               </div>

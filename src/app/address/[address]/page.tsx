@@ -40,7 +40,7 @@ export default async function AddressPage({
         </Link>
         <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-4">
-            <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
+            <h1 className="text-display text-4xl font-black tracking-tight md:text-5xl">
               Address Details
             </h1>
             <Badge
@@ -90,7 +90,7 @@ export default async function AddressPage({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
+            <div className="flex items-baseline gap-1 text-3xl font-black tracking-tight lg:text-4xl">
               <span className="text-foreground">
                 {formatAmount(data.account.amount.toString())}
               </span>
@@ -105,7 +105,7 @@ export default async function AddressPage({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
+            <div className="flex items-baseline gap-1 text-3xl font-black tracking-tight lg:text-4xl">
               <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent dark:from-blue-400 dark:to-blue-300">
                 {formatAmount(data.account.staking_amount.toString())}
               </span>
@@ -120,7 +120,7 @@ export default async function AddressPage({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
+            <div className="flex items-baseline gap-1 text-3xl font-black tracking-tight lg:text-4xl">
               <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent dark:from-orange-400 dark:to-orange-300">
                 {formatAmount(data.account.unbonding_amount.toString())}
               </span>
@@ -135,7 +135,7 @@ export default async function AddressPage({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-baseline gap-1 text-2xl font-bold tracking-tight lg:text-3xl">
+            <div className="flex items-baseline gap-1 text-3xl font-black tracking-tight lg:text-4xl">
               <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent dark:from-emerald-400 dark:to-emerald-300">
                 +{formatAmount(data.account.reward_amount.toString())}
               </span>
@@ -147,7 +147,7 @@ export default async function AddressPage({
       <div className="space-y-12">
         <div className="space-y-4">
           <div className="flex items-center justify-between px-1">
-            <h2 className="flex items-center gap-3 text-2xl font-bold tracking-tight text-foreground">
+            <h2 className="section-accent flex items-center gap-3 text-2xl font-bold tracking-tight text-foreground">
               Delegations
               <Badge
                 variant="secondary"
@@ -160,7 +160,7 @@ export default async function AddressPage({
           <div className="surface-panel overflow-hidden rounded-xl">
             <Table>
               <TableHeader>
-                <TableRow className="border-b border-border/30 bg-gradient-to-r from-muted/30 to-muted/10 hover:bg-muted/30">
+                <TableRow className="border-b border-border/20 bg-gradient-to-r from-muted/40 to-muted/15 hover:bg-muted/40">
                   <TableHead className="h-11 px-6 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">
                     Validator
                   </TableHead>
@@ -185,7 +185,7 @@ export default async function AddressPage({
                   data.stakings.map((item, i) => (
                     <TableRow
                       key={i}
-                      className="group h-14 border-b border-border/20 transition-all duration-300 ease-out hover:bg-primary/[0.025] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary)/0.7)]">
+                      className="group h-14 border-b border-border/15 transition-all duration-300 ease-out hover:bg-primary/[0.04] hover:shadow-[inset_4px_0_0_0_hsl(var(--primary))]">
                       <TableCell className="px-6 text-sm text-foreground/70 transition-colors duration-300 group-hover:text-foreground/90">
                         <div className="flex flex-col gap-0.5">
                           <Link
@@ -232,7 +232,7 @@ export default async function AddressPage({
           <div className="surface-panel overflow-hidden rounded-xl">
             <Table>
               <TableHeader>
-                <TableRow className="border-b border-border/30 bg-gradient-to-r from-muted/30 to-muted/10 hover:bg-muted/30">
+                <TableRow className="border-b border-border/20 bg-gradient-to-r from-muted/40 to-muted/15 hover:bg-muted/40">
                   <TableHead className="h-11 px-6 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">
                     Validator
                   </TableHead>
@@ -257,7 +257,7 @@ export default async function AddressPage({
                   data.unbondings.map((item, i) => (
                     <TableRow
                       key={i}
-                      className="group h-14 border-b border-border/20 transition-all duration-300 ease-out hover:bg-primary/[0.025] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary)/0.7)]">
+                      className="group h-14 border-b border-border/15 transition-all duration-300 ease-out hover:bg-primary/[0.04] hover:shadow-[inset_4px_0_0_0_hsl(var(--primary))]">
                       <TableCell className="px-6 text-sm text-foreground/70 transition-colors duration-300 group-hover:text-foreground/90">
                         <div className="flex flex-col gap-0.5">
                           <Link

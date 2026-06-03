@@ -46,7 +46,7 @@ export default async function ValidatorPage({
         </Link>
         <div className="flex flex-1 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-4">
-            <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
+            <h1 className="text-display text-4xl font-black tracking-tight md:text-5xl">
               {summary.val_moniker}
             </h1>
             <Badge
@@ -83,7 +83,7 @@ export default async function ValidatorPage({
             <Coins className="h-4 w-4 text-muted-foreground/50 transition-colors duration-300 group-hover:text-primary/70" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold tracking-tight">
+            <div className="text-3xl font-black tracking-tight">
               {formatAmount(summary.total_delegated_amount.toString())}
             </div>
           </CardContent>
@@ -97,7 +97,7 @@ export default async function ValidatorPage({
             <Users className="h-4 w-4 text-muted-foreground/50 transition-colors duration-300 group-hover:text-primary/70" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold tracking-tight">
+            <div className="text-3xl font-black tracking-tight">
               {summary.total_delegators_count}
             </div>
           </CardContent>
@@ -111,7 +111,7 @@ export default async function ValidatorPage({
             <UserMinus className="h-4 w-4 text-muted-foreground/50 transition-colors duration-300 group-hover:text-primary/70" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold tracking-tight">
+            <div className="text-3xl font-black tracking-tight">
               {formatAmount(summary.total_undelegated_amount.toString())}
             </div>
           </CardContent>
@@ -125,7 +125,7 @@ export default async function ValidatorPage({
             <UserMinus className="h-4 w-4 text-muted-foreground/50 transition-colors duration-300 group-hover:text-primary/70" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold tracking-tight">
+            <div className="text-3xl font-black tracking-tight">
               {summary.total_undelegators_count}
             </div>
           </CardContent>
@@ -133,15 +133,15 @@ export default async function ValidatorPage({
       </div>
 
       <Tabs defaultValue="delegations" className="w-full space-y-8">
-        <TabsList className="flex h-auto w-full justify-start gap-1 rounded-none border-b border-border/30 bg-transparent p-0">
+        <TabsList className="flex h-auto w-full justify-start gap-2 rounded-none border-b border-border/30 bg-transparent p-0">
           <TabsTrigger
             value="delegations"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
+            className="relative rounded-none border-b-[3px] border-transparent px-5 pb-3.5 text-sm font-semibold text-muted-foreground transition-all duration-300 ease-out hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Delegations
           </TabsTrigger>
           <TabsTrigger
             value="unbonding"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
+            className="relative rounded-none border-b-[3px] border-transparent px-5 pb-3.5 text-sm font-semibold text-muted-foreground transition-all duration-300 ease-out hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
             Unbonding
           </TabsTrigger>
         </TabsList>

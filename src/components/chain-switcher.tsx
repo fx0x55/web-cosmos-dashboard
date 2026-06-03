@@ -50,7 +50,7 @@ export function ChainSwitcher() {
 
   return (
     <Select value={currentChainId} onValueChange={handleValueChange}>
-      <SelectTrigger className="h-9 w-[180px] rounded-full border-border/50 bg-card transition-all duration-200 ease-out hover:bg-muted/80 hover:border-border focus:ring-0 focus:ring-offset-0">
+      <SelectTrigger className="h-9 w-[180px] rounded-full border-border/50 bg-card transition-all duration-200 ease-out hover:border-border hover:bg-muted/80 focus:ring-0 focus:ring-offset-0">
         <SelectValue placeholder="Select chain">
           <div className="flex items-center gap-2">
             <span className="flex h-5 w-5 items-center justify-center text-xs">
