@@ -68,33 +68,33 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent" />
 
       <Tabs value={tab} onValueChange={setTab} className="w-full space-y-8">
-        <TabsList className="flex h-auto w-full justify-start gap-1 rounded-none border-b border-border/40 bg-transparent p-0">
+        <TabsList className="flex h-auto w-full justify-start gap-1 rounded-none border-b border-border/30 bg-transparent p-0">
           <TabsTrigger
             value="balances"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
             Balances
           </TabsTrigger>
           <TabsTrigger
             value="delegations"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
             Delegations
           </TabsTrigger>
           <TabsTrigger
             value="unbonding"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
             Unbonding
           </TabsTrigger>
           <TabsTrigger
             value="crosschain-oracles"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
             Oracles
           </TabsTrigger>
           <TabsTrigger
             value="bridge-tokens"
-            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground transition-colors duration-200 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none">
+            className="relative rounded-none border-b-2 border-transparent px-4 pb-3 text-sm font-medium text-muted-foreground/70 transition-all duration-300 ease-out data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none hover:text-muted-foreground">
             Bridges
           </TabsTrigger>
         </TabsList>
@@ -116,10 +116,10 @@ export default function Home() {
                   aria-selected={subtab === st.value}
                   onClick={() => setSubtab(st.value)}
                   className={cn(
-                    'rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200',
+                    'rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ease-out',
                     subtab === st.value
-                      ? 'bg-primary/10 text-primary shadow-sm shadow-primary/10'
-                      : 'text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+                      ? 'bg-primary/[0.08] text-primary shadow-sm shadow-primary/[0.06]'
+                      : 'text-muted-foreground/70 hover:bg-muted/60 hover:text-muted-foreground'
                   )}>
                   {st.label}
                 </button>

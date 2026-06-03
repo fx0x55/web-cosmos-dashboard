@@ -88,10 +88,10 @@ export function CrosschainBridgeTokensList() {
               aria-selected={selectedChain === name}
               onClick={() => setSelectedChain(name)}
               className={cn(
-                'inline-flex items-center gap-1 rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200',
+                'inline-flex items-center gap-1 rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ease-out',
                 selectedChain === name
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-primary/[0.08] text-primary shadow-sm shadow-primary/[0.06]'
+                  : 'text-muted-foreground/70 hover:bg-muted/60 hover:text-muted-foreground'
               )}>
               {showName}
               {bridgeUrl && (

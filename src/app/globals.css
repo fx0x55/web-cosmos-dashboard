@@ -56,23 +56,29 @@
 
 @layer utilities {
   .surface-card {
-    @apply rounded-xl border border-border/70 bg-card transition-all duration-300 ease-out;
+    @apply rounded-xl border border-border/50 bg-card;
     box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.03),
-      0 1px 3px rgba(0, 0, 0, 0.04);
+      0 0 0 0 transparent,
+      0 1px 2px rgba(0, 0, 0, 0.02),
+      0 2px 6px rgba(0, 0, 0, 0.02);
+    transition:
+      box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .surface-card:hover {
     box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.04),
-      0 8px 24px hsl(265 59% 48% / 0.06);
-    border-color: hsl(265 59% 48% / 0.18);
-    transform: translateY(-1px);
+      0 0 0 1px hsl(265 59% 48% / 0.05),
+      0 2px 8px rgba(0, 0, 0, 0.03),
+      0 8px 28px hsl(265 59% 48% / 0.05);
+    border-color: hsl(265 59% 48% / 0.14);
+    transform: translateY(-2px);
   }
 
   .surface-panel {
-    @apply rounded-xl border border-border/70 bg-card;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    @apply rounded-xl border border-border/50 bg-card;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   }
 }
 
@@ -91,16 +97,16 @@
 @variant dark {
   .surface-card {
     box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 hsl(265 80% 65% / 0.03);
+      0 1px 2px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 hsl(265 80% 65% / 0.02);
   }
   .surface-card:hover {
     box-shadow:
-      0 0 0 1px hsl(265 80% 65% / 0.1),
-      0 4px 20px rgba(0, 0, 0, 0.3),
-      0 8px 32px hsl(265 80% 65% / 0.06);
-    border-color: hsl(265 80% 65% / 0.2);
-    transform: translateY(-1px);
+      0 0 0 1px hsl(265 80% 65% / 0.08),
+      0 4px 16px rgba(0, 0, 0, 0.2),
+      0 8px 32px hsl(265 80% 65% / 0.04);
+    border-color: hsl(265 80% 65% / 0.15);
+    transform: translateY(-2px);
   }
 }
 
@@ -159,6 +165,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
   body {
     @apply bg-background text-foreground;
     background-image:
@@ -178,6 +189,23 @@
         transparent 50%
       );
     background-attachment: fixed;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 100px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.3);
   }
 }
 
@@ -248,6 +276,7 @@
 /* ── Gradient accent border utility ── */
 .gradient-border-top {
   position: relative;
+  overflow: hidden;
 }
 .gradient-border-top::before {
   content: '';
@@ -263,7 +292,11 @@
     hsl(250 50% 50%)
   );
   border-radius: var(--radius) var(--radius) 0 0;
-  opacity: 0.7;
+  opacity: 0.6;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.gradient-border-top:hover::before {
+  opacity: 1;
 }
 
 /* ── Animated shimmer for loading ── */
@@ -280,12 +313,34 @@
   background: linear-gradient(
     90deg,
     hsl(var(--muted)) 0%,
-    hsl(var(--muted) / 0.5) 50%,
+    hsl(var(--muted) / 0.4) 50%,
     hsl(var(--muted)) 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 2s ease-in-out infinite;
+  animation: shimmer 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
+/* ── Content fade-in ── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Staggered delays for child elements */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
 
 /* ── Progress bar animation ── */
 @keyframes progress-fill {
@@ -295,7 +350,7 @@
 }
 
 .progress-animate {
-  animation: progress-fill 1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: progress-fill 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 /* ── Glow dot accent ── */

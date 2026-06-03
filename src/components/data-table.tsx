@@ -45,7 +45,7 @@ export function DataTable<T>({
       <div className="surface-panel overflow-hidden rounded-xl">
         <Table>
           <TableHeader>
-            <TableRow className="border-b border-border/40 bg-gradient-to-r from-muted/40 to-muted/20 hover:bg-muted/30">
+            <TableRow className="border-b border-border/30 bg-gradient-to-r from-muted/30 to-muted/10 hover:bg-muted/30">
               {columns.map((col, index) => (
                 <TableHead
                   key={index}
@@ -58,10 +58,13 @@ export function DataTable<T>({
           <TableBody>
             {loading &&
               Array.from({ length: 5 }).map((_, i) => (
-                <TableRow key={i} className="h-16 border-b border-border/30">
+                <TableRow key={i} className="h-14 border-b border-border/20">
                   {columns.map((_, j) => (
                     <TableCell key={j} className="px-6">
-                      <div className="shimmer h-5 w-full max-w-[100px] rounded-md bg-muted/50" />
+                      <div
+                        className="shimmer h-4 w-full max-w-[90px] rounded-md bg-muted/40"
+                        style={{ animationDelay: `${i * 0.1}s` }}
+                      />
                     </TableCell>
                   ))}
                 </TableRow>
@@ -70,11 +73,11 @@ export function DataTable<T>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-32 text-center">
+                  className="h-28 text-center">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="flex items-center gap-2 text-destructive">
-                      <AlertCircle className="h-5 w-5" />
-                      <span className="text-sm font-medium">{error}</span>
+                    <div className="flex items-center gap-2 text-destructive/80">
+                      <AlertCircle className="h-4 w-4" />
+                      <span className="text-sm">{error}</span>
                     </div>
                     {onRetry && (
                       <Button
@@ -94,7 +97,7 @@ export function DataTable<T>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-32 text-center text-muted-foreground">
+                  className="h-28 text-center text-muted-foreground/60">
                   No data available for this view.
                 </TableCell>
               </TableRow>
@@ -104,11 +107,11 @@ export function DataTable<T>({
               data.map((item, i) => (
                 <TableRow
                   key={i}
-                  className="group h-16 border-b border-border/30 transition-all duration-200 hover:bg-primary/[0.03] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary))]">
+                  className="group h-14 border-b border-border/20 transition-all duration-300 ease-out hover:bg-primary/[0.025] hover:shadow-[inset_3px_0_0_0_hsl(var(--primary)/0.7)]">
                   {columns.map((col, j) => (
                     <TableCell
                       key={j}
-                      className="px-6 text-sm font-medium text-foreground/80 transition-colors group-hover:text-foreground">
+                      className="px-6 text-sm text-foreground/70 transition-colors duration-300 group-hover:text-foreground/90">
                       {col.cell
                         ? col.cell(item)
                         : (item[col.accessorKey!] as React.ReactNode)}
@@ -121,7 +124,7 @@ export function DataTable<T>({
       </div>
 
       <div className="flex items-center justify-between px-2">
-        <div className="text-sm font-medium text-muted-foreground">
+        <div className="text-sm text-muted-foreground/60">
           Page {page} of {totalPages || 1}
         </div>
         <div className="flex items-center space-x-2">
@@ -130,7 +133,7 @@ export function DataTable<T>({
             size="icon"
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1 || loading}
-            className="h-10 w-10 rounded-xl border-border/60 transition-all duration-200 hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:shadow-sm">
+            className="h-9 w-9 rounded-xl border-border/50 transition-all duration-300 ease-out hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary hover:shadow-sm">
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
@@ -138,7 +141,7 @@ export function DataTable<T>({
             size="icon"
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages || loading}
-            className="h-10 w-10 rounded-xl border-border/60 transition-all duration-200 hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:shadow-sm">
+            className="h-9 w-9 rounded-xl border-border/50 transition-all duration-300 ease-out hover:border-primary/30 hover:bg-primary/[0.04] hover:text-primary hover:shadow-sm">
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>

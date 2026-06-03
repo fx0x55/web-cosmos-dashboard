@@ -131,27 +131,30 @@ export function DashboardStats() {
       <div className="grid gap-5 lg:grid-cols-3">
         <div className="surface-card h-48 lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 px-5 pb-2 pt-5">
-            <div className="shimmer h-4 w-24 rounded bg-muted" />
-            <div className="shimmer h-8 w-8 rounded-full bg-muted" />
+            <div className="shimmer h-3.5 w-24 rounded bg-muted/50" />
+            <div className="shimmer h-8 w-8 rounded-full bg-muted/50" />
           </CardHeader>
           <CardContent className="px-5 pb-5 pt-0">
-            <div className="shimmer mt-2 h-8 w-40 rounded bg-muted" />
+            <div className="shimmer mt-2 h-8 w-40 rounded bg-muted/50" />
             <div className="mt-4 space-y-2">
-              <div className="shimmer h-3 w-full rounded bg-muted" />
-              <div className="shimmer h-3 w-full rounded bg-muted" />
-              <div className="shimmer h-3 w-3/4 rounded bg-muted" />
+              <div className="shimmer h-3 w-full rounded bg-muted/50" />
+              <div className="shimmer h-3 w-full rounded bg-muted/50" />
+              <div className="shimmer h-3 w-3/4 rounded bg-muted/50" />
             </div>
           </CardContent>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="surface-card h-[88px]">
+            <div
+              key={i}
+              className="surface-card h-[88px]"
+              style={{ animationDelay: `${i * 0.08}s` }}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-1 pt-4">
-                <div className="shimmer h-3.5 w-16 rounded bg-muted" />
-                <div className="shimmer h-7 w-7 rounded-lg bg-muted" />
+                <div className="shimmer h-3 w-16 rounded bg-muted/50" />
+                <div className="shimmer h-7 w-7 rounded-lg bg-muted/50" />
               </CardHeader>
               <CardContent className="px-4 pb-3 pt-0">
-                <div className="shimmer mt-1 h-5 w-20 rounded bg-muted" />
+                <div className="shimmer mt-1 h-5 w-20 rounded bg-muted/50" />
               </CardContent>
             </div>
           ))}
@@ -185,7 +188,7 @@ export function DashboardStats() {
       <Card className="surface-card gradient-border-top lg:col-span-2">
         <CardHeader className="flex flex-row items-start justify-between space-y-0 px-5 pb-2 pt-5">
           <div className="min-w-0">
-            <CardTitle className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground/60">
               Migrated Supply
             </CardTitle>
             <p className="mt-0.5 text-[11px] text-muted-foreground/60">
@@ -238,7 +241,7 @@ export function DashboardStats() {
             key={i}
             className={cn('surface-card group border-t-2', item.borderColor)}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pb-1 pt-4">
-              <CardTitle className="truncate text-[11px] font-medium text-muted-foreground">
+              <CardTitle className="truncate text-[11px] font-medium text-muted-foreground/70">
                 {item.title}
               </CardTitle>
               <div className={cn('rounded-md p-1', item.bgColor)}>
@@ -250,7 +253,7 @@ export function DashboardStats() {
                 <span className="truncate text-lg font-bold tabular-nums tracking-tight text-foreground">
                   {fmt(item.value)}
                 </span>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted/80">
+                <div className="h-1 w-full overflow-hidden rounded-full bg-muted/60">
                   <div
                     className={cn(
                       'progress-animate h-full rounded-full',
@@ -259,7 +262,7 @@ export function DashboardStats() {
                     style={{ width: `${Math.min(item.percent, 100)}%` }}
                   />
                 </div>
-                <span className="text-[11px] font-medium tabular-nums text-muted-foreground">
+                <span className="text-[11px] font-medium tabular-nums text-muted-foreground/60">
                   {item.percent.toFixed(1)}%
                 </span>
               </div>

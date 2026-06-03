@@ -24,7 +24,7 @@ export function CopyButton({ value, className }: CopyButtonProps) {
       variant="ghost"
       size="icon"
       className={cn(
-        'h-6 w-6 opacity-50 transition-opacity hover:opacity-100',
+        'h-6 w-6 opacity-40 transition-all duration-200 ease-out hover:opacity-100',
         className
       )}
       onClick={e => {

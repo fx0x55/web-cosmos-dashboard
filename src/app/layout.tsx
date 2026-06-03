@@ -25,12 +25,17 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange>
+          disableTransitionOnChange={false}>
           <Suspense>
             <MainNav />
           </Suspense>
-          <main className="mx-auto max-w-6xl space-y-10 px-6 py-8 md:px-8">
-            <Suspense fallback={<div className="p-6">Loading...</div>}>
+          <main className="mx-auto max-w-6xl space-y-8 px-6 py-8 md:px-8">
+            <Suspense
+              fallback={
+                <div className="flex items-center justify-center p-12">
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-muted-foreground/20 border-t-primary" />
+                </div>
+              }>
               {children}
             </Suspense>
           </main>
